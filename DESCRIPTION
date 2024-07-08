@@ -2,16 +2,16 @@ Package: oepsData
 Title: Opioid Environment Policy Scan Data, But Easily
 Version: 0.0.0.9000
 Authors@R: 
-    person(first = "Ashlynn", 
+    person(given = "Ashlynn", 
            last = "Wimer", 
            email = "ashewimer@gmail.com", 
            role = c("aut", "cre"),
            comment = c(ORCID = "0009-0001-4803-5742"))
-    person(first = "Adam",
+    person(given = "Adam",
            last = "Cox",
            email = "acfc@illinois.edu",
            role = c("aut", "cre"))
-    person(first = "Marynia",
+    person(given = "Marynia",
            last = "Kolak",
            email = "mkolak@illinois.edu",
            role = c("aut", "cre"),
