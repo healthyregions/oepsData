@@ -1,6 +1,6 @@
-### Author: Ashlynn Wimer
-### Date: 7/4/2024
-### About: R Script which does very little.
+### Author: Ashlynn Wimer (@bucketteOfIvy)
+### Date: 7/15/2024
+### About: R script which loads attribute data into the package directly.
 
 library(tidyverse)
 library(here)
