@@ -4,7 +4,7 @@
 \alias{load_oeps}
 \title{Load OEPS data}
 \usage{
-load_oeps(scale, year, themes = "All", geometry = FALSE)
+load_oeps(scale, year, themes = "All", tidy = FALSE, geometry = FALSE)
 }
 \arguments{
 \item{scale}{String specifying which geographic scale to pull variables for.
@@ -13,12 +13,14 @@ Must be one of "tract", "zcta", "county", or "state".}
 \item{year}{String or integer specifying which year to pull variables for.
 Must be one of "1980", "1990", "2000", "2010", or "Latest".}
 
-\item{themes}{String or list of strings specifiying which Opioid Risk Environment
+\item{themes}{String or list of strings specifying which Opioid Risk Environment
 themes to pull variables for. Valid themes are "Geography", "Social", "Environment",
 "Economic", "Outcome", "Policy", "Composite", or "All". Defaults to "All".}
 
+\item{tidy}{Boolean specifying whether to return data in tidy format. Defaults False.}
+
 \item{geometry}{Boolean specifying whether to pull geometries for the dataset
-(TRUE) or not (FALSE). Defaults FALSE.}
+TRUE or not FALSE. Defaults FALSE.}
 }
 \value{
 A tibble containing the requested variables. Always exports merge keys.
@@ -28,11 +30,11 @@ A tibble containing the requested variables. Always exports merge keys.
 scale, year, and themes. Can also pull geometries.
 }
 \examples{
-load_oeps('tract', 2010, geometry=TRUE)
-load_oeps('county', 'latest', themes='social')
+load_oeps("tract", 2010, geometry = TRUE)
+load_oeps("county", "latest", themes = "social")
 
 # themes can also be a list of options
-load_oeps('zcta', 'latest', c('composite', 'economic'))
+load_oeps("zcta", "latest", c("composite", "economic"))
 
 }
 \seealso{
