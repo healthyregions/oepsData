@@ -1,3 +1,17 @@
+#' Read OEPS data documentation
+#'
+#' `oeps_dictionary` returns the data dictionary for OEPS data at a given 
+#' geographic scale. 
+#' 
+#' @param scale String specifying which geographic scale to pull variables for. 
+#'   Must be one of "tract", "zcta", "county", or "state".
+#'
+#' @returns A tibble cotnaining the data dictionary.
+#' 
+#' @examples
+#' tract_dictionary <- oeps_dictionary('tract')
+#' View(tract_dictionary) # for optimal viewing experience
+#' 
 #' @export
 oeps_dictionary <- function(scale) {
   stopifnot(grepl("state|county|counties|tract|zcta", scale, ignore.case=TRUE))

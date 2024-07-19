@@ -43,6 +43,7 @@ load_oeps <- function(scale, year, themes='All', geometry=FALSE) {
   attribute_data <- eval(parse(text=make_file_name(scale, year)))
   attribute_data <- filter_by_themes(attribute_data, scale, themes)
   
+  # TODO: Fix warning so it can actually trigger.
   if (ncol(attribute_data) == 0) {
     warning('No variables satisfy specified scale, year, and theme combination.')
   }
@@ -86,12 +87,13 @@ filter_by_themes <- function(attribute_data, scale, themes) {
   
   # always grab geography variables, which are merge keys
   if (!any(grepl('geography', themes, ignore.case=TRUE))) {
-    themes <- append(themes, 'geography')  
+    themes <- append(themes, 'geography')
   }
 
-  variable_has_theme <- grepl(paste(themes, collapse="|"), data_dictionary$Theme, ignore.case=TRUE)
-  variable_has_scale <- data_dictionary$geometry == scale
-  themes_key <- data_dictionary[variable_has_scale & variable_has_theme,]
+  correct_theme <- grepl(paste(themes, collapse="|"), data_dictionary$Theme, 
+                              ignore.case=TRUE)
+  correct_scale <- data_dictionary$geometry == scale
+  themes_key <- data_dictionary[correct_theme & correct_scale,]
   
   variable_subset <- names(attribute_data)[names(attribute_data) %in% themes_key[['Variable']]]
 
