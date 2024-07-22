@@ -4,7 +4,15 @@
 \alias{load_oeps}
 \title{Load OEPS data}
 \usage{
-load_oeps(scale, year, themes = "All", tidy = FALSE, geometry = FALSE)
+load_oeps(
+  scale,
+  year,
+  themes = "All",
+  states = NULL,
+  counties = NULL,
+  tidy = FALSE,
+  geometry = FALSE
+)
 }
 \arguments{
 \item{scale}{String specifying which geographic scale to pull variables for.
@@ -17,25 +25,31 @@ Must be one of "1980", "1990", "2000", "2010", or "Latest".}
 themes to pull variables for. Valid themes are "Geography", "Social", "Environment",
 "Economic", "Outcome", "Policy", "Composite", or "All". Defaults to "All".}
 
+\item{states}{String or vector of strings specifying which states to pull data for.
+Should be FIPS codes.}
+
+\item{counties}{String or vector of strings specifying which counties to pull data for.
+Should be in FIPS codes, and is invalid if scale is states.}
+
 \item{tidy}{Boolean specifying whether to return data in tidy format. Defaults False.}
 
 \item{geometry}{Boolean specifying whether to pull geometries for the dataset
 TRUE or not FALSE. Defaults FALSE.}
 }
 \value{
-A tibble containing the requested variables. Always exports merge keys.
+If geometry is FALSE, a tibble containing the requested variables.
+If geometry is TRUE, returns a simple feature collection.
 }
 \description{
 \code{load_oeps} packages opioid environment policy scan data with given geographic
 scale, year, and themes. Can also pull geometries.
 }
 \examples{
-load_oeps("tract", 2010, geometry = TRUE)
-load_oeps("county", "latest", themes = "social")
+tracts_2010 <- load_oeps("tract", 2010, geometry = TRUE)
+county_latest <- load_oeps("county", "latest", themes = "social")
 
 # themes can also be a list of options
-load_oeps("zcta", "latest", c("composite", "economic"))
-
+zcta_latest <- load_oeps("zcta", "latest", c("composite", "economic"))
 }
 \seealso{
 \code{\link[=load_oeps_dictionary]{load_oeps_dictionary()}}, which loads a basic data dictionary

@@ -19,6 +19,5 @@ geographic scale.
 }
 \examples{
 tract_dictionary <- load_oeps_dictionary("tract")
-View(tract_dictionary) # for optimal viewing experience
 
 }
