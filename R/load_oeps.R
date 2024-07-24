@@ -29,15 +29,18 @@
 #'
 #' # themes can also be a list of options
 #' zcta_latest <- load_oeps("zcta", "latest", c("composite", "economic"))
+#' 
 #' @import sf
 #' @export
-load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL, tidy=FALSE, geometry=FALSE) {
-
-  valid_themes <- data_dictionary[["Theme"]] |>
-    unique() |>
-    append("all") |>
-    paste(collapse = "|")
-
+load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL, 
+                      tidy=FALSE, geometry=FALSE) {
+  # TODO: implement cacheing
+  # TODO: implement cartographic boundaries
+  # TODO: determine what is needed to migrate to BQ
+  
+  valid_themes <- append(unique(data_dictionary[["Theme"]]), "all")
+  valid_themes <- paste(valid_themes, collapse="|")
+  
   stopifnot(
     grepl("state|tract|county|zcta|counties", scale, ignore.case = T),
     grepl("1980|1990|2000|2010|latest", year, ignore.case = T),
@@ -47,10 +50,9 @@ load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL, t
 
   scale <- standardize_scale(scale)
 
-  attribute_data <- parse(text = make_object_name(scale, year)) |>
-    eval() |>
-    filter_by_themes(themes)
-  
+  attribute_data <- eval(parse(text = make_object_name(scale, year)))
+  attribute_data <- filter_by_themes(themes)
+
   if (tidy) attribute_data <- tidify_data(attribute_data)
   if (!is.null(states)) attribute_data <- filter_by_state(attribute_data, states)
   if (!is.null(counties)) attribute_data <- filter_by_county(attribute_data, counties)
@@ -66,10 +68,15 @@ load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL, t
   return(sf::st_sf(data))
 }
 
-# Filter by theme
-#
-# Takes user defined list of themes and references data dictionary to
-# filter down to only variables within that list as well as geography variables.
+#' Filter by theme
+#'
+#' Takes user defined list of themes and references data dictionary to
+#' filter down to only variables within that list as well as geography variables.
+#' 
+#' @param attribute_data data.frame containing the attribute data to filter on.
+#' @param themes List of themes to filter out.
+#'
+#' @returns Filtered data.frame.
 filter_by_themes <- function(attribute_data, themes) {
   if (any(grepl("all", themes, ignore.case = TRUE))) {
     return(attribute_data)
