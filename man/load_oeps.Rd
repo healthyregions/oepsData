@@ -11,7 +11,8 @@ load_oeps(
   states = NULL,
   counties = NULL,
   tidy = FALSE,
-  geometry = FALSE
+  geometry = FALSE,
+  cache = TRUE
 )
 }
 \arguments{
@@ -35,6 +36,11 @@ Should be in FIPS codes, and is invalid if scale is states.}
 
 \item{geometry}{Boolean specifying whether to pull geometries for the dataset
 TRUE or not FALSE. Defaults FALSE.}
+
+\item{cache}{Boolean specifying whether to use/create cached geometries (TRUE)
+or to pull new geometries (FALSE). Ignored if geometry is FALSE.
+To overwrite cached geometries, call \code{\link[=clear_cache]{clear_cache()}} followed by
+\code{\link[=cache_geometries]{cache_geometries()}}.}
 }
 \value{
 If geometry is FALSE, a tibble containing the requested variables.
@@ -50,6 +56,7 @@ county_latest <- load_oeps("county", "latest", themes = "social")
 
 # themes can also be a list of options
 zcta_latest <- load_oeps("zcta", "latest", c("composite", "economic"))
+
 }
 \seealso{
 \code{\link[=load_oeps_dictionary]{load_oeps_dictionary()}}, which loads a basic data dictionary

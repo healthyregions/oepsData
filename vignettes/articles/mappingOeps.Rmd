@@ -13,6 +13,12 @@ knitr::opts_chunk$set(
 library(oepsData)
 ```
 
+```{r documentation}
+# 
+# ?load_oeps_dictionary
+# ?load_oeps
+```
+
 ```{r preview data}
 # See what data is available
 data_dictionary <- load_oeps_dictionary(scale='tract')
@@ -24,9 +30,9 @@ data_dictionary
 cook_county_2010 <- load_oeps(
   scale='tract', 
   year='2010', 
-  theme=c('social', 'economic'), 
+  themes=c('social', 'economic'), 
   states='17', 
-  counties='031', 
+  counties='031',
   geometry=T)
 
 # Preview what we got
@@ -49,7 +55,7 @@ chicago_metro_2010 <- load_oeps(
   scale='tract', 
   year='2010', 
   theme=c('social', 'economic'), 
-  counties=c('17031', '18089'), 
+  counties=c('17031', '18089'),
   geometry=T)
 
 # Preview what we got
