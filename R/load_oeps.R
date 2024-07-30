@@ -17,6 +17,10 @@
 #' @param tidy Boolean specifying whether to return data in tidy format. Defaults False.
 #' @param geometry Boolean specifying whether to pull geometries for the dataset
 #'   TRUE or not FALSE. Defaults FALSE.
+#' @param cache Boolean specifying whether to use/create cached geometries (TRUE)
+#' or to pull new geometries (FALSE). Ignored if geometry is FALSE. 
+#' To overwrite cached geometries, call [clear_cache()] followed by 
+#' [cache_geometries()].
 #'
 #' @returns If geometry is FALSE, a tibble containing the requested variables. 
 #' If geometry is TRUE, returns a simple feature collection.
@@ -33,8 +37,8 @@
 #' @import sf
 #' @export
 load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL, 
-                      tidy=FALSE, geometry=FALSE) {
-  # TODO: implement cacheing
+                      tidy=FALSE, geometry=FALSE, cache=TRUE) {
+
   # TODO: implement cartographic boundaries
   # TODO: determine what is needed to migrate to BQ
   
@@ -45,13 +49,13 @@ load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL,
     grepl("state|tract|county|zcta|counties", scale, ignore.case = T),
     grepl("1980|1990|2000|2010|latest", year, ignore.case = T),
     all(grepl(valid_themes[[1]], themes, ignore.case = T)),
-    xor(!is.null(counties), grepl("state", scale, ignore.case=T))
+    (is.null(counties) & is.null(states)) | xor(!is.null(counties), grepl("state", scale, ignore.case=T))
   )
 
   scale <- standardize_scale(scale)
 
   attribute_data <- eval(parse(text = make_object_name(scale, year)))
-  attribute_data <- filter_by_themes(themes)
+  attribute_data <- filter_by_themes(attribute_data, themes)
 
   if (tidy) attribute_data <- tidify_data(attribute_data)
   if (!is.null(states)) attribute_data <- filter_by_state(attribute_data, states)
@@ -92,7 +96,7 @@ filter_by_themes <- function(attribute_data, themes) {
   variable_subset <- names(attribute_data)[names(attribute_data) %in% return_variables]
 
   if (all(variable_subset %in% merge_keys())) {
-    warning("No variables satisfy specified scale, year, and theme combination.")
+    warning("No OEPS variables satisfy specified scale, year, and theme combination.")
   }
   
   return(attribute_data[variable_subset])
