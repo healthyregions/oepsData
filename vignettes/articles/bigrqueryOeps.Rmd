@@ -1,0 +1,93 @@
+---
+title: "OEPS BigQuery"
+output: html_notebook
+author: "Ashlynn Wimer"
+date: "7/29/2024"
+---
+
+Opioid Environment Policy Scan data is available on Google BigQuery. In this notebook, we'll go over how to interact with the data using either the `oepsData` package or `bigrquery`, depending on user preference. We assume readers know basic SQL; for users unfamiliar with SQL, we recommend consulting [insert resource here]. Lastly, readers who are already familiar with Google BigQuery will likely want to skip to [Make a Query](#querying) for a basic overview of the OEPS BigQuery datasets and link to the data schema.
+
+### Setting up BigQuery
+
+When making queries against a BigQuery dataset, we do not directly query the dataset. Instead, we connect to a BigQuery profile and submit a job, which tells the profile to make the query in our stead and return the data. You can think of this like connecting to another computer to middleman the exchange.
+
+[insert image here]
+
+The setup  allows users to work with multiple BigQuery datasets within a single hub, and also allows for billing to be separated so that data providers only pay to store the data instead of also paying for all pulls against their data.
+
+[insert another image here]
+
+To enable BigQuery, sign into a Google account on your browser of choice before navigating to [this link](https://console.cloud.google.com/marketplace/product/google/bigquery.googleapis.com?hl=en&returnUrl=%252Fbigquery). 
+
+[insert image of enable button maybe]
+
+Once BigQuery is enabled, you'll be taken to the BigQuery studio page. This page is a hub for BigQuery interaction on the cloud, and technically a place that you test out SQL queries and manage connections to databases from. In the BigQuery diagram, it's the computer on the cloud that you submit jobs to. 
+
+For our purposes, we're interested in the resources under the explorer. By default, Google creates a default resource by mashing together random words and numbers; the default resource on our tutorial account is "prismatic-sunup-430917-s6", but yours likely differs dramatically. You can either continue using this project, or create a new resource entirely through the `+ ADD` button at the top of the Explorer pane.
+
+Whichever route you take, we need to store the name of your bigquery project in a variable for use:
+
+```{r bigquery project name}
+bq_project <- "prismatic-sunup-430917-s6" # replace this with your project name!
+```
+
+### Make a Query {#query}
+
+Now that we've enabled bigquery on our account, we can use bigquery to query OEPS.
+
+To do this, we need to back up and look at the OEPS project at a broader level. Currently, the OEPS data warehouse on BigQuery is named `oeps-391119`, and is divided into two datasets: `tabular` and `spatial`. The `tabular` dataset consists of 16 tables of attribute data at the state, county, tract, and ZCTA scales from 1980 to 2020. The `spatial` dataset contains the 2010 TIGER/Line geometries for each of these scales. The primary key for the datasets are `HEROP_ID`. A full dataset schema can be found on the OEPS BigQuery reference [linked here](https://github.com/healthyregions/oeps/blob/23_update_explorer/docs/BQ-Reference.md).
+
+[TODO: put a a diagram here].
+
+SQL queries can be made to pull data tables from the OEPS data warehouse. Data tables need to be referred to in three part strings specifying their data warehouse, dataset, and table name. For example, to pull the `HEROP_ID` variable from table `C_1980` in the `tabular` dataset of `oeps-391119`, our SQL query would be:
+
+```{r example sql query}
+sql <- 'SELECT HEROP_ID, TotPop FROM oeps-391119.tabular.C_1980'
+```
+
+We can pull this data from OEPS in one of two ways. First, we can use `oepsData::query_oeps_bigquery`:
+
+```{r basic query, message=FALSE, warning=FALSE}
+results <- oepsData::query_oeps_bigquery(bq_project, query=sql)
+
+head(results)
+```
+
+Or we can use `bigrquery` functions directly: 
+
+```{r bigrquery, warning=FALSE, message=FALSE}
+
+# Submit a job to grab the data
+tb <- bigrquery::bq_project_query(bq_project, sql)
+
+# Download the results of that query to our system
+results <- bigrquery::bq_table_download(tb)
+
+
+head(results)
+```
+
+The first time you make a pull with either method, you will be prompted to authenticate. We recommend using in browser authentication and giving permissions to the Tidyverse API to interact with the Google account you used to create your BigQuery instance, but other methods can be found in the Google documentation [here](https://cloud.google.com/bigquery/docs/authentication).
+
+We can also make queries which join across the two datasets:
+
+```{r joining across datasets}
+# TODO: make a github issue about this on `bigrquery` --
+sql <- 'SELECT C_1980.HEROP_ID, C_1980.TotPop, counties2010.name 
+          FROM oeps-391119.tabular.C_1980
+        INNER JOIN oeps-391119.spatial.counties2010 
+          ON C_1980.HEROP_ID=counties2010.HEROP_ID LIMIT 1000'
+
+sql <- 'SELECT * FROM oeps-391119.spatial.counties2010'
+
+# Method 1
+#results <- oepsData::query_oeps_bigquery(bq_project, query=sql)
+
+# Method 2
+tb <- bigrquery::bq_project_query(bq_project, sql)
+results <- bigrquery::bq_table_download(tb)
+
+head(results)
+```
+
+
