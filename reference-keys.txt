@@ -1,0 +1,9 @@
+prerequisites
+mapping-the-risk-environment-with-oepsdata
+getting-oeps-data-from-bigquery
+setting-up-bigquery
+query
+low-level
+a-full-low-level-pipeline
+dplyr
+a-full-dplyr-pipeline
