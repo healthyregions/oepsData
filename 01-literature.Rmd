@@ -7,11 +7,13 @@ To get a better sense of how this package can be used, let's walk through a quic
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
 ```
 
 ```{r load oeps}
+devtools::install_github('https://github.com/healthyregions/oepsData')
 library(oepsData)
 ```
 
