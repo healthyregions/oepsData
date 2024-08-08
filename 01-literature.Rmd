@@ -1,0 +1,88 @@
+# Mapping the risk environment with oepsData
+
+`oepsData` is a package created to help interact more easily with the opioid risk environment data within OEPS. The main package offerings come in the form of two functions: `load_oeps_dictionary`, which loads a basic data dictionary; and `load_oeps`, which loads OEPS data. 
+
+To get a better sense of how this package can be used, let's walk through a quick and dirty spatial investigation of poverty and working age population in Chicago.
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r load oeps}
+library(oepsData)
+```
+
+```{r documentation, include=FALSE}
+# 
+# ?load_oeps_dictionary
+# ?load_oeps
+```
+
+Let's start by previewing OEPS, and seeing what data is available. As alluded above, we do this through `load_oeps_dictionary`. The function itself takes one required argument, `scale`, which is just the spatial scale we're interested in observing. While state, county, ZCTA, and tract level data are all available, only tract level is relevant for our analysis.
+
+```{r preview data}
+# See what data is available
+data_dictionary <- load_oeps_dictionary(scale='tract')
+
+# if working in RStudio, we recommend:
+# View(data_dictionary)
+
+data_dictionary
+```
+
+Based on the data dictionary, we can see that we have two variables of interest -- `Age18_64` and `PovP`. Both variables are available at multiple time periods, and they belong to different themes -- social and economic, respectively. 
+
+Let's pull the data using `load_oeps`. We're technically only required to provide `scale` and `year`, but we provide additional information so that we only grab the data we need.
+
+Notably, in this example we're referring to states and counties by their FIPS codes. Illinois' has a FIPS of 17, while Cook County has a FIPS of 031. Additionally, we're retreiving the geometry files with this pull.
+
+```{r}
+# Grab the data
+cook_county_2010 <- load_oeps(
+  scale='tract', 
+  year='2010', 
+  themes=c('social', 'economic'), 
+  states='17', 
+  counties='031',
+  geometry=T)
+
+# Preview what we got
+head(data.frame(cook_county_2010))
+```
+
+```{r}
+library(tmap)
+
+tm_shape(cook_county_2010) + 
+  tm_fill(c('Age18_64', 'PovP'), 
+          title = c('Working Age', 'Poverty\nPercentage'),
+          style = c('sd', 'sd'),
+          palette = 'BrBG') + 
+  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE, main.title = 'Fewer workers correlates with higher poverty in Cook')
+```
+
+```{r}
+# Grab the data
+chicago_metro_2010 <- load_oeps(
+  scale='tract', 
+  year='2010', 
+  theme=c('social', 'economic'), 
+  counties=c('17031', '18089'),
+  geometry=T)
+
+# Preview what we got
+head(data.frame(cook_county_2010))
+```
+
+```{r}
+library(tmap)
+tm_shape(chicago_metro_2010) + 
+  tm_fill(c('Age18_64', 'PovP'), 
+          title = c('Working Age', 'Poverty\nPercentage'),
+          style = c('sd', 'sd'),
+          palette = 'BrBG') + 
+  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE, main.title = 'Fewer workers correlates with higher poverty near Chi')
+```
