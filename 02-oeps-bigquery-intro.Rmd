@@ -2,6 +2,14 @@
 
 Opioid Environment Policy Scan data is available on Google BigQuery. In this notebook, we'll go over how to interact with the data using `bigrquery`. We go over two of the `bigrquery` APIs -- one for readers familiar with SQL, and one for readers who want to avoid SQL. Lastly, readers who are already familiar with Google BigQuery will likely want to skip to [Make a Query](#querying).
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE
+)
+```
+
 ## Setting up BigQuery
 
 When making queries against a BigQuery dataset, we do not directly query the dataset. Instead, we connect to a BigQuery profile and submit a job, which tells the profile to make the query in our stead and return the data. You can think of this like connecting to another computer to middleman the exchange.
