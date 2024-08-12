@@ -3,3 +3,7 @@
 ^data-raw$
 ^LICENSE\.md$
 ^vignettes/articles$
+_book
+_bookdown_files
+bookdown-demo_files
+packages.bib

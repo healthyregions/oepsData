@@ -48,3 +48,8 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 .Rproj.user
+
+# Bookdown
+__book*
+bookdown-demo_files
+packages.bib
