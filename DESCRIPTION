@@ -26,6 +26,7 @@ Depends:
 Imports: 
     sf (>= 1.0),
     R.cache (>= 0.16.0),
-    rappdirs (>= 0.3.3)
+    rappdirs (>= 0.3.3),
+    data.table (>= 1.0.0)
 LazyData: true
 Config/Needs/website: rmarkdown

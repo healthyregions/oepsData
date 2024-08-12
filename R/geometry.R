@@ -95,7 +95,7 @@ retrieve_geometry_from_url <- function(scale, quiet = FALSE) {
 #' @export
 cache_geometries <- function(scales='all') {
 
-  if (!all(grepl("state|tract|county|zcta|counties|all", scale, ignore.case = TRUE))) {
+  if (!all(grepl("state|tract|county|zcta|all", scales, ignore.case = TRUE))) {
     stop('Input scale must be one of "state", "tract", "county", "zcta", or "all"')
   }
 
@@ -105,14 +105,16 @@ cache_geometries <- function(scales='all') {
 
   geoms <- lapply(scales,
                   function(scale) {
-                    print(paste("Retrieving", scale, "level geometries..."))
-                    retrieve_geometry_from_url(scale)
+                    message(paste("Retrieving", scale, "level geometries..."))
+                    retrieve_geometry_from_url(scale, quiet=TRUE)
                     }
                   )
 
-  file_names <- lapply(get_cached_geometry_name, scale)
+  file_names <- lapply(X=scales, FUN=get_cached_geometry_name)
 
-  mapply(cache_file, geoms, file_names)
+  mapply(FUN=cache_file, geoms, file_names)
+
+  return(invisible(NULL))
 }
 
 #' Cached geometry name
