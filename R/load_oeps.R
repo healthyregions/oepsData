@@ -122,7 +122,7 @@ get_attribute_table <- function(scale, year, cache=FALSE) {
   if (cache) {
     cache_file(attribute_table, table_name)
   }
-  return(attribute_table)
+  return(data.frame(attribute_table))
 }
 
 #' Filter by theme

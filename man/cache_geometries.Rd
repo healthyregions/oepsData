@@ -7,7 +7,7 @@
 cache_geometries(scales = "all")
 }
 \arguments{
-\item{scales}{Or list of strings specifying which geometries to cache.
+\item{scales}{String or list of strings specifying which geometries to cache.
 Must be one of "state", "tract", "county", "zcta" or "all". Defaults to "all."}
 }
 \description{

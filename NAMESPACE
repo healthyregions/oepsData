@@ -2,6 +2,7 @@
 
 export(cache_dir)
 export(cache_geometries)
+export(cache_oeps_tables)
 export(clear_cache)
 export(load_oeps)
 export(load_oeps_dictionary)
