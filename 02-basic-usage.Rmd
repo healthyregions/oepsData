@@ -36,10 +36,17 @@ head(data.frame(states_1990))
 
 Which lets us operate on the data as we desire. For instance, we can make a simple map:
 
-```{r}
+```{r, include=FALSE}
+install.packages('tmap')
+install.packages('sf')
+```
 
-# reproject to a better, albeit imperfect, display CRS
-states_1990 <- sf::st_transform(states_1990, "ESRI:102004")
+```{r}
+library(tmap)
+library(sf)
+
+# reproject to a better display CRS
+states_1990 <- st_transform(states_1990, "ESRI:102004")
 
 tm_shape(states_1990) + 
   tm_fill("NoHsP", style="jenks") +

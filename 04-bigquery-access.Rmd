@@ -10,6 +10,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r, include=FALSE}
+install.packages('bigrquery')
+install.packages('dplyr')
+install.packages('DBI')
+```
+
+
 ## Setting up BigQuery
 
 When making queries against a BigQuery dataset, we do not directly query the dataset. Instead, we connect to a BigQuery profile and submit a job, which tells the profile to make the query in our stead and return the data. You can think of this like connecting to another computer to middleman the exchange.
