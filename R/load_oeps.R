@@ -20,7 +20,7 @@
 #' @param cache Boolean specifying whether to use/create cached geometries and
 #' attribute data (TRUE) or to pull fresh geometry and attribute data (FALSE).
 #' To update cached geometries and data, call [clear_cache()] followed by
-#' one of [cache_geometries()], or [cache_all()].
+#' one of [cache_geometries()], or [cache_oeps_tables()].
 #'
 #' @returns If geometry is FALSE, a tibble containing the requested variables.
 #' If geometry is TRUE, returns a simple feature collection.
@@ -113,16 +113,17 @@ get_attribute_table <- function(scale, year, cache=FALSE) {
 
   can_retrieve_from_cache <- cache & file.exists(file.path(cache_dir(), table_name))
   if (can_retrieve_from_cache) {
-    return (data.table::fread(file.path(cache_dir(), table_name)))
+    attribute_table <- data.frame(data.table::fread(file.path(cache_dir(), table_name)))
+    return (attribute_table)
   }
 
   url <- paste0(BASE_URL, '/', table_name)
-  attribute_table <- data.table::fread(url)
+  attribute_table <- data.frame(data.table::fread(url))
 
   if (cache) {
     cache_file(attribute_table, table_name)
   }
-  return(data.frame(attribute_table))
+  return(attribute_table)
 }
 
 #' Filter by theme

@@ -40,7 +40,7 @@ TRUE or not FALSE. Defaults FALSE.}
 \item{cache}{Boolean specifying whether to use/create cached geometries and
 attribute data (TRUE) or to pull fresh geometry and attribute data (FALSE).
 To update cached geometries and data, call \code{\link[=clear_cache]{clear_cache()}} followed by
-one of \code{\link[=cache_geometries]{cache_geometries()}}, or \code{\link[=cache_all]{cache_all()}}.}
+one of \code{\link[=cache_geometries]{cache_geometries()}}, or \code{\link[=cache_oeps_tables]{cache_oeps_tables()}}.}
 }
 \value{
 If geometry is FALSE, a tibble containing the requested variables.
