@@ -22,7 +22,7 @@ data_dictionary <- load_oeps_dictionary(scale='tract')
 # if working in RStudio, we recommend:
 # View(data_dictionary)
 
-head(data_dictionary)
+View(data_dictionary)
 ```
 
 Based on the data dictionary, we can see that we have two variables of interest -- `Age18_64` and `PovP`. Both variables are available at multiple time periods, and they belong to different themes -- social and economic, respectively.
