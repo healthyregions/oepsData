@@ -20,7 +20,7 @@ data_dictionary <- load_oeps_dictionary(scale="state")
 # View(data_dictionary)
 
 # as we're in a bookdown, we just preview it simply:
-View(data_dictionary)
+data_dictionary
 ```
 
 We might find that we're interested in the 1990 state data. We can load that data and its geometries using `load_oeps`.
