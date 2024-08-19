@@ -1,6 +1,6 @@
-# Mapping the risk environment with oepsData
+# Basic Usage
 
-`oepsData` is a package created to help interact more easily with the opioid risk environment data within OEPS. The main package offerings come in the form of two functions: `load_oeps_dictionary`, which loads a basic data dictionary; and `load_oeps`, which loads OEPS data. 
+`oepsData` is centered around two functions: `load_oeps_dictionary`, which loads a basic data dictionary; and `load_oeps`, which directly loads OEPS data. 
 
 To get a better sense of how this package can be used, let's walk through a quick and dirty spatial investigation of poverty and working age population in Chicago.
 
@@ -15,12 +15,6 @@ knitr::opts_chunk$set(
 ```{r load oeps}
 devtools::install_github('https://github.com/healthyregions/oepsData')
 library(oepsData)
-```
-
-```{r documentation, include=FALSE}
-# 
-# ?load_oeps_dictionary
-# ?load_oeps
 ```
 
 Let's start by previewing OEPS, and seeing what data is available. As alluded above, we do this through `load_oeps_dictionary`. The function itself takes one required argument, `scale`, which is just the spatial scale we're interested in observing. While state, county, ZCTA, and tract level data are all available, only tract level is relevant for our analysis.

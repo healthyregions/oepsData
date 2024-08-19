@@ -1,0 +1,15 @@
+# Getting started
+
+Installing `oepsData` is easy. Just run the following command to grab the newest release from GitHub.
+
+```{r how to install}
+devtools::install_github('https://github.com/healthyregions/oepsData')
+```
+
+You can then load the package like any other R package:
+
+```{r}
+library(oepsData)
+```
+
+Efforts are currently under way to list the package on CRAN.
