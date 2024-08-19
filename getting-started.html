@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | oepsData Package Documentation</title>
+  <title>Chapter 2 Getting started | oepsData Package Documentation</title>
   <meta name="description" content="This is a short bookdown explaining how to access OEPS data through R and showing off a few potential uses." />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | oepsData Package Documentation" />
+  <meta property="og:title" content="Chapter 2 Getting started | oepsData Package Documentation" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is a short bookdown explaining how to access OEPS data through R and showing off a few potential uses." />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | oepsData Package Documentation" />
+  <meta name="twitter:title" content="Chapter 2 Getting started | oepsData Package Documentation" />
   
   <meta name="twitter:description" content="This is a short bookdown explaining how to access OEPS data through R and showing off a few potential uses." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="index.html"/>
+<link rel="next" href="basic-usage.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -178,19 +178,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="getting-started" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Getting started<a href="getting-started.html#getting-started" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Installing <code>oepsData</code> is easy. Just run the following command to grab the newest release from GitHub.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="getting-started.html#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&#39;devtools&#39;</span>)</span></code></pre></div>
+<pre><code>## Installing package into &#39;/Users/runner/work/_temp/Library&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre><code>## also installing the dependencies &#39;Rcpp&#39;, &#39;utf8&#39;, &#39;askpass&#39;, &#39;credentials&#39;, &#39;sys&#39;, &#39;zip&#39;, &#39;gitcreds&#39;, &#39;ini&#39;, &#39;httpuv&#39;, &#39;xtable&#39;, &#39;sourcetools&#39;, &#39;later&#39;, &#39;promises&#39;, &#39;fansi&#39;, &#39;systemfonts&#39;, &#39;textshaping&#39;, &#39;pillar&#39;, &#39;pkgconfig&#39;, &#39;diffobj&#39;, &#39;rematch2&#39;, &#39;clipr&#39;, &#39;crayon&#39;, &#39;curl&#39;, &#39;gert&#39;, &#39;gh&#39;, &#39;purrr&#39;, &#39;rprojroot&#39;, &#39;rstudioapi&#39;, &#39;whisker&#39;, &#39;shiny&#39;, &#39;callr&#39;, &#39;processx&#39;, &#39;downlit&#39;, &#39;httr2&#39;, &#39;openssl&#39;, &#39;ragg&#39;, &#39;tibble&#39;, &#39;xml2&#39;, &#39;htmlwidgets&#39;, &#39;stringr&#39;, &#39;vctrs&#39;, &#39;prettyunits&#39;, &#39;xopen&#39;, &#39;brew&#39;, &#39;commonmark&#39;, &#39;stringi&#39;, &#39;cpp11&#39;, &#39;brio&#39;, &#39;magrittr&#39;, &#39;praise&#39;, &#39;ps&#39;, &#39;waldo&#39;, &#39;usethis&#39;, &#39;desc&#39;, &#39;ellipsis&#39;, &#39;miniUI&#39;, &#39;pkgbuild&#39;, &#39;pkgdown&#39;, &#39;pkgload&#39;, &#39;profvis&#39;, &#39;rcmdcheck&#39;, &#39;remotes&#39;, &#39;roxygen2&#39;, &#39;rversions&#39;, &#39;sessioninfo&#39;, &#39;testthat&#39;, &#39;urlchecker&#39;, &#39;withr&#39;</code></pre>
+<pre><code>## 
+## The downloaded binary packages are in
+##  /var/folders/hw/1f0gcr8d6kn9ms0_wn0_57qc0000gn/T//RtmpaJz1jJ/downloaded_packages</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="getting-started.html#cb5-1" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&#39;https://github.com/healthyregions/oepsData&#39;</span>)</span></code></pre></div>
+<pre><code>## Using github PAT from envvar GITHUB_PAT. Use `gitcreds::gitcreds_set()` and unset GITHUB_PAT in .Renviron (or elsewhere) if you want to use the more secure git credential store instead.</code></pre>
+<pre><code>## Downloading GitHub repo healthyregions/oepsData@HEAD</code></pre>
+<pre><code>## R.methodsS3 (NA     -&gt; 1.8.2 ) [CRAN]
+## R.oo        (NA     -&gt; 1.26.0) [CRAN]
+## wk          (NA     -&gt; 0.9.2 ) [CRAN]
+## proxy       (NA     -&gt; 0.4-27) [CRAN]
+## e1071       (NA     -&gt; 1.7-14) [CRAN]
+## digest      (0.6.36 -&gt; 0.6.37) [CRAN]
+## R.utils     (NA     -&gt; 2.12.3) [CRAN]
+## units       (NA     -&gt; 0.8-5 ) [CRAN]
+## s2          (NA     -&gt; 1.1.7 ) [CRAN]
+## DBI         (NA     -&gt; 1.2.3 ) [CRAN]
+## classInt    (NA     -&gt; 0.4-10) [CRAN]
+## data.table  (NA     -&gt; 1.15.4) [CRAN]
+## R.cache     (NA     -&gt; 0.16.0) [CRAN]
+## sf          (NA     -&gt; 1.0-16) [CRAN]</code></pre>
+<pre><code>## Installing 14 packages: R.methodsS3, R.oo, wk, proxy, e1071, digest, R.utils, units, s2, DBI, classInt, data.table, R.cache, sf</code></pre>
+<pre><code>## Installing packages into &#39;/Users/runner/work/_temp/Library&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre><code>## 
+## The downloaded binary packages are in
+##  /var/folders/hw/1f0gcr8d6kn9ms0_wn0_57qc0000gn/T//RtmpaJz1jJ/downloaded_packages
+## ── R CMD build ─────────────────────────────────────────────────────────────────
+## * checking for file ‘/private/var/folders/hw/1f0gcr8d6kn9ms0_wn0_57qc0000gn/T/RtmpaJz1jJ/remotes134c13ef80e6/healthyregions-oepsData-3e4ba05/DESCRIPTION’ ... OK
+## * preparing ‘oepsData’:
+## * checking DESCRIPTION meta-information ... OK
+## * checking for LF line-endings in source and make files and shell scripts
+## * checking for empty or unneeded directories
+## Removed empty directory ‘oepsData/vignettes’
+## * building ‘oepsData_0.0.0.9000.tar.gz’</code></pre>
+<pre><code>## Installing package into &#39;/Users/runner/work/_temp/Library&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<p>You can then load the package like any other R package:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="getting-started.html#cb13-1" tabindex="-1"></a><span class="fu">library</span>(oepsData)</span></code></pre></div>
+<p>Efforts are currently under way to list the package on CRAN.</p>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="basic-usage.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -221,7 +263,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/%s",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-getting-started.Rmd",
 "text": "Edit"
 },
 "history": {

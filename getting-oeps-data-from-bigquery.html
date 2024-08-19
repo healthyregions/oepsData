@@ -4,33 +4,31 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Getting OEPS Data from BigQuery | A Minimal Book Example</title>
-  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <title>Chapter 5 Getting OEPS Data from BigQuery | oepsData Package Documentation</title>
+  <meta name="description" content="This is a short bookdown explaining how to access OEPS data through R and showing off a few potential uses." />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Getting OEPS Data from BigQuery | A Minimal Book Example" />
+  <meta property="og:title" content="Chapter 5 Getting OEPS Data from BigQuery | oepsData Package Documentation" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta property="og:description" content="This is a short bookdown explaining how to access OEPS data through R and showing off a few potential uses." />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Getting OEPS Data from BigQuery | A Minimal Book Example" />
+  <meta name="twitter:title" content="Chapter 5 Getting OEPS Data from BigQuery | oepsData Package Documentation" />
   
-  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:description" content="This is a short bookdown explaining how to access OEPS data through R and showing off a few potential uses." />
   
 
-<meta name="author" content="Yihui Xie" />
 
 
-<meta name="date" content="2024-08-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="mapping-the-risk-environment-with-oepsdata.html"/>
+<link rel="prev" href="example-uses.html"/>
 
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -49,25 +47,24 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,13 +84,13 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +103,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -141,13 +138,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
-<li class="chapter" data-level="2" data-path="mapping-the-risk-environment-with-oepsdata.html"><a href="mapping-the-risk-environment-with-oepsdata.html"><i class="fa fa-check"></i><b>2</b> Mapping the risk environment with oepsData</a></li>
-<li class="chapter" data-level="3" data-path="getting-oeps-data-from-bigquery.html"><a href="getting-oeps-data-from-bigquery.html"><i class="fa fa-check"></i><b>3</b> Getting OEPS Data from BigQuery</a><ul>
-<li class="chapter" data-level="3.1" data-path="getting-oeps-data-from-bigquery.html"><a href="getting-oeps-data-from-bigquery.html#setting-up-bigquery"><i class="fa fa-check"></i><b>3.1</b> Setting up BigQuery</a></li>
-<li class="chapter" data-level="3.2" data-path="getting-oeps-data-from-bigquery.html"><a href="getting-oeps-data-from-bigquery.html#query"><i class="fa fa-check"></i><b>3.2</b> Making Queries</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="getting-oeps-data-from-bigquery.html"><a href="getting-oeps-data-from-bigquery.html#low-level"><i class="fa fa-check"></i><b>3.2.1</b> The low-level API</a></li>
-<li class="chapter" data-level="3.2.2" data-path="getting-oeps-data-from-bigquery.html"><a href="getting-oeps-data-from-bigquery.html#dplyr"><i class="fa fa-check"></i><b>3.2.2</b> The dplyr API</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>2</b> Getting started</a></li>
+<li class="chapter" data-level="3" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>3</b> Basic Usage</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="basic-usage.html"><a href="basic-usage.html#cacheing"><i class="fa fa-check"></i><b>3.1</b> Cacheing</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="example-uses.html"><a href="example-uses.html"><i class="fa fa-check"></i><b>4</b> Example uses</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="example-uses.html"><a href="example-uses.html#data-subsetting"><i class="fa fa-check"></i><b>4.1</b> Data subsetting</a></li>
+<li class="chapter" data-level="4.2" data-path="example-uses.html"><a href="example-uses.html#longitudinal-analysis"><i class="fa fa-check"></i><b>4.2</b> Longitudinal analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="getting-oeps-data-from-bigquery.html"><a href="getting-oeps-data-from-bigquery.html"><i class="fa fa-check"></i><b>5</b> Getting OEPS Data from BigQuery</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="getting-oeps-data-from-bigquery.html"><a href="getting-oeps-data-from-bigquery.html#setting-up-bigquery"><i class="fa fa-check"></i><b>5.1</b> Setting up BigQuery</a></li>
+<li class="chapter" data-level="5.2" data-path="getting-oeps-data-from-bigquery.html"><a href="getting-oeps-data-from-bigquery.html#query"><i class="fa fa-check"></i><b>5.2</b> Making Queries</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="getting-oeps-data-from-bigquery.html"><a href="getting-oeps-data-from-bigquery.html#low-level"><i class="fa fa-check"></i><b>5.2.1</b> The low-level API</a></li>
+<li class="chapter" data-level="5.2.2" data-path="getting-oeps-data-from-bigquery.html"><a href="getting-oeps-data-from-bigquery.html#dplyr"><i class="fa fa-check"></i><b>5.2.2</b> The dplyr API</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -162,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">oepsData Package Documentation</a>
           </h1>
         </div>
 
@@ -170,206 +178,208 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="getting-oeps-data-from-bigquery" class="section level1 hasAnchor">
-<h1><span class="header-section-number">Chapter 3</span> Getting OEPS Data from BigQuery<a href="getting-oeps-data-from-bigquery.html#getting-oeps-data-from-bigquery" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="getting-oeps-data-from-bigquery" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Getting OEPS Data from BigQuery<a href="getting-oeps-data-from-bigquery.html#getting-oeps-data-from-bigquery" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Opioid Environment Policy Scan data is available on Google BigQuery. In this notebook, we’ll go over how to interact with the data using <code>bigrquery</code>. We go over two of the <code>bigrquery</code> APIs – one for readers familiar with SQL, and one for readers who want to avoid SQL. Lastly, readers who are already familiar with Google BigQuery will likely want to skip to <a href="#querying">Make a Query</a>.</p>
-<div id="setting-up-bigquery" class="section level2 hasAnchor">
-<h2><span class="header-section-number">3.1</span> Setting up BigQuery<a href="getting-oeps-data-from-bigquery.html#setting-up-bigquery" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="setting-up-bigquery" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Setting up BigQuery<a href="getting-oeps-data-from-bigquery.html#setting-up-bigquery" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When making queries against a BigQuery dataset, we do not directly query the dataset. Instead, we connect to a BigQuery profile and submit a job, which tells the profile to make the query in our stead and return the data. You can think of this like connecting to another computer to middleman the exchange.</p>
+<p><img src="images/gc-structure.png" width="874" style="display: block; margin: auto;" /></p>
 <p>The setup allows users to work with multiple BigQuery datasets within a single profile, and also allows for billing to be separated so that data providers only pay to store the data instead of also paying for all usage of their data.</p>
 <p>To enable BigQuery, sign into a Google account on your browser of choice before navigating to <a href="https://console.cloud.google.com/marketplace/product/google/bigquery.googleapis.com?hl=en&amp;returnUrl=%252Fbigquery">this link</a>, where you will be prompted to “Enable BigQuery.” Do so to enable your account to access BigQuery and data through BigQuery.</p>
 <p>Once BigQuery is enabled, you’ll be taken to the BigQuery studio page. This page is a hub for BigQuery interaction on the cloud, and technically also a place from which you can test out SQL queries and manage connections to external databases. In the BigQuery diagram, it’s the computer on the cloud that you submit jobs to.</p>
 <p>For our purposes, we’re interested in the resources under the explorer. By default, Google creates a default resource by mashing together random words and numbers. You can proceed using this resource, or create a new, more memorably named resource through the “+ ADD” button at the top of the Explorer pane.</p>
 <p>Whichever route you take, we need to store the name of your BigQuery project in a variable for use. As it’s the project that gets billed for the queries, it’s conventional to refer to this project as “billing.”</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="getting-oeps-data-from-bigquery.html#cb8-1"></a>billing &lt;-<span class="st"> &quot;oeps-tutorial&quot;</span> <span class="co"># replace this with your project name!</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="getting-oeps-data-from-bigquery.html#cb22-1" tabindex="-1"></a>billing <span class="ot">&lt;-</span> <span class="st">&quot;oeps-tutorial&quot;</span> <span class="co"># replace this with your project name!</span></span></code></pre></div>
 <p>Lastly, we need to establish that we actually have permission to create jobs on the account we created. To do that, we can use <code>bigrquery::bq_auth()</code>, and then grant the Tidyverse API a few permissions on our Google Account. Note that this command will prompt you to open a new window in your browser.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="getting-oeps-data-from-bigquery.html#cb9-1"></a><span class="co"># Opens your browser to authenticate your account</span></span>
-<span id="cb9-2"><a href="getting-oeps-data-from-bigquery.html#cb9-2"></a>bigrquery<span class="op">::</span><span class="kw">bq_auth</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="getting-oeps-data-from-bigquery.html#cb23-1" tabindex="-1"></a><span class="co"># Opens your browser to authenticate your account</span></span>
+<span id="cb23-2"><a href="getting-oeps-data-from-bigquery.html#cb23-2" tabindex="-1"></a>bigrquery<span class="sc">::</span><span class="fu">bq_auth</span>()</span></code></pre></div>
 </div>
-<div id="query" class="section level2 hasAnchor">
-<h2><span class="header-section-number">3.2</span> Making Queries<a href="getting-oeps-data-from-bigquery.html#query" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="query" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Making Queries<a href="getting-oeps-data-from-bigquery.html#query" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now that we’ve enabled BigQuery on our account, we can use it to query the OEPS data on BigQuery.</p>
 <p>First, lets back up and look at the OEPS project at a broader level. Currently, the OEPS data warehouse on BigQuery is named <code>oeps-391119</code>, and is divided into two datasets: <code>tabular</code> and <code>spatial</code>. The <code>tabular</code> dataset consists of 16 tables of attribute data at the state, county, tract, and ZCTA scales from 1980 to 2020. The <code>spatial</code> dataset contains the 2010 TIGER/Line geometries for each of these scales. The primary key for the datasets are <code>HEROP_ID</code>. A full dataset schema can be found on the OEPS BigQuery reference <a href="https://github.com/healthyregions/oeps/blob/23_update_explorer/docs/BQ-Reference.md">linked here</a>.</p>
+<p><img src="images/oeps-structure.png" width="400" height="400" style="display: block; margin: auto;" /></p>
 <p>bigrquery offers three interfaces for interacting with BigQuery, but we introduce two here: the low-level API that uses SQL, and a higher level method using dplyr.</p>
-<div id="low-level" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.2.1</span> The low-level API<a href="getting-oeps-data-from-bigquery.html#low-level" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="low-level" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> The low-level API<a href="getting-oeps-data-from-bigquery.html#low-level" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The low-level API offers a series of methods that can be used to interact with <a href="https://cloud.google.com/bigquery/docs/reference/rest">BigQuery’s REST API</a>. While bigrquery offers quite a few commands, it’s usually sufficient to use two: <code>bq_project_query</code> and <code>bq_table_download</code>.</p>
 <p>Using these commands, we can create and submit SQL queries to pull data tables from the OEPS data warehouse:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="getting-oeps-data-from-bigquery.html#cb10-1"></a><span class="kw">library</span>(bigrquery)</span>
-<span id="cb10-2"><a href="getting-oeps-data-from-bigquery.html#cb10-2"></a></span>
-<span id="cb10-3"><a href="getting-oeps-data-from-bigquery.html#cb10-3"></a><span class="co"># Our query</span></span>
-<span id="cb10-4"><a href="getting-oeps-data-from-bigquery.html#cb10-4"></a>sql &lt;-<span class="st"> &#39;SELECT HEROP_ID, TotPop, PovP FROM oeps-391119.tabular.C_1990&#39;</span></span>
-<span id="cb10-5"><a href="getting-oeps-data-from-bigquery.html#cb10-5"></a></span>
-<span id="cb10-6"><a href="getting-oeps-data-from-bigquery.html#cb10-6"></a><span class="co"># Submit a job to grab the data</span></span>
-<span id="cb10-7"><a href="getting-oeps-data-from-bigquery.html#cb10-7"></a>tb &lt;-<span class="st"> </span><span class="kw">bq_project_query</span>(billing, <span class="dt">query=</span>sql)</span>
-<span id="cb10-8"><a href="getting-oeps-data-from-bigquery.html#cb10-8"></a><span class="co"># Download the results of that query to our system</span></span>
-<span id="cb10-9"><a href="getting-oeps-data-from-bigquery.html#cb10-9"></a>results &lt;-<span class="st"> </span><span class="kw">bq_table_download</span>(tb)</span>
-<span id="cb10-10"><a href="getting-oeps-data-from-bigquery.html#cb10-10"></a></span>
-<span id="cb10-11"><a href="getting-oeps-data-from-bigquery.html#cb10-11"></a><span class="kw">head</span>(results)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="getting-oeps-data-from-bigquery.html#cb24-1" tabindex="-1"></a><span class="fu">library</span>(bigrquery)</span>
+<span id="cb24-2"><a href="getting-oeps-data-from-bigquery.html#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="getting-oeps-data-from-bigquery.html#cb24-3" tabindex="-1"></a><span class="co"># Our query</span></span>
+<span id="cb24-4"><a href="getting-oeps-data-from-bigquery.html#cb24-4" tabindex="-1"></a>sql <span class="ot">&lt;-</span> <span class="st">&#39;SELECT HEROP_ID, TotPop, PovP FROM oeps-391119.tabular.C_1990&#39;</span></span>
+<span id="cb24-5"><a href="getting-oeps-data-from-bigquery.html#cb24-5" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="getting-oeps-data-from-bigquery.html#cb24-6" tabindex="-1"></a><span class="co"># Submit a job to grab the data</span></span>
+<span id="cb24-7"><a href="getting-oeps-data-from-bigquery.html#cb24-7" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">bq_project_query</span>(billing, <span class="at">query=</span>sql)</span>
+<span id="cb24-8"><a href="getting-oeps-data-from-bigquery.html#cb24-8" tabindex="-1"></a><span class="co"># Download the results of that query to our system</span></span>
+<span id="cb24-9"><a href="getting-oeps-data-from-bigquery.html#cb24-9" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">bq_table_download</span>(tb)</span>
+<span id="cb24-10"><a href="getting-oeps-data-from-bigquery.html#cb24-10" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="getting-oeps-data-from-bigquery.html#cb24-11" tabindex="-1"></a><span class="fu">head</span>(results)</span></code></pre></div>
 <p>We can also use more complex queries:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="getting-oeps-data-from-bigquery.html#cb11-1"></a>sql &lt;-<span class="st"> &#39;</span></span>
-<span id="cb11-2"><a href="getting-oeps-data-from-bigquery.html#cb11-2"></a><span class="st">    SELECT</span></span>
-<span id="cb11-3"><a href="getting-oeps-data-from-bigquery.html#cb11-3"></a><span class="st">      C_1990.HEROP_ID,</span></span>
-<span id="cb11-4"><a href="getting-oeps-data-from-bigquery.html#cb11-4"></a><span class="st">      (C_2000.PovP - C_1990.PovP) AS ChangeInPovP,</span></span>
-<span id="cb11-5"><a href="getting-oeps-data-from-bigquery.html#cb11-5"></a><span class="st">      (C_2000.TotPop - C_1990.TotPop) AS ChangeInPop</span></span>
-<span id="cb11-6"><a href="getting-oeps-data-from-bigquery.html#cb11-6"></a><span class="st">    FROM oeps-391119.tabular.C_1990 INNER JOIN oeps-391119.tabular.C_2000</span></span>
-<span id="cb11-7"><a href="getting-oeps-data-from-bigquery.html#cb11-7"></a><span class="st">      ON C_1990.HEROP_ID=C_2000.HEROP_ID</span></span>
-<span id="cb11-8"><a href="getting-oeps-data-from-bigquery.html#cb11-8"></a><span class="st">&#39;</span></span>
-<span id="cb11-9"><a href="getting-oeps-data-from-bigquery.html#cb11-9"></a></span>
-<span id="cb11-10"><a href="getting-oeps-data-from-bigquery.html#cb11-10"></a>tb &lt;-<span class="st"> </span><span class="kw">bq_project_query</span>(billing, sql)</span>
-<span id="cb11-11"><a href="getting-oeps-data-from-bigquery.html#cb11-11"></a>results &lt;-<span class="st"> </span><span class="kw">bq_table_download</span>(tb)</span>
-<span id="cb11-12"><a href="getting-oeps-data-from-bigquery.html#cb11-12"></a></span>
-<span id="cb11-13"><a href="getting-oeps-data-from-bigquery.html#cb11-13"></a><span class="kw">head</span>(results)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="getting-oeps-data-from-bigquery.html#cb25-1" tabindex="-1"></a>sql <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb25-2"><a href="getting-oeps-data-from-bigquery.html#cb25-2" tabindex="-1"></a><span class="st">    SELECT</span></span>
+<span id="cb25-3"><a href="getting-oeps-data-from-bigquery.html#cb25-3" tabindex="-1"></a><span class="st">      C_1990.HEROP_ID,</span></span>
+<span id="cb25-4"><a href="getting-oeps-data-from-bigquery.html#cb25-4" tabindex="-1"></a><span class="st">      (C_2000.PovP - C_1990.PovP) AS ChangeInPovP,</span></span>
+<span id="cb25-5"><a href="getting-oeps-data-from-bigquery.html#cb25-5" tabindex="-1"></a><span class="st">      (C_2000.TotPop - C_1990.TotPop) AS ChangeInPop</span></span>
+<span id="cb25-6"><a href="getting-oeps-data-from-bigquery.html#cb25-6" tabindex="-1"></a><span class="st">    FROM oeps-391119.tabular.C_1990 INNER JOIN oeps-391119.tabular.C_2000</span></span>
+<span id="cb25-7"><a href="getting-oeps-data-from-bigquery.html#cb25-7" tabindex="-1"></a><span class="st">      ON C_1990.HEROP_ID=C_2000.HEROP_ID</span></span>
+<span id="cb25-8"><a href="getting-oeps-data-from-bigquery.html#cb25-8" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb25-9"><a href="getting-oeps-data-from-bigquery.html#cb25-9" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="getting-oeps-data-from-bigquery.html#cb25-10" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">bq_project_query</span>(billing, sql)</span>
+<span id="cb25-11"><a href="getting-oeps-data-from-bigquery.html#cb25-11" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">bq_table_download</span>(tb)</span>
+<span id="cb25-12"><a href="getting-oeps-data-from-bigquery.html#cb25-12" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="getting-oeps-data-from-bigquery.html#cb25-13" tabindex="-1"></a><span class="fu">head</span>(results)</span></code></pre></div>
 <p>If we want to plot this data, we need to query the <code>spatial</code> database. This is doable, but R interactive environments are not always a fan of the result, so we’re forced to turn <code>results</code> into an sf object <em>before</em> attempting to preview it. That is, for the following setup:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="getting-oeps-data-from-bigquery.html#cb12-1"></a><span class="kw">library</span>(sf)</span>
-<span id="cb12-2"><a href="getting-oeps-data-from-bigquery.html#cb12-2"></a></span>
-<span id="cb12-3"><a href="getting-oeps-data-from-bigquery.html#cb12-3"></a>sql &lt;-<span class="st"> &#39;SELECT HEROP_ID, geom FROM oeps-391119.spatial.counties2010&#39;</span></span>
-<span id="cb12-4"><a href="getting-oeps-data-from-bigquery.html#cb12-4"></a>tb &lt;-<span class="st"> </span><span class="kw">bq_project_query</span>(billing, sql)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="getting-oeps-data-from-bigquery.html#cb26-1" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb26-2"><a href="getting-oeps-data-from-bigquery.html#cb26-2" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="getting-oeps-data-from-bigquery.html#cb26-3" tabindex="-1"></a>sql <span class="ot">&lt;-</span> <span class="st">&#39;SELECT HEROP_ID, geom FROM oeps-391119.spatial.counties2010&#39;</span></span>
+<span id="cb26-4"><a href="getting-oeps-data-from-bigquery.html#cb26-4" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">bq_project_query</span>(billing, sql)</span></code></pre></div>
 <p>this breaks:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="getting-oeps-data-from-bigquery.html#cb13-1"></a><span class="co"># bad</span></span>
-<span id="cb13-2"><a href="getting-oeps-data-from-bigquery.html#cb13-2"></a>results &lt;-<span class="st"> </span><span class="kw">bq_table_download</span>(tb)</span>
-<span id="cb13-3"><a href="getting-oeps-data-from-bigquery.html#cb13-3"></a><span class="kw">head</span>(results) </span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="getting-oeps-data-from-bigquery.html#cb27-1" tabindex="-1"></a><span class="co"># bad</span></span>
+<span id="cb27-2"><a href="getting-oeps-data-from-bigquery.html#cb27-2" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">bq_table_download</span>(tb)</span>
+<span id="cb27-3"><a href="getting-oeps-data-from-bigquery.html#cb27-3" tabindex="-1"></a><span class="fu">head</span>(results) </span></code></pre></div>
 <p>And this works:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="getting-oeps-data-from-bigquery.html#cb14-1"></a><span class="co"># This works</span></span>
-<span id="cb14-2"><a href="getting-oeps-data-from-bigquery.html#cb14-2"></a>results &lt;-<span class="st"> </span><span class="kw">bq_table_download</span>(tb) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span></span>
-<span id="cb14-3"><a href="getting-oeps-data-from-bigquery.html#cb14-3"></a><span class="st">  </span><span class="kw">st_as_sf</span>(<span class="dt">wkt=</span><span class="st">&#39;geom&#39;</span>, <span class="dt">crs=</span><span class="st">&#39;EPSG:4326&#39;</span>) <span class="co"># convert geom to sf</span></span>
-<span id="cb14-4"><a href="getting-oeps-data-from-bigquery.html#cb14-4"></a><span class="kw">head</span>(results)</span></code></pre></div>
-<div id="a-full-low-level-pipeline" class="section level4 hasAnchor">
-<h4><span class="header-section-number">3.2.1.1</span> A full low-level pipeline:<a href="getting-oeps-data-from-bigquery.html#a-full-low-level-pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="getting-oeps-data-from-bigquery.html#cb28-1" tabindex="-1"></a><span class="co"># This works</span></span>
+<span id="cb28-2"><a href="getting-oeps-data-from-bigquery.html#cb28-2" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">bq_table_download</span>(tb) <span class="sc">|&gt;</span> </span>
+<span id="cb28-3"><a href="getting-oeps-data-from-bigquery.html#cb28-3" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">wkt=</span><span class="st">&#39;geom&#39;</span>, <span class="at">crs=</span><span class="st">&#39;EPSG:4326&#39;</span>) <span class="co"># convert geom to sf</span></span>
+<span id="cb28-4"><a href="getting-oeps-data-from-bigquery.html#cb28-4" tabindex="-1"></a><span class="fu">head</span>(results)</span></code></pre></div>
+<div id="a-full-low-level-pipeline" class="section level4 hasAnchor" number="5.2.1.1">
+<h4><span class="header-section-number">5.2.1.1</span> A full low-level pipeline:<a href="getting-oeps-data-from-bigquery.html#a-full-low-level-pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Putting this all together, we can create a quick map of how county level poverty changed from 1990 to 2000:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="getting-oeps-data-from-bigquery.html#cb15-1"></a><span class="kw">library</span>(tmap)</span>
-<span id="cb15-2"><a href="getting-oeps-data-from-bigquery.html#cb15-2"></a><span class="kw">tmap_mode</span>(<span class="st">&#39;view&#39;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="getting-oeps-data-from-bigquery.html#cb16-1"></a>sql &lt;-<span class="st"> &#39;</span></span>
-<span id="cb16-2"><a href="getting-oeps-data-from-bigquery.html#cb16-2"></a><span class="st">    SELECT</span></span>
-<span id="cb16-3"><a href="getting-oeps-data-from-bigquery.html#cb16-3"></a><span class="st">      C_1990.HEROP_ID,</span></span>
-<span id="cb16-4"><a href="getting-oeps-data-from-bigquery.html#cb16-4"></a><span class="st">      (C_2000.PovP - C_1990.PovP) AS ChangeInPovP,</span></span>
-<span id="cb16-5"><a href="getting-oeps-data-from-bigquery.html#cb16-5"></a><span class="st">      counties2010.name, counties2010.geom</span></span>
-<span id="cb16-6"><a href="getting-oeps-data-from-bigquery.html#cb16-6"></a><span class="st">    FROM oeps-391119.tabular.C_1990 INNER JOIN oeps-391119.tabular.C_2000</span></span>
-<span id="cb16-7"><a href="getting-oeps-data-from-bigquery.html#cb16-7"></a><span class="st">      ON C_1990.HEROP_ID=C_2000.HEROP_ID</span></span>
-<span id="cb16-8"><a href="getting-oeps-data-from-bigquery.html#cb16-8"></a><span class="st">    INNER JOIN oeps-391119.spatial.counties2010 </span></span>
-<span id="cb16-9"><a href="getting-oeps-data-from-bigquery.html#cb16-9"></a><span class="st">      ON C_1990.HEROP_ID=counties2010.HEROP_ID</span></span>
-<span id="cb16-10"><a href="getting-oeps-data-from-bigquery.html#cb16-10"></a><span class="st">&#39;</span></span>
-<span id="cb16-11"><a href="getting-oeps-data-from-bigquery.html#cb16-11"></a></span>
-<span id="cb16-12"><a href="getting-oeps-data-from-bigquery.html#cb16-12"></a>tb &lt;-<span class="st"> </span><span class="kw">bq_project_query</span>(billing, sql)</span>
-<span id="cb16-13"><a href="getting-oeps-data-from-bigquery.html#cb16-13"></a>results &lt;-<span class="st"> </span><span class="kw">bq_table_download</span>(tb) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span><span class="kw">st_as_sf</span>(<span class="dt">wkt=</span><span class="st">&#39;geom&#39;</span>, <span class="dt">crs=</span><span class="st">&#39;EPSG:4326&#39;</span>)</span>
-<span id="cb16-14"><a href="getting-oeps-data-from-bigquery.html#cb16-14"></a></span>
-<span id="cb16-15"><a href="getting-oeps-data-from-bigquery.html#cb16-15"></a><span class="kw">tm_shape</span>(results) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb16-16"><a href="getting-oeps-data-from-bigquery.html#cb16-16"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="st">&#39;ChangeInPovP&#39;</span>, </span>
-<span id="cb16-17"><a href="getting-oeps-data-from-bigquery.html#cb16-17"></a>          <span class="dt">style=</span><span class="st">&#39;sd&#39;</span>, </span>
-<span id="cb16-18"><a href="getting-oeps-data-from-bigquery.html#cb16-18"></a>          <span class="dt">midpoint=</span><span class="dv">0</span>,</span>
-<span id="cb16-19"><a href="getting-oeps-data-from-bigquery.html#cb16-19"></a>          <span class="dt">title=</span><span class="st">&#39;Change in Poverty</span><span class="ch">\n</span><span class="st"> 1990 to 2000&#39;</span>,</span>
-<span id="cb16-20"><a href="getting-oeps-data-from-bigquery.html#cb16-20"></a>          <span class="dt">palette=</span><span class="st">&#39;-RdYlBu&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="getting-oeps-data-from-bigquery.html#cb29-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb29-2"><a href="getting-oeps-data-from-bigquery.html#cb29-2" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&#39;view&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="getting-oeps-data-from-bigquery.html#cb30-1" tabindex="-1"></a>sql <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb30-2"><a href="getting-oeps-data-from-bigquery.html#cb30-2" tabindex="-1"></a><span class="st">    SELECT</span></span>
+<span id="cb30-3"><a href="getting-oeps-data-from-bigquery.html#cb30-3" tabindex="-1"></a><span class="st">      C_1990.HEROP_ID,</span></span>
+<span id="cb30-4"><a href="getting-oeps-data-from-bigquery.html#cb30-4" tabindex="-1"></a><span class="st">      (C_2000.PovP - C_1990.PovP) AS ChangeInPovP,</span></span>
+<span id="cb30-5"><a href="getting-oeps-data-from-bigquery.html#cb30-5" tabindex="-1"></a><span class="st">      counties2010.name, counties2010.geom</span></span>
+<span id="cb30-6"><a href="getting-oeps-data-from-bigquery.html#cb30-6" tabindex="-1"></a><span class="st">    FROM oeps-391119.tabular.C_1990 INNER JOIN oeps-391119.tabular.C_2000</span></span>
+<span id="cb30-7"><a href="getting-oeps-data-from-bigquery.html#cb30-7" tabindex="-1"></a><span class="st">      ON C_1990.HEROP_ID=C_2000.HEROP_ID</span></span>
+<span id="cb30-8"><a href="getting-oeps-data-from-bigquery.html#cb30-8" tabindex="-1"></a><span class="st">    INNER JOIN oeps-391119.spatial.counties2010 </span></span>
+<span id="cb30-9"><a href="getting-oeps-data-from-bigquery.html#cb30-9" tabindex="-1"></a><span class="st">      ON C_1990.HEROP_ID=counties2010.HEROP_ID</span></span>
+<span id="cb30-10"><a href="getting-oeps-data-from-bigquery.html#cb30-10" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb30-11"><a href="getting-oeps-data-from-bigquery.html#cb30-11" tabindex="-1"></a></span>
+<span id="cb30-12"><a href="getting-oeps-data-from-bigquery.html#cb30-12" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">bq_project_query</span>(billing, sql)</span>
+<span id="cb30-13"><a href="getting-oeps-data-from-bigquery.html#cb30-13" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">bq_table_download</span>(tb) <span class="sc">|&gt;</span> <span class="fu">st_as_sf</span>(<span class="at">wkt=</span><span class="st">&#39;geom&#39;</span>, <span class="at">crs=</span><span class="st">&#39;EPSG:4326&#39;</span>)</span>
+<span id="cb30-14"><a href="getting-oeps-data-from-bigquery.html#cb30-14" tabindex="-1"></a></span>
+<span id="cb30-15"><a href="getting-oeps-data-from-bigquery.html#cb30-15" tabindex="-1"></a><span class="fu">tm_shape</span>(results) <span class="sc">+</span> </span>
+<span id="cb30-16"><a href="getting-oeps-data-from-bigquery.html#cb30-16" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="st">&#39;ChangeInPovP&#39;</span>, </span>
+<span id="cb30-17"><a href="getting-oeps-data-from-bigquery.html#cb30-17" tabindex="-1"></a>          <span class="at">style=</span><span class="st">&#39;sd&#39;</span>, </span>
+<span id="cb30-18"><a href="getting-oeps-data-from-bigquery.html#cb30-18" tabindex="-1"></a>          <span class="at">midpoint=</span><span class="dv">0</span>,</span>
+<span id="cb30-19"><a href="getting-oeps-data-from-bigquery.html#cb30-19" tabindex="-1"></a>          <span class="at">title=</span><span class="st">&#39;Change in Poverty</span><span class="sc">\n</span><span class="st"> 1990 to 2000&#39;</span>,</span>
+<span id="cb30-20"><a href="getting-oeps-data-from-bigquery.html#cb30-20" tabindex="-1"></a>          <span class="at">palette=</span><span class="st">&#39;-RdYlBu&#39;</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="dplyr" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.2.2</span> The dplyr API<a href="getting-oeps-data-from-bigquery.html#dplyr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="dplyr" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> The dplyr API<a href="getting-oeps-data-from-bigquery.html#dplyr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For users with less SQL familiarity, it’s also possible to use dplyr to interact with BigQuery. We’ll need the help of DBI, a library for interacting with databases in R.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="getting-oeps-data-from-bigquery.html#cb17-1"></a><span class="co"># install.packages(DBI) # uncomment if needed</span></span>
-<span id="cb17-2"><a href="getting-oeps-data-from-bigquery.html#cb17-2"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb17-3"><a href="getting-oeps-data-from-bigquery.html#cb17-3"></a><span class="kw">library</span>(DBI)</span>
-<span id="cb17-4"><a href="getting-oeps-data-from-bigquery.html#cb17-4"></a><span class="kw">library</span>(bigrquery)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="getting-oeps-data-from-bigquery.html#cb31-1" tabindex="-1"></a><span class="co"># install.packages(DBI) # uncomment if needed</span></span>
+<span id="cb31-2"><a href="getting-oeps-data-from-bigquery.html#cb31-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb31-3"><a href="getting-oeps-data-from-bigquery.html#cb31-3" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb31-4"><a href="getting-oeps-data-from-bigquery.html#cb31-4" tabindex="-1"></a><span class="fu">library</span>(bigrquery)</span></code></pre></div>
 <p>For this pipeline, we use DBI to connect to a given dataset (e.g. <code>tabular</code>), before picking a table within the dataset to interact with and then manipulate that table using dplyr.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="getting-oeps-data-from-bigquery.html#cb18-1"></a><span class="co"># Connect to the tabular dataset</span></span>
-<span id="cb18-2"><a href="getting-oeps-data-from-bigquery.html#cb18-2"></a>conn &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(</span>
-<span id="cb18-3"><a href="getting-oeps-data-from-bigquery.html#cb18-3"></a>  <span class="kw">bigquery</span>(),</span>
-<span id="cb18-4"><a href="getting-oeps-data-from-bigquery.html#cb18-4"></a>  <span class="dt">project =</span> <span class="st">&#39;oeps-391119&#39;</span>,</span>
-<span id="cb18-5"><a href="getting-oeps-data-from-bigquery.html#cb18-5"></a>  <span class="dt">dataset =</span> <span class="st">&#39;tabular&#39;</span>,</span>
-<span id="cb18-6"><a href="getting-oeps-data-from-bigquery.html#cb18-6"></a>  <span class="dt">billing =</span> billing</span>
-<span id="cb18-7"><a href="getting-oeps-data-from-bigquery.html#cb18-7"></a>)</span>
-<span id="cb18-8"><a href="getting-oeps-data-from-bigquery.html#cb18-8"></a></span>
-<span id="cb18-9"><a href="getting-oeps-data-from-bigquery.html#cb18-9"></a><span class="co"># List off available tables</span></span>
-<span id="cb18-10"><a href="getting-oeps-data-from-bigquery.html#cb18-10"></a><span class="kw">dbListTables</span>(conn)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="getting-oeps-data-from-bigquery.html#cb32-1" tabindex="-1"></a><span class="co"># Connect to the tabular dataset</span></span>
+<span id="cb32-2"><a href="getting-oeps-data-from-bigquery.html#cb32-2" tabindex="-1"></a>conn <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
+<span id="cb32-3"><a href="getting-oeps-data-from-bigquery.html#cb32-3" tabindex="-1"></a>  <span class="fu">bigquery</span>(),</span>
+<span id="cb32-4"><a href="getting-oeps-data-from-bigquery.html#cb32-4" tabindex="-1"></a>  <span class="at">project =</span> <span class="st">&#39;oeps-391119&#39;</span>,</span>
+<span id="cb32-5"><a href="getting-oeps-data-from-bigquery.html#cb32-5" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&#39;tabular&#39;</span>,</span>
+<span id="cb32-6"><a href="getting-oeps-data-from-bigquery.html#cb32-6" tabindex="-1"></a>  <span class="at">billing =</span> billing</span>
+<span id="cb32-7"><a href="getting-oeps-data-from-bigquery.html#cb32-7" tabindex="-1"></a>)</span>
+<span id="cb32-8"><a href="getting-oeps-data-from-bigquery.html#cb32-8" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="getting-oeps-data-from-bigquery.html#cb32-9" tabindex="-1"></a><span class="co"># List off available tables</span></span>
+<span id="cb32-10"><a href="getting-oeps-data-from-bigquery.html#cb32-10" tabindex="-1"></a><span class="fu">dbListTables</span>(conn)</span></code></pre></div>
 <p>We can then pick a table from the above and interact with it using dplyr.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="getting-oeps-data-from-bigquery.html#cb19-1"></a>C_<span class="dv">1990</span> &lt;-<span class="st"> </span><span class="kw">tbl</span>(conn, <span class="st">&#39;C_1990&#39;</span>)</span>
-<span id="cb19-2"><a href="getting-oeps-data-from-bigquery.html#cb19-2"></a></span>
-<span id="cb19-3"><a href="getting-oeps-data-from-bigquery.html#cb19-3"></a>C_<span class="dv">1990</span> <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span></span>
-<span id="cb19-4"><a href="getting-oeps-data-from-bigquery.html#cb19-4"></a><span class="st">  </span><span class="kw">select</span>(HEROP_ID, TotPop, PovP) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb19-5"><a href="getting-oeps-data-from-bigquery.html#cb19-5"></a><span class="st">  </span><span class="kw">collect</span>() <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb19-6"><a href="getting-oeps-data-from-bigquery.html#cb19-6"></a><span class="st">  </span><span class="kw">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="getting-oeps-data-from-bigquery.html#cb33-1" tabindex="-1"></a>C_1990 <span class="ot">&lt;-</span> <span class="fu">tbl</span>(conn, <span class="st">&#39;C_1990&#39;</span>)</span>
+<span id="cb33-2"><a href="getting-oeps-data-from-bigquery.html#cb33-2" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="getting-oeps-data-from-bigquery.html#cb33-3" tabindex="-1"></a>C_1990 <span class="sc">|&gt;</span> </span>
+<span id="cb33-4"><a href="getting-oeps-data-from-bigquery.html#cb33-4" tabindex="-1"></a>  <span class="fu">select</span>(HEROP_ID, TotPop, PovP) <span class="sc">|&gt;</span></span>
+<span id="cb33-5"><a href="getting-oeps-data-from-bigquery.html#cb33-5" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
+<span id="cb33-6"><a href="getting-oeps-data-from-bigquery.html#cb33-6" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <p>As with the low-level API, we can also do more complex tasks, albeit with a few more lines of code:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="getting-oeps-data-from-bigquery.html#cb20-1"></a>C_<span class="dv">1990</span> &lt;-<span class="st"> </span><span class="kw">tbl</span>(conn, <span class="st">&#39;C_1990&#39;</span>) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb20-2"><a href="getting-oeps-data-from-bigquery.html#cb20-2"></a><span class="st">  </span><span class="kw">select</span>(HEROP_ID, <span class="dt">PovP1990=</span>PovP, <span class="dt">TotPop1990=</span>TotPop) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb20-3"><a href="getting-oeps-data-from-bigquery.html#cb20-3"></a><span class="st">  </span><span class="kw">collect</span>()</span>
-<span id="cb20-4"><a href="getting-oeps-data-from-bigquery.html#cb20-4"></a>C_<span class="dv">2000</span> &lt;-<span class="st"> </span><span class="kw">tbl</span>(conn, <span class="st">&#39;C_2000&#39;</span>) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb20-5"><a href="getting-oeps-data-from-bigquery.html#cb20-5"></a><span class="st">  </span><span class="kw">select</span>(HEROP_ID, <span class="dt">PovP2000=</span>PovP, <span class="dt">TotPop2000=</span>TotPop) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb20-6"><a href="getting-oeps-data-from-bigquery.html#cb20-6"></a><span class="st">  </span><span class="kw">collect</span>()</span>
-<span id="cb20-7"><a href="getting-oeps-data-from-bigquery.html#cb20-7"></a></span>
-<span id="cb20-8"><a href="getting-oeps-data-from-bigquery.html#cb20-8"></a>changes &lt;-<span class="st"> </span><span class="kw">merge</span>(C_<span class="dv">2000</span>, C_<span class="dv">1990</span>, <span class="dt">on=</span><span class="st">&#39;HEROP_ID&#39;</span>) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb20-9"><a href="getting-oeps-data-from-bigquery.html#cb20-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ChangeInPovP =</span> PovP2000<span class="op">-</span>PovP1990,</span>
-<span id="cb20-10"><a href="getting-oeps-data-from-bigquery.html#cb20-10"></a>         <span class="dt">ChangeInTotPop =</span> TotPop2000<span class="op">-</span>TotPop1990) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb20-11"><a href="getting-oeps-data-from-bigquery.html#cb20-11"></a><span class="st">  </span><span class="kw">select</span>(HEROP_ID, ChangeInPovP, ChangeInTotPop) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb20-12"><a href="getting-oeps-data-from-bigquery.html#cb20-12"></a><span class="st">  </span><span class="kw">collect</span>()</span>
-<span id="cb20-13"><a href="getting-oeps-data-from-bigquery.html#cb20-13"></a></span>
-<span id="cb20-14"><a href="getting-oeps-data-from-bigquery.html#cb20-14"></a><span class="kw">head</span>(changes)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="getting-oeps-data-from-bigquery.html#cb34-1" tabindex="-1"></a>C_1990 <span class="ot">&lt;-</span> <span class="fu">tbl</span>(conn, <span class="st">&#39;C_1990&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="getting-oeps-data-from-bigquery.html#cb34-2" tabindex="-1"></a>  <span class="fu">select</span>(HEROP_ID, <span class="at">PovP1990=</span>PovP, <span class="at">TotPop1990=</span>TotPop) <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="getting-oeps-data-from-bigquery.html#cb34-3" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb34-4"><a href="getting-oeps-data-from-bigquery.html#cb34-4" tabindex="-1"></a>C_2000 <span class="ot">&lt;-</span> <span class="fu">tbl</span>(conn, <span class="st">&#39;C_2000&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-5"><a href="getting-oeps-data-from-bigquery.html#cb34-5" tabindex="-1"></a>  <span class="fu">select</span>(HEROP_ID, <span class="at">PovP2000=</span>PovP, <span class="at">TotPop2000=</span>TotPop) <span class="sc">|&gt;</span></span>
+<span id="cb34-6"><a href="getting-oeps-data-from-bigquery.html#cb34-6" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb34-7"><a href="getting-oeps-data-from-bigquery.html#cb34-7" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="getting-oeps-data-from-bigquery.html#cb34-8" tabindex="-1"></a>changes <span class="ot">&lt;-</span> <span class="fu">merge</span>(C_2000, C_1990, <span class="at">on=</span><span class="st">&#39;HEROP_ID&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-9"><a href="getting-oeps-data-from-bigquery.html#cb34-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ChangeInPovP =</span> PovP2000<span class="sc">-</span>PovP1990,</span>
+<span id="cb34-10"><a href="getting-oeps-data-from-bigquery.html#cb34-10" tabindex="-1"></a>         <span class="at">ChangeInTotPop =</span> TotPop2000<span class="sc">-</span>TotPop1990) <span class="sc">|&gt;</span></span>
+<span id="cb34-11"><a href="getting-oeps-data-from-bigquery.html#cb34-11" tabindex="-1"></a>  <span class="fu">select</span>(HEROP_ID, ChangeInPovP, ChangeInTotPop) <span class="sc">|&gt;</span></span>
+<span id="cb34-12"><a href="getting-oeps-data-from-bigquery.html#cb34-12" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb34-13"><a href="getting-oeps-data-from-bigquery.html#cb34-13" tabindex="-1"></a></span>
+<span id="cb34-14"><a href="getting-oeps-data-from-bigquery.html#cb34-14" tabindex="-1"></a><span class="fu">head</span>(changes)</span></code></pre></div>
 <p>We can also interact with spatial data. This also requires the same hack as above: we cannot preview our results until <em>after</em> converting them to an <code>sf</code> object, at least within interactive R environments.</p>
 <p>In other words, with this connection to the <code>spatial</code> dataset:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="getting-oeps-data-from-bigquery.html#cb21-1"></a><span class="co"># Connect to the spatial dataset</span></span>
-<span id="cb21-2"><a href="getting-oeps-data-from-bigquery.html#cb21-2"></a>spatial_conn &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(</span>
-<span id="cb21-3"><a href="getting-oeps-data-from-bigquery.html#cb21-3"></a>  <span class="kw">bigquery</span>(),</span>
-<span id="cb21-4"><a href="getting-oeps-data-from-bigquery.html#cb21-4"></a>  <span class="dt">project =</span> <span class="st">&#39;oeps-391119&#39;</span>,</span>
-<span id="cb21-5"><a href="getting-oeps-data-from-bigquery.html#cb21-5"></a>  <span class="dt">dataset =</span> <span class="st">&#39;spatial&#39;</span>,</span>
-<span id="cb21-6"><a href="getting-oeps-data-from-bigquery.html#cb21-6"></a>  <span class="dt">billing =</span> billing</span>
-<span id="cb21-7"><a href="getting-oeps-data-from-bigquery.html#cb21-7"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="getting-oeps-data-from-bigquery.html#cb35-1" tabindex="-1"></a><span class="co"># Connect to the spatial dataset</span></span>
+<span id="cb35-2"><a href="getting-oeps-data-from-bigquery.html#cb35-2" tabindex="-1"></a>spatial_conn <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
+<span id="cb35-3"><a href="getting-oeps-data-from-bigquery.html#cb35-3" tabindex="-1"></a>  <span class="fu">bigquery</span>(),</span>
+<span id="cb35-4"><a href="getting-oeps-data-from-bigquery.html#cb35-4" tabindex="-1"></a>  <span class="at">project =</span> <span class="st">&#39;oeps-391119&#39;</span>,</span>
+<span id="cb35-5"><a href="getting-oeps-data-from-bigquery.html#cb35-5" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&#39;spatial&#39;</span>,</span>
+<span id="cb35-6"><a href="getting-oeps-data-from-bigquery.html#cb35-6" tabindex="-1"></a>  <span class="at">billing =</span> billing</span>
+<span id="cb35-7"><a href="getting-oeps-data-from-bigquery.html#cb35-7" tabindex="-1"></a>)</span></code></pre></div>
 <p>This breaks:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="getting-oeps-data-from-bigquery.html#cb22-1"></a><span class="co"># breaks</span></span>
-<span id="cb22-2"><a href="getting-oeps-data-from-bigquery.html#cb22-2"></a>counties2010 &lt;-<span class="st"> </span><span class="kw">tbl</span>(spatial_conn, <span class="st">&#39;counties2010&#39;</span>) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span></span>
-<span id="cb22-3"><a href="getting-oeps-data-from-bigquery.html#cb22-3"></a><span class="st">  </span><span class="kw">collect</span>()</span>
-<span id="cb22-4"><a href="getting-oeps-data-from-bigquery.html#cb22-4"></a></span>
-<span id="cb22-5"><a href="getting-oeps-data-from-bigquery.html#cb22-5"></a><span class="kw">head</span>(counties2010)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="getting-oeps-data-from-bigquery.html#cb36-1" tabindex="-1"></a><span class="co"># breaks</span></span>
+<span id="cb36-2"><a href="getting-oeps-data-from-bigquery.html#cb36-2" tabindex="-1"></a>counties2010 <span class="ot">&lt;-</span> <span class="fu">tbl</span>(spatial_conn, <span class="st">&#39;counties2010&#39;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb36-3"><a href="getting-oeps-data-from-bigquery.html#cb36-3" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb36-4"><a href="getting-oeps-data-from-bigquery.html#cb36-4" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="getting-oeps-data-from-bigquery.html#cb36-5" tabindex="-1"></a><span class="fu">head</span>(counties2010)</span></code></pre></div>
 <p>and this works:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="getting-oeps-data-from-bigquery.html#cb23-1"></a><span class="co"># works</span></span>
-<span id="cb23-2"><a href="getting-oeps-data-from-bigquery.html#cb23-2"></a>counties2010 &lt;-<span class="st"> </span><span class="kw">tbl</span>(spatial_conn, <span class="st">&#39;counties2010&#39;</span>) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb23-3"><a href="getting-oeps-data-from-bigquery.html#cb23-3"></a><span class="st">  </span><span class="kw">collect</span>() <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb23-4"><a href="getting-oeps-data-from-bigquery.html#cb23-4"></a><span class="st">  </span><span class="kw">st_as_sf</span>(<span class="dt">wkt=</span><span class="st">&#39;geom&#39;</span>, <span class="dt">crs=</span><span class="st">&#39;EPSG:4326&#39;</span>)</span>
-<span id="cb23-5"><a href="getting-oeps-data-from-bigquery.html#cb23-5"></a></span>
-<span id="cb23-6"><a href="getting-oeps-data-from-bigquery.html#cb23-6"></a><span class="kw">head</span>(counties2010)</span></code></pre></div>
-<div id="a-full-dplyr-pipeline" class="section level4 hasAnchor">
-<h4><span class="header-section-number">3.2.2.1</span> A full dplyr pipeline:<a href="getting-oeps-data-from-bigquery.html#a-full-dplyr-pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="getting-oeps-data-from-bigquery.html#cb37-1" tabindex="-1"></a><span class="co"># works</span></span>
+<span id="cb37-2"><a href="getting-oeps-data-from-bigquery.html#cb37-2" tabindex="-1"></a>counties2010 <span class="ot">&lt;-</span> <span class="fu">tbl</span>(spatial_conn, <span class="st">&#39;counties2010&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="getting-oeps-data-from-bigquery.html#cb37-3" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
+<span id="cb37-4"><a href="getting-oeps-data-from-bigquery.html#cb37-4" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">wkt=</span><span class="st">&#39;geom&#39;</span>, <span class="at">crs=</span><span class="st">&#39;EPSG:4326&#39;</span>)</span>
+<span id="cb37-5"><a href="getting-oeps-data-from-bigquery.html#cb37-5" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="getting-oeps-data-from-bigquery.html#cb37-6" tabindex="-1"></a><span class="fu">head</span>(counties2010)</span></code></pre></div>
+<div id="a-full-dplyr-pipeline" class="section level4 hasAnchor" number="5.2.2.1">
+<h4><span class="header-section-number">5.2.2.1</span> A full dplyr pipeline:<a href="getting-oeps-data-from-bigquery.html#a-full-dplyr-pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Putting all the pieces together, we can make our poverty map with the following code:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="getting-oeps-data-from-bigquery.html#cb24-1"></a></span>
-<span id="cb24-2"><a href="getting-oeps-data-from-bigquery.html#cb24-2"></a><span class="co"># Make database connections</span></span>
-<span id="cb24-3"><a href="getting-oeps-data-from-bigquery.html#cb24-3"></a>spat_conn &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(</span>
-<span id="cb24-4"><a href="getting-oeps-data-from-bigquery.html#cb24-4"></a>  <span class="kw">bigquery</span>(),</span>
-<span id="cb24-5"><a href="getting-oeps-data-from-bigquery.html#cb24-5"></a>  <span class="dt">project =</span> <span class="st">&#39;oeps-391119&#39;</span>,</span>
-<span id="cb24-6"><a href="getting-oeps-data-from-bigquery.html#cb24-6"></a>  <span class="dt">dataset =</span> <span class="st">&#39;spatial&#39;</span>,</span>
-<span id="cb24-7"><a href="getting-oeps-data-from-bigquery.html#cb24-7"></a>  <span class="dt">billing =</span> billing</span>
-<span id="cb24-8"><a href="getting-oeps-data-from-bigquery.html#cb24-8"></a>)</span>
-<span id="cb24-9"><a href="getting-oeps-data-from-bigquery.html#cb24-9"></a>tab_conn &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(</span>
-<span id="cb24-10"><a href="getting-oeps-data-from-bigquery.html#cb24-10"></a>  <span class="kw">bigquery</span>(),</span>
-<span id="cb24-11"><a href="getting-oeps-data-from-bigquery.html#cb24-11"></a>  <span class="dt">project =</span> <span class="st">&#39;oeps-391119&#39;</span>,</span>
-<span id="cb24-12"><a href="getting-oeps-data-from-bigquery.html#cb24-12"></a>  <span class="dt">dataset =</span> <span class="st">&#39;tabular&#39;</span>,</span>
-<span id="cb24-13"><a href="getting-oeps-data-from-bigquery.html#cb24-13"></a>  <span class="dt">billing =</span> billing</span>
-<span id="cb24-14"><a href="getting-oeps-data-from-bigquery.html#cb24-14"></a>)</span>
-<span id="cb24-15"><a href="getting-oeps-data-from-bigquery.html#cb24-15"></a></span>
-<span id="cb24-16"><a href="getting-oeps-data-from-bigquery.html#cb24-16"></a><span class="co"># Grab tables</span></span>
-<span id="cb24-17"><a href="getting-oeps-data-from-bigquery.html#cb24-17"></a>C_<span class="dv">1990</span> &lt;-<span class="st"> </span><span class="kw">tbl</span>(tab_conn, <span class="st">&quot;C_1990&quot;</span>)</span>
-<span id="cb24-18"><a href="getting-oeps-data-from-bigquery.html#cb24-18"></a>C_<span class="dv">2000</span> &lt;-<span class="st"> </span><span class="kw">tbl</span>(tab_conn, <span class="st">&quot;C_2000&quot;</span>)</span>
-<span id="cb24-19"><a href="getting-oeps-data-from-bigquery.html#cb24-19"></a>counties2010 &lt;-<span class="st"> </span><span class="kw">tbl</span>(spat_conn, <span class="st">&quot;counties2010&quot;</span>)</span>
-<span id="cb24-20"><a href="getting-oeps-data-from-bigquery.html#cb24-20"></a></span>
-<span id="cb24-21"><a href="getting-oeps-data-from-bigquery.html#cb24-21"></a><span class="co"># Data wrangling</span></span>
-<span id="cb24-22"><a href="getting-oeps-data-from-bigquery.html#cb24-22"></a>C_<span class="dv">1990</span> &lt;-<span class="st"> </span>C_<span class="dv">1990</span> <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb24-23"><a href="getting-oeps-data-from-bigquery.html#cb24-23"></a><span class="st">  </span><span class="kw">select</span>(HEROP_ID, <span class="dt">PovP1990=</span>PovP) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb24-24"><a href="getting-oeps-data-from-bigquery.html#cb24-24"></a><span class="st">  </span><span class="kw">collect</span>()</span>
-<span id="cb24-25"><a href="getting-oeps-data-from-bigquery.html#cb24-25"></a>C_<span class="dv">2000</span> &lt;-<span class="st"> </span>C_<span class="dv">2000</span> <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb24-26"><a href="getting-oeps-data-from-bigquery.html#cb24-26"></a><span class="st">  </span><span class="kw">select</span>(HEROP_ID, <span class="dt">PovP2000=</span>PovP) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb24-27"><a href="getting-oeps-data-from-bigquery.html#cb24-27"></a><span class="st">  </span><span class="kw">collect</span>()</span>
-<span id="cb24-28"><a href="getting-oeps-data-from-bigquery.html#cb24-28"></a></span>
-<span id="cb24-29"><a href="getting-oeps-data-from-bigquery.html#cb24-29"></a>change_in_pov &lt;-<span class="st"> </span><span class="kw">merge</span>(C_<span class="dv">2000</span>, C_<span class="dv">1990</span>, <span class="dt">on=</span><span class="st">&#39;HEROP_ID&#39;</span>) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb24-30"><a href="getting-oeps-data-from-bigquery.html#cb24-30"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ChangeInPovP=</span>PovP2000<span class="op">-</span>PovP1990) <span class="op">|</span><span class="er">&gt;</span></span>
-<span id="cb24-31"><a href="getting-oeps-data-from-bigquery.html#cb24-31"></a><span class="st">  </span><span class="kw">select</span>(HEROP_ID, ChangeInPovP)</span>
-<span id="cb24-32"><a href="getting-oeps-data-from-bigquery.html#cb24-32"></a></span>
-<span id="cb24-33"><a href="getting-oeps-data-from-bigquery.html#cb24-33"></a>counties2010 &lt;-<span class="st"> </span>counties2010 <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span></span>
-<span id="cb24-34"><a href="getting-oeps-data-from-bigquery.html#cb24-34"></a><span class="st">  </span><span class="kw">collect</span>() <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span></span>
-<span id="cb24-35"><a href="getting-oeps-data-from-bigquery.html#cb24-35"></a><span class="st">  </span><span class="kw">st_as_sf</span>(<span class="dt">wkt=</span><span class="st">&#39;geom&#39;</span>, <span class="dt">crs=</span><span class="st">&#39;EPSG:4326&#39;</span>)</span>
-<span id="cb24-36"><a href="getting-oeps-data-from-bigquery.html#cb24-36"></a>  </span>
-<span id="cb24-37"><a href="getting-oeps-data-from-bigquery.html#cb24-37"></a>change_in_pov &lt;-<span class="st"> </span><span class="kw">merge</span>(counties2010, change_in_pov, <span class="dt">on=</span><span class="st">&#39;HEROP_ID&#39;</span>)</span>
-<span id="cb24-38"><a href="getting-oeps-data-from-bigquery.html#cb24-38"></a></span>
-<span id="cb24-39"><a href="getting-oeps-data-from-bigquery.html#cb24-39"></a><span class="kw">tm_shape</span>(results) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb24-40"><a href="getting-oeps-data-from-bigquery.html#cb24-40"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="st">&#39;ChangeInPovP&#39;</span>, </span>
-<span id="cb24-41"><a href="getting-oeps-data-from-bigquery.html#cb24-41"></a>          <span class="dt">style=</span><span class="st">&#39;sd&#39;</span>, </span>
-<span id="cb24-42"><a href="getting-oeps-data-from-bigquery.html#cb24-42"></a>          <span class="dt">midpoint=</span><span class="dv">0</span>,</span>
-<span id="cb24-43"><a href="getting-oeps-data-from-bigquery.html#cb24-43"></a>          <span class="dt">title=</span><span class="st">&#39;Change in Poverty</span><span class="ch">\n</span><span class="st">1990 to 2000&#39;</span>,</span>
-<span id="cb24-44"><a href="getting-oeps-data-from-bigquery.html#cb24-44"></a>          <span class="dt">palette=</span><span class="st">&#39;-RdYlBu&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="getting-oeps-data-from-bigquery.html#cb38-1" tabindex="-1"></a></span>
+<span id="cb38-2"><a href="getting-oeps-data-from-bigquery.html#cb38-2" tabindex="-1"></a><span class="co"># Make database connections</span></span>
+<span id="cb38-3"><a href="getting-oeps-data-from-bigquery.html#cb38-3" tabindex="-1"></a>spat_conn <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
+<span id="cb38-4"><a href="getting-oeps-data-from-bigquery.html#cb38-4" tabindex="-1"></a>  <span class="fu">bigquery</span>(),</span>
+<span id="cb38-5"><a href="getting-oeps-data-from-bigquery.html#cb38-5" tabindex="-1"></a>  <span class="at">project =</span> <span class="st">&#39;oeps-391119&#39;</span>,</span>
+<span id="cb38-6"><a href="getting-oeps-data-from-bigquery.html#cb38-6" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&#39;spatial&#39;</span>,</span>
+<span id="cb38-7"><a href="getting-oeps-data-from-bigquery.html#cb38-7" tabindex="-1"></a>  <span class="at">billing =</span> billing</span>
+<span id="cb38-8"><a href="getting-oeps-data-from-bigquery.html#cb38-8" tabindex="-1"></a>)</span>
+<span id="cb38-9"><a href="getting-oeps-data-from-bigquery.html#cb38-9" tabindex="-1"></a>tab_conn <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
+<span id="cb38-10"><a href="getting-oeps-data-from-bigquery.html#cb38-10" tabindex="-1"></a>  <span class="fu">bigquery</span>(),</span>
+<span id="cb38-11"><a href="getting-oeps-data-from-bigquery.html#cb38-11" tabindex="-1"></a>  <span class="at">project =</span> <span class="st">&#39;oeps-391119&#39;</span>,</span>
+<span id="cb38-12"><a href="getting-oeps-data-from-bigquery.html#cb38-12" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&#39;tabular&#39;</span>,</span>
+<span id="cb38-13"><a href="getting-oeps-data-from-bigquery.html#cb38-13" tabindex="-1"></a>  <span class="at">billing =</span> billing</span>
+<span id="cb38-14"><a href="getting-oeps-data-from-bigquery.html#cb38-14" tabindex="-1"></a>)</span>
+<span id="cb38-15"><a href="getting-oeps-data-from-bigquery.html#cb38-15" tabindex="-1"></a></span>
+<span id="cb38-16"><a href="getting-oeps-data-from-bigquery.html#cb38-16" tabindex="-1"></a><span class="co"># Grab tables</span></span>
+<span id="cb38-17"><a href="getting-oeps-data-from-bigquery.html#cb38-17" tabindex="-1"></a>C_1990 <span class="ot">&lt;-</span> <span class="fu">tbl</span>(tab_conn, <span class="st">&quot;C_1990&quot;</span>)</span>
+<span id="cb38-18"><a href="getting-oeps-data-from-bigquery.html#cb38-18" tabindex="-1"></a>C_2000 <span class="ot">&lt;-</span> <span class="fu">tbl</span>(tab_conn, <span class="st">&quot;C_2000&quot;</span>)</span>
+<span id="cb38-19"><a href="getting-oeps-data-from-bigquery.html#cb38-19" tabindex="-1"></a>counties2010 <span class="ot">&lt;-</span> <span class="fu">tbl</span>(spat_conn, <span class="st">&quot;counties2010&quot;</span>)</span>
+<span id="cb38-20"><a href="getting-oeps-data-from-bigquery.html#cb38-20" tabindex="-1"></a></span>
+<span id="cb38-21"><a href="getting-oeps-data-from-bigquery.html#cb38-21" tabindex="-1"></a><span class="co"># Data wrangling</span></span>
+<span id="cb38-22"><a href="getting-oeps-data-from-bigquery.html#cb38-22" tabindex="-1"></a>C_1990 <span class="ot">&lt;-</span> C_1990 <span class="sc">|&gt;</span></span>
+<span id="cb38-23"><a href="getting-oeps-data-from-bigquery.html#cb38-23" tabindex="-1"></a>  <span class="fu">select</span>(HEROP_ID, <span class="at">PovP1990=</span>PovP) <span class="sc">|&gt;</span></span>
+<span id="cb38-24"><a href="getting-oeps-data-from-bigquery.html#cb38-24" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb38-25"><a href="getting-oeps-data-from-bigquery.html#cb38-25" tabindex="-1"></a>C_2000 <span class="ot">&lt;-</span> C_2000 <span class="sc">|&gt;</span></span>
+<span id="cb38-26"><a href="getting-oeps-data-from-bigquery.html#cb38-26" tabindex="-1"></a>  <span class="fu">select</span>(HEROP_ID, <span class="at">PovP2000=</span>PovP) <span class="sc">|&gt;</span></span>
+<span id="cb38-27"><a href="getting-oeps-data-from-bigquery.html#cb38-27" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb38-28"><a href="getting-oeps-data-from-bigquery.html#cb38-28" tabindex="-1"></a></span>
+<span id="cb38-29"><a href="getting-oeps-data-from-bigquery.html#cb38-29" tabindex="-1"></a>change_in_pov <span class="ot">&lt;-</span> <span class="fu">merge</span>(C_2000, C_1990, <span class="at">on=</span><span class="st">&#39;HEROP_ID&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb38-30"><a href="getting-oeps-data-from-bigquery.html#cb38-30" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ChangeInPovP=</span>PovP2000<span class="sc">-</span>PovP1990) <span class="sc">|&gt;</span></span>
+<span id="cb38-31"><a href="getting-oeps-data-from-bigquery.html#cb38-31" tabindex="-1"></a>  <span class="fu">select</span>(HEROP_ID, ChangeInPovP)</span>
+<span id="cb38-32"><a href="getting-oeps-data-from-bigquery.html#cb38-32" tabindex="-1"></a></span>
+<span id="cb38-33"><a href="getting-oeps-data-from-bigquery.html#cb38-33" tabindex="-1"></a>counties2010 <span class="ot">&lt;-</span> counties2010 <span class="sc">|&gt;</span> </span>
+<span id="cb38-34"><a href="getting-oeps-data-from-bigquery.html#cb38-34" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb38-35"><a href="getting-oeps-data-from-bigquery.html#cb38-35" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">wkt=</span><span class="st">&#39;geom&#39;</span>, <span class="at">crs=</span><span class="st">&#39;EPSG:4326&#39;</span>)</span>
+<span id="cb38-36"><a href="getting-oeps-data-from-bigquery.html#cb38-36" tabindex="-1"></a>  </span>
+<span id="cb38-37"><a href="getting-oeps-data-from-bigquery.html#cb38-37" tabindex="-1"></a>change_in_pov <span class="ot">&lt;-</span> <span class="fu">merge</span>(counties2010, change_in_pov, <span class="at">on=</span><span class="st">&#39;HEROP_ID&#39;</span>)</span>
+<span id="cb38-38"><a href="getting-oeps-data-from-bigquery.html#cb38-38" tabindex="-1"></a></span>
+<span id="cb38-39"><a href="getting-oeps-data-from-bigquery.html#cb38-39" tabindex="-1"></a><span class="fu">tm_shape</span>(results) <span class="sc">+</span> </span>
+<span id="cb38-40"><a href="getting-oeps-data-from-bigquery.html#cb38-40" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="st">&#39;ChangeInPovP&#39;</span>, </span>
+<span id="cb38-41"><a href="getting-oeps-data-from-bigquery.html#cb38-41" tabindex="-1"></a>          <span class="at">style=</span><span class="st">&#39;sd&#39;</span>, </span>
+<span id="cb38-42"><a href="getting-oeps-data-from-bigquery.html#cb38-42" tabindex="-1"></a>          <span class="at">midpoint=</span><span class="dv">0</span>,</span>
+<span id="cb38-43"><a href="getting-oeps-data-from-bigquery.html#cb38-43" tabindex="-1"></a>          <span class="at">title=</span><span class="st">&#39;Change in Poverty</span><span class="sc">\n</span><span class="st">1990 to 2000&#39;</span>,</span>
+<span id="cb38-44"><a href="getting-oeps-data-from-bigquery.html#cb38-44" tabindex="-1"></a>          <span class="at">palette=</span><span class="st">&#39;-RdYlBu&#39;</span>)</span></code></pre></div>
 
 </div>
 </div>
@@ -380,7 +390,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="mapping-the-risk-environment-with-oepsdata.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="example-uses.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
@@ -412,7 +422,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-oeps-bigquery-intro.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/04-bigquery-access.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -435,20 +445,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
