@@ -1,84 +1,62 @@
 # Basic Usage
 
-`oepsData` is centered around two functions: `load_oeps_dictionary`, which loads a basic data dictionary; and `load_oeps`, which directly loads OEPS data. 
-
-To get a better sense of how this package can be used, let's walk through a quick and dirty spatial investigation of poverty and working age population in Chicago.
-
-```{r, include = FALSE}
+```{r, include = FALSE, eval=TRUE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  eval = FALSE
+  eval = TRUE
 )
 ```
 
-```{r load oeps}
-devtools::install_github('https://github.com/healthyregions/oepsData')
-library(oepsData)
-```
+`oepsData` is centered around two functions: `load_oeps_dictionary`, which loads a basic data dictionary; and `load_oeps`, which directly loads OEPS data. We expect that most users will start by calling `load_oeps_dictionary` to look at what data is available at their desired analysis scale, followed by calling `load_oeps` to actually load the data.
 
-Let's start by previewing OEPS, and seeing what data is available. As alluded above, we do this through `load_oeps_dictionary`. The function itself takes one required argument, `scale`, which is just the spatial scale we're interested in observing. While state, county, ZCTA, and tract level data are all available, only tract level is relevant for our analysis.
+`load_oeps_dictionary` itself takes one argument -- scale -- that can be any of "tract", "zcta", "county", or "state". It returns the data dictionary (stored as a data.frame), so we recommend browsing it through the `View` command:
 
 ```{r preview data}
-# See what data is available
-data_dictionary <- load_oeps_dictionary(scale='tract')
+# See what data is available at the state level
+data_dictionary <- load_oeps_dictionary(scale="state")
 
 # if working in RStudio, we recommend:
 # View(data_dictionary)
 
+# as we're in a bookdown, we just preview it simply:
 data_dictionary
 ```
 
-Based on the data dictionary, we can see that we have two variables of interest -- `Age18_64` and `PovP`. Both variables are available at multiple time periods, and they belong to different themes -- social and economic, respectively. 
+We might find that we're interested in the 1990 state data. We can load that data and its geometries using `load_oeps`.
 
-Let's pull the data using `load_oeps`. We're technically only required to provide `scale` and `year`, but we provide additional information so that we only grab the data we need.
+```{r basic data loading}
 
-Notably, in this example we're referring to states and counties by their FIPS codes. Illinois' has a FIPS of 17, while Cook County has a FIPS of 031. Additionally, we're retreiving the geometry files with this pull.
+states_1990 <- load_oeps(scale="state", 
+          year=1990,
+          geometry=TRUE)
 
-```{r}
-# Grab the data
-cook_county_2010 <- load_oeps(
-  scale='tract', 
-  year='2010', 
-  themes=c('social', 'economic'), 
-  states='17', 
-  counties='031',
-  geometry=T)
-
-# Preview what we got
-head(data.frame(cook_county_2010))
+head(data.frame(states_1990))
 ```
 
-```{r}
-library(tmap)
-
-tm_shape(cook_county_2010) + 
-  tm_fill(c('Age18_64', 'PovP'), 
-          title = c('Working Age', 'Poverty\nPercentage'),
-          style = c('sd', 'sd'),
-          palette = 'BrBG') + 
-  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE, main.title = 'Fewer workers correlates with higher poverty in Cook')
-```
+Which lets us operate on the data as we desire. For instance, we can make a simple map:
 
 ```{r}
-# Grab the data
-chicago_metro_2010 <- load_oeps(
-  scale='tract', 
-  year='2010', 
-  theme=c('social', 'economic'), 
-  counties=c('17031', '18089'),
-  geometry=T)
 
-# Preview what we got
-head(data.frame(cook_county_2010))
+# reproject to a better, albeit imperfect, display CRS
+states_1990 <- sf::st_transform(states_1990, "ESRI:102004")
+
+tm_shape(states_1990) + 
+  tm_fill("NoHsP", style="jenks") +
+  tm_borders(alpha=0.05) +
+  tm_layout(main.title = "Population over 25 without a high school degree")
+
 ```
 
-```{r}
-library(tmap)
-tm_shape(chicago_metro_2010) + 
-  tm_fill(c('Age18_64', 'PovP'), 
-          title = c('Working Age', 'Poverty\nPercentage'),
-          style = c('sd', 'sd'),
-          palette = 'BrBG') + 
-  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE, main.title = 'Fewer workers correlates with higher poverty near Chi')
-```
+
+## Cacheing
+
+`oepsData` pulls its data from online repositories, primarily GitHub. This can lead to issues for users operating on slow internet, for whom load times can be long for larger datasets, or for users who anticipate needing the package when entirely offline.
+
+To help minimize these issues, `oepsData` caches, or saves a local copy of, data loaded by `load_oeps` on its first load. Additionally, `oepsData` offers a few commands can help maintain caches:
+* `cache_geometries` and `cache_oeps_tables` cache all tables and geometries, overwriting prior ones in the process.
+* `clear_cache` deletes all cached data.
+* `cache_dir` returns the directory of the oepsData cache.
+
+Users who want to avoid using cached data and instead download data fresh every time can set `cache=FALSE` when calling `load_oeps`. 
+

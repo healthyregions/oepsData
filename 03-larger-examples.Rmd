@@ -1,0 +1,88 @@
+# Example uses
+
+
+## Data subsetting
+
+`load_data` offers a few tools to help subset data on first load. To get a better sense of how these tools can be put towards practical use, let's walk through a quick and dirty spatial investigation of poverty and working age population in Chicago.
+
+```{r, include = FALSE, eval=TRUE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE
+)
+```
+
+We start by loading the data dictionary to see what data is available and into what themes they are categorized. This lets us request a subset of the full data set, which minimizes the amount of data in our environment at a time. 
+
+```{r preview tract data}
+# See what data is available
+data_dictionary <- load_oeps_dictionary(scale='tract')
+
+# if working in RStudio, we recommend:
+# View(data_dictionary)
+
+data_dictionary
+```
+
+Based on the data dictionary, we can see that we have two variables of interest -- `Age18_64` and `PovP`. Both variables are available at multiple time periods, and they belong to different themes -- social and economic, respectively.
+
+Let's pull our data using `load_oeps`. Note how many parameters we provide information for. Geographically, we provide the [FIPS code](https://transition.fcc.gov/oet/info/maps/census/fips/fips.txt) for our desired ``states`` (just Illinois) and ``counties`` (just Cook), which dramatically cuts down the number of entries retrieved. Additionally, we provide our variables of interests' themes, lowering the number of rows retrieved.
+
+```{r}
+# Grab the data
+cook_county_2010 <- load_oeps(
+  scale='tract', 
+  year='2010', 
+  themes=c('social', 'economic'), 
+  states='17', 
+  counties='031',
+  geometry=T)
+
+# Preview what we got
+head(data.frame(cook_county_2010))
+```
+
+We can then immediately map our data. We opt to use `tmap` in this example, but `ggplot2` also has mapping functionality for users more familiar with the library.
+
+```{r}
+library(tmap)
+
+tm_shape(cook_county_2010) + 
+  tm_fill(c('Age18_64', 'PovP'), 
+          title = c('Working Age', 'Poverty\nPercentage'),
+          style = c('sd', 'sd'),
+          palette = 'BrBG') + 
+  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE, main.title = 'Fewer workers correlates with higher poverty in Cook')
+```
+
+Based on the above, we observe that fewer working age individuals correlates roughly with higher poverty rates within the southern and western sides of Chicago, with this trend breaking down in northern suburbs. 
+
+Chicagoland continues a little bit into northeastern Indiana; maybe the rough correlation is present there as well? To check, we can pass a list of county [GEOIDS](https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html) to the `counties` parameter of `load_oeps`. Note that these GEOIDS _must_ consist of the state FIPS and county FIPS, as they would otherwise fail to uniquely identify our two counties.
+
+```{r}
+# Grab the data
+chicago_metro_2010 <- load_oeps(
+  scale='tract', 
+  year='2010', 
+  theme=c('social', 'economic'), 
+  counties=c('17031', '18089'),
+  geometry=T)
+
+# Preview what we got
+head(data.frame(cook_county_2010))
+```
+
+We can once again map the resultant data, and find that the rough correlation between lower working age population totals and higher poverty in more densely populated, coastal areas seems to hold for the broader Chicagoland area.
+
+```{r}
+library(tmap)
+tm_shape(chicago_metro_2010) + 
+  tm_fill(c('Age18_64', 'PovP'), 
+          title = c('Working Age', 'Poverty\nPercentage'),
+          style = c('sd', 'sd'),
+          palette = 'BrBG') + 
+  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE, main.title = 'Fewer workers correlates with higher poverty near Chi')
+```
+
+## Longitudinal analysis

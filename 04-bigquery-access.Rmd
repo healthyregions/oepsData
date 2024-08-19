@@ -2,7 +2,7 @@
 
 Opioid Environment Policy Scan data is available on Google BigQuery. In this notebook, we'll go over how to interact with the data using `bigrquery`. We go over two of the `bigrquery` APIs -- one for readers familiar with SQL, and one for readers who want to avoid SQL. Lastly, readers who are already familiar with Google BigQuery will likely want to skip to [Make a Query](#querying).
 
-```{r, include = FALSE}
+```{r, include = FALSE, eval=TRUE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 When making queries against a BigQuery dataset, we do not directly query the dataset. Instead, we connect to a BigQuery profile and submit a job, which tells the profile to make the query in our stead and return the data. You can think of this like connecting to another computer to middleman the exchange.
 
 ```{r, echo=FALSE, fig.align='center'}
-knitr::include_graphics('images/gc-structure.png')
+knitr::include_graphics('./images/gc-structure.png')
 ```
 
 The setup  allows users to work with multiple BigQuery datasets within a single profile, and also allows for billing to be separated so that data providers only pay to store the data instead of also paying for all usage of their data.
@@ -54,7 +54,7 @@ Now that we've enabled BigQuery on our account, we can use it to query the OEPS 
 First, lets back up and look at the OEPS project at a broader level. Currently, the OEPS data warehouse on BigQuery is named `oeps-391119`, and is divided into two datasets: `tabular` and `spatial`. The `tabular` dataset consists of 16 tables of attribute data at the state, county, tract, and ZCTA scales from 1980 to 2020. The `spatial` dataset contains the 2010 TIGER/Line geometries for each of these scales. The primary key for the datasets are `HEROP_ID`. A full dataset schema can be found on the OEPS BigQuery reference [linked here](https://github.com/healthyregions/oeps/blob/23_update_explorer/docs/BQ-Reference.md).
 
 ```{r, echo=FALSE, fig.align='center', out.width=400, out.height=400}
-knitr::include_graphics('images/oeps-structure.png')
+knitr::include_graphics('./images/oeps-structure.png')
 ```
 
 bigrquery offers three interfaces for interacting with BigQuery, but we introduce two here: the low-level API that uses SQL, and a higher level method using dplyr. 
