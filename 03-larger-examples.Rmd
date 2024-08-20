@@ -53,7 +53,7 @@ tm_shape(cook_county_2010) +
           title = c('Working Age', 'Poverty\nPercentage'),
           style = c('sd', 'sd'),
           palette = 'BrBG') + 
-  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE, main.title = 'Fewer workers correlates with higher poverty in Cook')
+  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE)
 ```
 
 Based on the above, we observe that fewer working age individuals correlates roughly with higher poverty rates within the southern and western sides of Chicago, with this trend breaking down in northern suburbs. 
@@ -82,7 +82,62 @@ tm_shape(chicago_metro_2010) +
           title = c('Working Age', 'Poverty\nPercentage'),
           style = c('sd', 'sd'),
           palette = 'BrBG') + 
-  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE, main.title = 'Fewer workers correlates with higher poverty near Chi')
+  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE)
 ```
 
 ## Longitudinal analysis
+
+Although not directly supported in the package, `oepsData` also enables easier longitudinal analysis. Continuing our above example, we might be interested in the change in percent poverty over time throughout Chicagoland. To check, let's compare 2000 data to 2010 data.
+
+We start by grabbing data from 2000:
+```{r}
+# get new data
+chicago_metro_2000 <- load_oeps(
+  scale='tract', 
+  year='2000', 
+  theme=c('social', 'economic'), 
+  counties=c('17031', '18089'),
+  geometry=F)
+```
+Note that `chicago_metro_2000` and `chicago_metro_2010` share column names, so we need to do some data wrangling for the merge. A wide variety of approaches exist, but we opt to use `dplyr` to select and rename our columns of interest.
+
+```{r}
+# rename data columns
+chicago_metro_2000 <- dplyr::select(chicago_metro_2000, "HEROP_ID", "PovP2000"="PovP") 
+chicago_metro_2010 <- dplyr::select(chicago_metro_2010, "HEROP_ID", "PovP2010"="PovP")
+```
+
+We can then merge the dataframes. Provided with oepsData are a HEROP specific merge-key -- `HEROP_ID` -- and a more common `GEOID`. We recommend merging on `HEROP_ID` when merging HEROP data, and reserving `GEOID` for compatability with outside datasets. 
+
+```{r}
+# we changed the name of our merge keys earlier
+# so we resolve that here.
+chicago_metro_longitudinal <- merge(chicago_metro_2010, chicago_metro_2000, 
+                                    by.x='HEROP_ID', by.y='HEROP_ID')
+```
+
+With longitudinal data in hand, we can then conduct basic analyses on our data. For instance, we can make side-by-side maps of poverty rates:
+
+```{r side by side poverty}
+tm_shape(chicago_metro_longitudinal) + 
+  tm_fill(c('PovP2000', 'PovP2010'), 
+          title = c('2000 Poverty\nPercentage', '2010 Poverty\nPercentage'),
+          style = c('sd', 'sd'),
+          palette = 'BrBG') + 
+  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE)
+```
+
+Or calculate the change in poverty:
+
+```{r}
+# make a new variable
+chicago_metro_longitudinal <- dplyr::mutate(chicago_metro_longitudinal, 
+                                       ChangePovP = PovP2010 - PovP2000)
+
+tm_shape(chicago_metro_longitudinal) + 
+  tm_fill('ChangePovP', 
+          title = "Change in Percent\n Poverty, 2000 to 2010",
+          style = 'jenks',
+          palette = 'BrBG') + 
+  tm_layout(legend.position = c('left', 'bottom'), frame=FALSE)
+```
