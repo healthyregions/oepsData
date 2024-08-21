@@ -1,7 +1,9 @@
 --- 
 title: "oepsData Package Documentation"
 site: bookdown::bookdown_site
-output: bookdown::gitbook
+output: 
+  bookdown::gitbook:
+    df_print: paged
 documentclass: book
 biblio-style: apalike
 link-citations: yes
@@ -17,4 +19,11 @@ On this site, we have tutorials demonstrating two methods of accessing the Polic
 
 To hear more on the project, check out the OEPS [website](). For more on the data itself, check out the in-depth [data documentation]() or the [online explorer]()
 
+```{r, include=FALSE}
+install.packages('bigrquery')
+install.packages('dplyr')
+install.packages('DBI')
+install.packages('sf')
+install.packages('tmap')
+```
 

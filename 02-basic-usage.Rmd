@@ -36,11 +36,6 @@ head(data.frame(states_1990))
 
 Which lets us operate on the data as we desire. For instance, we can make a simple map:
 
-```{r, include=FALSE}
-install.packages('tmap')
-install.packages('sf')
-```
-
 ```{r}
 library(tmap)
 library(sf)
