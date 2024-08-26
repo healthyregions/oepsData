@@ -11,9 +11,10 @@
 #'   themes to pull variables for. Valid themes are "Geography", "Social", "Environment",
 #'   "Economic", "Outcome", "Policy", "Composite", or "All". Defaults to "All".
 #' @param states String or vector of strings specifying which states to pull data for.
-#' Should be FIPS codes.
+#' Should be FIPS codes. Cannot be a vector if counties is provided.
 #' @param counties String or vector of strings specifying which counties to pull data for.
-#' Should be in FIPS codes, and is invalid if scale is states.
+#' Should be in FIPS codes, and is invalid if scale is states, or if no or multiple
+#' states are specified.
 #' @param tidy Boolean specifying whether to return data in tidy format. Defaults False.
 #' @param geometry Boolean specifying whether to pull geometries for the dataset
 #'   TRUE or not FALSE. Defaults FALSE.
@@ -48,7 +49,8 @@ load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL,
     grepl("state|tract|county|zcta|counties", scale, ignore.case = T),
     grepl("1980|1990|2000|2010|latest", year, ignore.case = T),
     all(grepl(valid_themes[[1]], themes, ignore.case = T)),
-    (is.null(counties) & is.null(states)) | xor(!is.null(counties), grepl("state", scale, ignore.case=T))
+    (is.null(counties) & is.null(states)) | xor(!is.null(counties), grepl("state", scale, ignore.case=T)),
+    (is.null(counties) & length(states) != 1) | (length(states) == 1 & !is.null(counties))
   )
 
   scale <- standardize_scale(scale)
@@ -57,8 +59,15 @@ load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL,
   attribute_data <- filter_by_themes(attribute_data, themes)
 
   if (tidy) attribute_data <- tidify_data(attribute_data)
-  if (!is.null(states)) attribute_data <- filter_by_state(attribute_data, states)
-  if (!is.null(counties)) attribute_data <- filter_by_county(attribute_data, counties)
+  
+  if (!is.null(states)) {
+    states <- translate_to_fips(states)
+    attribute_data <- filter_by_state(attribute_data, states)
+  }
+  if (!is.null(counties)) {
+    counties <- translate_to_fips(states, counties)
+    attribute_data <- filter_by_county(attribute_data, counties)
+  }
 
   if (!geometry) {
     return(attribute_data)

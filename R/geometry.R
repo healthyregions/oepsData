@@ -173,22 +173,23 @@ translate_to_fips <- function(state, county=NULL) {
   
   # check for validity
   rel_counties <- county_id_table[county_id_table$STATEFP==state_fips,]
+  
   valid_options <- c(rel_counties$GEOID, rel_counties$NAME, rel_counties$COUNTYFP)
   if (!(all(county %in% valid_options))) {
     stop('Counties must be valid county names, COUNTYFP, or GEOIDs from the same state.')
   } 
   
-  geoids <- map(county, .f <- function(cnty) {
+  geoids <- lapply(county, FUN=function(cnty) {
     if (cnty %in% rel_counties$GEOID) {
       return(cnty)
-    } else if (cnty %in% rel_counties$STATE_FP) {
-      geoid <- rel_counties[rel_counties$STATE_FP == cnty]$GEOID
+    } else if (cnty %in% rel_counties$COUNTYFP) {
+      geoid <- rel_counties[tolower(rel_counties$COUNTYFP) == cnty,]$GEOID
       return(geoid)
     } else if (cnty %in% rel_counties$NAME) {
-      geoid <- rel_counties[rel_counties$NAME == cnty]$NAME
+      geoid <- rel_counties[tolower(rel_counties$NAME) == cnty,]$GEOID
       return(geoid)
-    }
+    } 
   })
-  
-  return(geoids)
+
+  return(unlist(geoids, use.names=FALSE))
 }

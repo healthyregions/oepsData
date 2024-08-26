@@ -27,10 +27,11 @@ themes to pull variables for. Valid themes are "Geography", "Social", "Environme
 "Economic", "Outcome", "Policy", "Composite", or "All". Defaults to "All".}
 
 \item{states}{String or vector of strings specifying which states to pull data for.
-Should be FIPS codes.}
+Should be FIPS codes. Cannot be a vector if counties is provided.}
 
 \item{counties}{String or vector of strings specifying which counties to pull data for.
-Should be in FIPS codes, and is invalid if scale is states.}
+Should be in FIPS codes, and is invalid if scale is states, or if no or multiple
+states are specified.}
 
 \item{tidy}{Boolean specifying whether to return data in tidy format. Defaults False.}
 

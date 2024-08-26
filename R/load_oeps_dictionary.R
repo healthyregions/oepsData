@@ -17,26 +17,26 @@ load_oeps_dictionary <- function(scale) {
 
   if (grepl("state", scale)) {
     return_data <- 
-      data_dictionary[data_dictionary$geometry == 'state',] |>
-      subset(select = -c(geometry))
+      data_dictionary[data_dictionary$scale == 'state',] |>
+      subset(select = -c(scale))
   }
 
   if (grepl("county|counties", scale)) {
     return_data <-
-      data_dictionary[data_dictionary$geometry == 'county',] |>
-      subset(select = -c(geometry))
+      data_dictionary[data_dictionary$scale == 'county',] |>
+      subset(select = -c(scale))
   }
 
   if (grepl("tract", scale)) {
     return_data <- 
-      data_dictionary[data_dictionary$geometry == 'tract',] |>
-      subset(select = -c(geometry))
+      data_dictionary[data_dictionary$scale == 'tract',] |>
+      subset(select = -c(scale))
   }
 
   if (grepl("zcta", scale)) {
     return_data <- 
-      data_dictionary[data_dictionary$geometry == 'zcta',] |>
-      subset(select = -c(geometry))
+      data_dictionary[data_dictionary$scale == 'zcta',] |>
+      subset(select = -c(scale))
   }
 
   return(return_data)
