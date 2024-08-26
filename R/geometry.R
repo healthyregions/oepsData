@@ -144,4 +144,51 @@ get_cached_geometry_name <- function(scale, cb=FALSE, year=2010) {
 #'
 #' Take State and possibly County names and return the FIPS code of the relevant
 #' unit.
-
+#'
+#' @param state Name, abbreviation, or FIPS of the state to be converted
+#' @param county Name or abbreviation of the county to be converted. Optional
+#' 
+#' @returns FIPS code for the state.
+translate_to_fips <- function(state, county=NULL) {
+  
+  state <- tolower(state)
+  
+  if (state %in% states_id_table$NAME) {
+    relevant_state <- state == states_id_table$NAME
+    state_fips <- states_id_table[relevant_state,]$STATEFP
+  } else if (state %in% states_id_table$ABBR) {
+    relevant_state <- state == states_id_table$ABBR 
+    state_fips <- states_id_table[relevant_state,]$STATEFP
+  } else if (state %in% states_id_table$STATEFP) {
+    state_fips <- state
+  } else {
+    stop('State must be either a state name, abbreviation, or FIPS.')
+  }
+  
+  if (is.null(county)) {
+    return(state_fips)
+  }
+  
+  county <- gsub('\\s?county', '', tolower(county))
+  
+  # check for validity
+  rel_counties <- county_id_table[county_id_table$STATEFP==state_fips,]
+  valid_options <- c(rel_counties$GEOID, rel_counties$NAME, rel_counties$COUNTYFP)
+  if (!(all(county %in% valid_options))) {
+    stop('Counties must be valid county names, COUNTYFP, or GEOIDs from the same state.')
+  } 
+  
+  geoids <- map(county, .f <- function(cnty) {
+    if (cnty %in% rel_counties$GEOID) {
+      return(cnty)
+    } else if (cnty %in% rel_counties$STATE_FP) {
+      geoid <- rel_counties[rel_counties$STATE_FP == cnty]$GEOID
+      return(geoid)
+    } else if (cnty %in% rel_counties$NAME) {
+      geoid <- rel_counties[rel_counties$NAME == cnty]$NAME
+      return(geoid)
+    }
+  })
+  
+  return(geoids)
+}
