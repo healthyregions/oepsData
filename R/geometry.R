@@ -138,3 +138,10 @@ get_cached_geometry_name <- function(scale, cb=FALSE, year=2010) {
 
   return(paste0("herop_", scale, "_", year, ".shp"))
 }
+
+
+#' Translate to FIPS
+#'
+#' Take State and possibly County names and return the FIPS code of the relevant
+#' unit.
+
