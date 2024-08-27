@@ -50,8 +50,8 @@ filter_by_geography <- function(df, states, counties) {
   }
   
   if (is.null(counties) & !is.null(states)) {
-    state <- state_to_fips(state)
-    df <- filter_by_state(df, state)
+    states <- state_to_fips(states)
+    df <- filter_by_state(df, states)
     return(df)
   }
   
@@ -64,8 +64,8 @@ filter_by_geography <- function(df, states, counties) {
   }
   
   # states and counties both specified
-  state_fips <- state_to_fips(state)
-  county_geoids <- county_to_fips(county, state_fips)
+  state_fips <- state_to_fips(states)
+  county_geoids <- county_to_fips(counties, state_fips)
   
   df <- filter_by_county(df, county_geoids)
 }
