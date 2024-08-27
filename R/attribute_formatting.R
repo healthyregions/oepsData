@@ -29,6 +29,103 @@ tidify_data <- function(df) {
   return(tidy_df)
 }
 
+#' Filter by geographies
+#'
+#' Filters a given dataframe to only include entires with specified state and 
+#' counties. If no state or counties are specififed, does nothing.
+#'
+#' @param df Dataframe to filter.
+#' @param states String or vector of strings detailing which states to filter on.
+#' Can be the states name, abbreviation, or GEOID. Optional. If null, counties must 
+#' either not be specified or must be GEOIDS. Defaults NULL.
+#' @param counties String or vector of strings detailing which counties to filter on.
+#' Can be county names, abbreviations, or GEOIDS. Optional. If multiple counties are
+#' passed, counties must either be from the same state or be GEOIDS.
+#'
+#' @returns Dataframe containing only observations which satisfy the filter.
+filter_by_geography <- function(df, states, counties) {
+  
+  if (is.null(states) & is.null(counties)) {
+    return(df)
+  }
+  
+  if (is.null(counties) & !is.null(states)) {
+    state <- state_to_fips(state)
+    df <- filter_by_state(df, state)
+    return(df)
+  }
+  
+  if (is.null(states) & !is.null(counties)) {
+    if (!(all(counties %in% county_id_table$GEOID))) {
+      stop('If state is not specified, counties must be GEOIDS.')
+    }
+    df <- filter_by_county(df, counties)
+    return(df)
+  }
+  
+  # states and counties both specified
+  state_fips <- state_to_fips(state)
+  county_geoids <- county_to_fips(county, state_fips)
+  
+  df <- filter_by_county(df, county_geoids)
+}
+
+#' Identify a state's FIPS code.
+#'
+#' Takes a states name, abbreviation, or FIPS code and returns the 
+#' FIPS code.
+state_to_fips <- function(state) {
+  state <- tolower(state)
+  
+  if (state %in% states_id_table$NAME) {
+    relevant_state <- state == states_id_table$NAME
+    state_fips <- states_id_table[relevant_state,]$STATEFP
+  } else if (state %in% states_id_table$ABBR) {
+    relevant_state <- state == states_id_table$ABBR 
+    state_fips <- states_id_table[relevant_state,]$STATEFP
+  } else if (state %in% states_id_table$STATEFP) {
+    state_fips <- state
+  } else {
+    stop('State must be either a state name, abbreviation, or FIPS.')
+  }
+  
+  return(state_fips)
+}
+
+#' Identify counties GEOID
+#' 
+#' Takes one or more county names, alongside their relevant
+#' state, and return the counties' GEOIDS.
+#' 
+#' @param county As in [filter_by_geography]
+#' @param state_fips The FIPS code for one of the 50 states or DC.
+#' 
+#' @returns Single County GEOID or list of GEOIDS. 
+county_to_fips <- function(county, state_fips) {
+  county <- gsub('\\s?county', '', tolower(county))
+  
+  # check for validity
+  rel_counties <- county_id_table[county_id_table$STATEFP==state_fips,]
+  
+  valid_options <- c(rel_counties$GEOID, rel_counties$NAME, rel_counties$COUNTYFP)
+  if (!(all(county %in% valid_options))) {
+    stop('Counties must be valid county names, COUNTYFP, or GEOIDs from the same state.')
+  } 
+  
+  geoids <- lapply(county, FUN=function(cnty) {
+    if (cnty %in% rel_counties$GEOID) {
+      return(cnty)
+    } else if (cnty %in% rel_counties$COUNTYFP) {
+      geoid <- rel_counties[tolower(rel_counties$COUNTYFP) == cnty,]$GEOID
+      return(geoid)
+    } else if (cnty %in% rel_counties$NAME) {
+      geoid <- rel_counties[tolower(rel_counties$NAME) == cnty,]$GEOID
+      return(geoid)
+    } 
+  })
+  
+  return(unlist(geoids, use.names=FALSE))
+}
 
 #' Filter by state
 #'

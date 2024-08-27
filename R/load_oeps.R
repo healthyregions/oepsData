@@ -49,8 +49,7 @@ load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL,
     grepl("state|tract|county|zcta|counties", scale, ignore.case = T),
     grepl("1980|1990|2000|2010|latest", year, ignore.case = T),
     all(grepl(valid_themes[[1]], themes, ignore.case = T)),
-    (is.null(counties) & is.null(states)) | xor(!is.null(counties), grepl("state", scale, ignore.case=T)),
-    (is.null(counties) & length(states) != 1) | (length(states) == 1 & !is.null(counties))
+    (is.null(counties) & is.null(states)) | xor(!is.null(counties), grepl("state", scale, ignore.case=T))
   )
 
   scale <- standardize_scale(scale)
@@ -58,16 +57,9 @@ load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL,
   attribute_data <- get_attribute_table(scale, year, cache)
   attribute_data <- filter_by_themes(attribute_data, themes)
 
-  if (tidy) attribute_data <- tidify_data(attribute_data)
+  attribute_data <- filter_by_geography(attribute_data, states, counties)
   
-  if (!is.null(states)) {
-    states <- translate_to_fips(states)
-    attribute_data <- filter_by_state(attribute_data, states)
-  }
-  if (!is.null(counties)) {
-    counties <- translate_to_fips(states, counties)
-    attribute_data <- filter_by_county(attribute_data, counties)
-  }
+  if (tidy) attribute_data <- tidify_data(attribute_data)
 
   if (!geometry) {
     return(attribute_data)
