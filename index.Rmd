@@ -25,5 +25,6 @@ install.packages('dplyr')
 install.packages('DBI')
 install.packages('sf')
 install.packages('tmap')
+install.packages('dbplyr')
 ```
 
