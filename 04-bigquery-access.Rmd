@@ -45,6 +45,7 @@ bigrquery::bq_auth()
 
 ```{r show=FALSE, echo=FALSE}
 bigrquery::bq_auth(path=Sys.getenv("BIGQUERY_OEPS_TUTORIAL_KEY"))
+billing <- "oeps-391119"
 ```
 
 ## Making Queries {#query}

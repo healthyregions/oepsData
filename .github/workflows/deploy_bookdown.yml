@@ -3,12 +3,13 @@ on:
      branches:
        - bookdown
 
-  
+
 
 name: renderbook
 
 jobs:
   bookdown:
+    environment: bookdown
     name: Render-Book
     runs-on: macOS-latest
     steps:
@@ -21,15 +22,12 @@ jobs:
         run: Rscript -e 'bookdown::render_book("index.Rmd")'
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+          BIGQUERY_OEPS_TUTORIAL_KEY: ${{ secrets.BIGQUERY_KEY }}
       - uses: actions/upload-artifact@v4
         with:
           name: _book
           path: _book/
-  
-# Need to first create an empty gh-pages branch
-# see https://pkgdown.r-lib.org/reference/deploy_site_github.html
-# and also add secrets for a GH_PAT and EMAIL to the repository
-# gh-action from Cecilapp/GitHub-Pages-deploy
+
   checkout-and-deploy:
    runs-on: ubuntu-latest
    needs: bookdown
