@@ -6,7 +6,7 @@ Opioid Environment Policy Scan data is available on Google BigQuery. In this not
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  eval = FALSE
+  eval = TRUE
 )
 ```
 
