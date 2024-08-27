@@ -9,7 +9,6 @@ name: renderbook
 
 jobs:
   bookdown:
-    environment: bookdown
     name: Render-Book
     runs-on: macOS-latest
     steps:
