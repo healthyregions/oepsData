@@ -1,6 +1,6 @@
 # Getting OEPS Data from BigQuery
 
-Opioid Environment Policy Scan data is available on Google BigQuery. In this notebook, we'll go over how to interact with the data using `bigrquery`. We go over two of the `bigrquery` APIs -- one for readers familiar with SQL, and one for readers who want to avoid SQL. Lastly, readers who are already familiar with Google BigQuery will likely want to skip to [Make a Query](#querying).
+Opioid Environment Policy Scan data is also available on Google BigQuery. In this notebook, we'll go over how to interact with the data using `bigrquery`. We go over two of the `bigrquery` APIs -- one for readers familiar with SQL, and one for readers who want to avoid SQL. Lastly, readers who are already familiar with Google BigQuery will likely want to skip to [Make a Query](#querying).
 
 ```{r, include = FALSE, eval=TRUE}
 knitr::opts_chunk$set(

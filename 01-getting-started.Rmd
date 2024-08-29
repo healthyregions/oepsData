@@ -2,7 +2,7 @@
 
 Installing `oepsData` is easy. Just run the following command to grab the newest release from GitHub.
 
-```{r how to install}
+```{r how to install, results=FALSE, message=FALSE, warning=FALSE}
 install.packages('devtools')
 
 devtools::install_github('https://github.com/healthyregions/oepsData')
