@@ -43,8 +43,9 @@ jobs:
      - name: Deploy to GitHub Pages
        uses: Cecilapp/GitHub-Pages-deploy@master
        env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        with:
-           email: ${{ github.actor }}
-           build_dir: _book/
+         cname: oepsdata.healthyregions.org
+         email: ${{ github.actor }}
+         build_dir: _book/
 
