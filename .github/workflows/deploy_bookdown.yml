@@ -2,6 +2,7 @@ on:
   push:
      branches:
        - bookdown
+  workflow_dispatch: {}
 
 
 
