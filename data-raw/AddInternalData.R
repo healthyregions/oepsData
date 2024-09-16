@@ -72,7 +72,7 @@ data_dictionary["Year"] <- combine_if_present(data_dictionary[["Year"]], data_di
 data_dictionary["Year"] <- combine_if_present(data_dictionary[["Year"]], data_dictionary[["1990"]])
 data_dictionary["Year"] <- combine_if_present(data_dictionary[["Year"]], data_dictionary[["1980"]])
 
-data_dictionary <- select(data_dictionary, 'Variable', 'Year', 'Theme', everything())
+data_dictionary <- select(data_dictionary, 'Variable', "Release Year"='Year', 'Theme', everything())
 data_dictionary <- select(data_dictionary, -'1980', -'1990', -'2000', -'2010', -'Latest')
 
 temps |> walk(unlink)
