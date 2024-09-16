@@ -6,6 +6,10 @@
 \usage{
 state_to_fips(state)
 }
+\arguments{
+\item{state}{String or vector of strings detailing which states to filter
+on. Can be the state's name, abbreviation, or GEOID.}
+}
 \description{
 Takes a states name, abbreviation, or FIPS code and returns the
 FIPS code.

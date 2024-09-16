@@ -1,6 +1,6 @@
 #' Load OEPS data
 #'
-#' `load_oeps` packages opioid environment policy scan data with given geographic
+#' `load_oeps` packages Opioid Environment Policy Scan data with given geographic
 #' scale, year, and themes. Can also pull geometries.
 #'
 #' @param scale String specifying which geographic scale to pull variables for.
@@ -11,10 +11,11 @@
 #'   themes to pull variables for. Valid themes are "Geography", "Social", "Environment",
 #'   "Economic", "Outcome", "Policy", "Composite", or "All". Defaults to "All".
 #' @param states String or vector of strings specifying which states to pull data for.
-#' Should be FIPS codes. Cannot be a vector if counties is provided.
+#' Should be FIPS codes. Cannot be a vector if counties is provided. Ignored when
+#' scale is ZCTA.
 #' @param counties String or vector of strings specifying which counties to pull data for.
 #' Should be in FIPS codes, and is invalid if scale is states, or if no or multiple
-#' states are specified.
+#' states are specified. Ignored when scale is ZCTA.
 #' @param tidy Boolean specifying whether to return data in tidy format. Defaults False.
 #' @param geometry Boolean specifying whether to pull geometries for the dataset
 #'   TRUE or not FALSE. Defaults FALSE.
@@ -39,36 +40,34 @@
 #' @export
 load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL,
                       tidy=FALSE, geometry=FALSE, cache=TRUE) {
-
-  # TODO: implement cartographic boundaries
-
+  
   valid_themes <- append(unique(data_dictionary[["Theme"]]), "all")
   valid_themes <- paste(valid_themes, collapse="|")
 
   stopifnot(
     grepl("state|tract|county|zcta|counties", scale, ignore.case = T),
-    grepl("1980|1990|2000|2010|latest", year, ignore.case = T),
+    grepl("1980|1990|2000|2010|2018|latest", year, ignore.case = T),
     all(grepl(valid_themes[[1]], themes, ignore.case = T)),
     (is.null(counties) & is.null(states)) | xor(!is.null(counties), grepl("state", scale, ignore.case=T))
   )
-
+  
   scale <- standardize_scale(scale)
-
   attribute_data <- get_attribute_table(scale, year, cache)
   attribute_data <- filter_by_themes(attribute_data, themes)
-
-  attribute_data <- filter_by_geography(attribute_data, states, counties)
+  
+  if (!(is.null(counties) & is.null(states)) & scale == 'zcta') {
+    message('ZCTA scale is not compatible with counties, states parameters; returning
+          nationwide results.')
+  }
+  
+  if (scale != "zcta") attribute_data <- filter_by_geography(attribute_data, states, counties)
   
   if (tidy) attribute_data <- tidify_data(attribute_data)
 
-  if (!geometry) {
-    return(attribute_data)
-  }
-
+  if (!geometry) return(attribute_data)
+  
   geometry <- retrieve_geometry(scale, quiet = TRUE)
-
   data <- merge(attribute_data, geometry, on = "HEROP_ID", how = "left")
-
   return(sf::st_sf(data))
 }
 
@@ -109,7 +108,11 @@ cache_oeps_tables <- function() {
 #' @import data.table
 get_attribute_table <- function(scale, year, cache=FALSE) {
   BASE_URL <- "https://raw.githubusercontent.com/GeoDaCenter/opioid-policy-scan/main/data_final/full_tables/"
-
+  
+  if (grepl(year, "2018")) {
+    year <- 'latest'
+  }
+  
   table_name <- paste0(make_object_name(scale, year), '.csv')
 
   can_retrieve_from_cache <- cache & file.exists(file.path(cache_dir(), table_name))

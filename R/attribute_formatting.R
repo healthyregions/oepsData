@@ -74,6 +74,9 @@ filter_by_geography <- function(df, states, counties) {
 #'
 #' Takes a states name, abbreviation, or FIPS code and returns the 
 #' FIPS code.
+#' 
+#' @param state String or vector of strings detailing which states to filter
+#' on. Can be the state's name, abbreviation, or GEOID. 
 state_to_fips <- function(state) {
   state <- tolower(state)
   

@@ -27,11 +27,12 @@ themes to pull variables for. Valid themes are "Geography", "Social", "Environme
 "Economic", "Outcome", "Policy", "Composite", or "All". Defaults to "All".}
 
 \item{states}{String or vector of strings specifying which states to pull data for.
-Should be FIPS codes. Cannot be a vector if counties is provided.}
+Should be FIPS codes. Cannot be a vector if counties is provided. Ignored when
+scale is ZCTA.}
 
 \item{counties}{String or vector of strings specifying which counties to pull data for.
 Should be in FIPS codes, and is invalid if scale is states, or if no or multiple
-states are specified.}
+states are specified. Ignored when scale is ZCTA.}
 
 \item{tidy}{Boolean specifying whether to return data in tidy format. Defaults False.}
 
@@ -48,7 +49,7 @@ If geometry is FALSE, a tibble containing the requested variables.
 If geometry is TRUE, returns a simple feature collection.
 }
 \description{
-\code{load_oeps} packages opioid environment policy scan data with given geographic
+\code{load_oeps} packages Opioid Environment Policy Scan data with given geographic
 scale, year, and themes. Can also pull geometries.
 }
 \examples{
