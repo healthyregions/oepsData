@@ -5,6 +5,7 @@ cacheing
 example-uses
 data-subsetting
 longitudinal-analysis
+combining-outside-data
 getting-oeps-data-from-bigquery
 setting-up-bigquery
 query
