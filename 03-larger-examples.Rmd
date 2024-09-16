@@ -141,3 +141,140 @@ tm_shape(chicago_metro_longitudinal) +
           palette = 'BrBG') + 
   tm_layout(legend.position = c('left', 'bottom'), frame=FALSE)
 ```
+
+## Combining outside data
+
+In this section, we'll demonstrate how to pair `oepsData` with outside data sources to glean new insights through a short case study.
+
+Evelyn is a public policy researcher that wants to investigate the viability of two interventions to increase healthcare accessibility in her region: increased transit availability through rideshare vouchers, and increased telehealth outreach. Through a partnership with the local regional hospital, she managed to survey 110 of the hospital's patients, getting data on how they use the facility and their access to car transit. Let's see how the `oepsData` package can help Evelyn contextualize her data and create an initial hypothesis about where best to target these interventions.
+
+Evelyn starts by using the `load_oeps_dictionary` command to view the variables available at the ZCTA scale. She identifies two relevant variables for her purposes: `FqhcTmDr`, or the drive time to the nearest Federally Qualified Healthcare Facility, and `MhTmDr`, or the drive time to the nearest mental health facility. Both variables are under the `Environment` theme, so she uses `load_oeps` to pull the data:
+
+```{r}
+library(oepsData)
+library(dplyr)
+
+zcta <- oepsData::load_oeps(scale='zcta', year='2018', 
+                            theme='Environment', geometry=TRUE)
+
+zcta <- zcta[c('GEOID', 'FqhcTmDr', 'MhTmDr')]
+
+dplyr::glimpse(zcta)
+```
+
+Evelyn then filters down to the ZCTAs in her region. Depending on what data Evelyn has on hand, she has a few possible approaches. If she has a geometry for her region, she can use a spatial filter through `sf`:
+
+```{r}
+library(sf)
+
+# Read in data
+study_region <- st_read('data/service_area.shp')
+
+# Match CRS
+crs <- "EPSG:3968"
+zcta <- st_transform(zcta, crs)
+study_region <- st_transform(study_region, crs)
+
+# Find ZCTAs which intersect the study region
+zcta <- st_filter(zcta, study_region) 
+```
+
+Alternatively, if she has a list of relevant ZCTAs on hand, she can directly filter on those:
+
+```{r}
+# Read in list of relevant ZCTAs
+relevant_zctas <- read.csv('data/zctas.csv')$x
+
+# Filter against the relevant ZCTAs
+zcta <- zcta[zcta$GEOID %in% relevant_zctas,]
+```
+
+Regardless of which approach she picks, her final result looks something like this:
+
+```{r, include=FALSE}
+library(tmap)
+tmap_mode('view')
+```
+
+```{r}
+library(tmap)
+tm_shape(zcta) + tm_fill(col='FqhcTmDr', palette='Reds') + tm_borders()
+```
+
+With the ZCTA data in hand, Evelyn can load in her survey data and attach it.
+
+```{r}
+survey <- read.csv('data/survey_data.csv')
+head(survey)
+```
+
+Evelyn's data details the home ZIP of each individual (`ZCTA`), whether they utilize primary care services at the local medical facility (`Has_Pcp`), utilize specialists at the facility (`Has_Sp`), receive financial aid to help cover their medical expenses (`Fin_Aid`), and have access to a car (`Has_Car`). 
+
+She's interested in aggregate statistics, so instead of merging her data directly into the sample, she first aggregates it by ZCTA.
+
+```{r}
+survey <- survey |> 
+  select(-RID) |>
+  group_by(ZCTA) |>
+  summarize(Fin_Aid   = sum(Fin_Aid), # count who receive financial aid
+            Has_Pcp   = sum(Has_Pcp), # count who see a pcp
+            Has_Sp    = sum(Has_Sp),  # count who see a specialist
+            Has_car   = sum(Has_Car), # count with a car
+            Num_Resps = n()) # count of respondents
+
+# Full join, as not every ZCTA has a respondent 
+zcta <- merge(zcta, survey, by.x = "GEOID", by.y = "ZCTA", all=TRUE)
+head(data.frame(zcta)) 
+```
+
+With her data merged, Evelyn starts a three step preliminary analysis. First, she checks the distribution of her responses:
+
+```{r, include=FALSE}
+tmap_mode('view')
+```
+
+```{r}
+tm_shape(zcta) + 
+  tm_fill('Num_Resps', style='cont', palette='RdPu', alpha=.8) + 
+  tm_borders()
+```
+
+The majority of responses are from the center of her study area, near the city containing her partner medical facility, or from surrounding towns. Additionally, Evelyn doesn't have respondents from West Virginia ZCTAs whose closest medical center is likely her partner facility.
+
+With this info in hand, Evelyn asks an her main question: which ZCTAs would most benefit from increased transit services to and from the local Methadone Clinic and Mental Health providers, and which areas would benefit more from increased telehealth opportunities and outreach?
+
+As a rough and tumble operationalization, she guesses that areas within a 30 minute drive of their nearest Mental Health provider and Methadone clinic but which have a below median percentage of patients with cars likely benefit most from a increased transit options, while locations further out might with fewer cars likely benefit most from increased telehealth.
+
+To map this, she does a quick bit of data wrangling:
+
+```{r}
+
+# What percentage of patients in a given ZCTA have cars?
+zcta["Has_CarP"] <- zcta["Has_car"] / zcta["Num_Resps"] * 100
+med_car_pct <- median(zcta$Has_CarP, na.rm = T)
+
+# Which areas would benefit most from increased transit option?
+zcta["More_Transit"] <- (zcta$MhTmDr <= 30) & 
+                          (zcta$FqhcTmDr <= 30) & 
+                             (zcta$Has_CarP < med_car_pct)
+
+# Which areas would benefit most from increased telehealth?
+zcta["More_Telehealth"] <- (zcta$MhTmDr > 30) & 
+                             (zcta$FqhcTmDr > 30) &
+                              (zcta$Has_CarP < med_car_pct)
+
+head(data.frame(zcta)) 
+```
+
+Evelyn then plots the results, highlighting the borders of the ZCTAs she believes may benefit most from increased telehealth in blue, and zctas she believe may benefit most from increased transit in red.
+
+```{r}
+tm_shape(zcta) + tm_fill(col='pink', alpha=.25) +
+tm_shape(filter(zcta, More_Transit)) +
+  tm_fill(lwd=3, col='red') +
+tm_shape(filter(zcta, More_Telehealth)) +
+  tm_fill(lwd=3, col='blue') +
+tm_shape(zcta) + tm_borders(lwd=.2)
+```
+
+Evelyn has thus identified six ZCTAs she thinks may benefit most from increased transit options, and one that she thinks will benefit more from increased telehealth accessibility. From here, she can and probably should continue to validate her results through multiple approaches. Computationally, she may want to check the percent of households with internet in each ZCTA -- which she can do using `load_oeps` -- or collect increased responses to ensure her calculated percentages are accurate. Qualitatively, she may also want to validate her results against interview data from patients, to ensure that her proposed interventions agree with the needs expressed by the communities they will effect.
