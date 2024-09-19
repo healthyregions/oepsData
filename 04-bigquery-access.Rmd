@@ -6,7 +6,7 @@ Opioid Environment Policy Scan data is also available on Google BigQuery. In thi
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  eval = TRUE
+  eval = FALSE
 )
 ```
 ## Overview
@@ -56,7 +56,7 @@ It's unlikely outside of unreasonably intense usage of BigQuery.
 
 As of September 2024, the free tier for BigQuery allows for 1 TiB of data querying. The entire OEPS dataset is less than 1 GiB in size, so you would need to pull the entire dataset over 1,000 times in a month to leave the free tier. Unless you have an automated pipeline pulling from OEPS or are pulling other datasets on BigQuery, this is a hard limit to reach!
 
-For more on BigQuery billing, see the [Google BigQuery pricing page](https://cloud.google.com/bigquery/pricing).
+For more on BigQuery billing, see the <a style="color:#f07e4b;font-weight:bold;"href="https://cloud.google.com/bigquery/pricing">Google BigQuery pricing page</a>.
 
 ::::
 
