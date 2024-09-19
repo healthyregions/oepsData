@@ -19,19 +19,20 @@ load_oeps(
 \item{scale}{String specifying which geographic scale to pull variables for.
 Must be one of "tract", "zcta", "county", or "state".}
 
-\item{year}{String or integer specifying which year to pull variables for.
-Must be one of "1980", "1990", "2000", "2010", or "Latest".}
+\item{year}{String or integer specifying which release year to pull variables for.
+Must be one of "1980", "1990", "2000", "2010", "2018, or "Latest". "2018"
+and "Latest" return the same data.}
 
 \item{themes}{String or list of strings specifying which Opioid Risk Environment
 themes to pull variables for. Valid themes are "Geography", "Social", "Environment",
 "Economic", "Outcome", "Policy", "Composite", or "All". Defaults to "All".}
 
 \item{states}{String or vector of strings specifying which states to pull data for.
-Should be FIPS codes. Cannot be a vector if counties is provided. Ignored when
-scale is ZCTA.}
+Can be FIPS codes, state names, or state abbreviations. Cannot be a vector if
+counties is provided. Ignored when scale is ZCTA.}
 
 \item{counties}{String or vector of strings specifying which counties to pull data for.
-Should be in FIPS codes, and is invalid if scale is states, or if no or multiple
+Can be FIPS codes or county name, and is invalid if scale is states, or if no or multiple
 states are specified. Ignored when scale is ZCTA.}
 
 \item{tidy}{Boolean specifying whether to return data in tidy format. Defaults False.}

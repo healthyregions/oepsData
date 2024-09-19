@@ -19,7 +19,7 @@ library(sf)
 #' @param sep the seperator for pasting. Defaults ''
 #' 
 #' @returns A list of length `length(a)` which contains the pairwise pasted strings.
-combine_if_present <- function(A, B, sep) {
+combine_if_present <- function(A, B, sep=", ") {
   # this is not a very paradigmatic solution for R
   # but it works soooo
   return_list <- 1:length(A)
