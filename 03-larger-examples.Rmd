@@ -1,4 +1,4 @@
-# Example uses
+# Examples
 
 
 ## Data subsetting
@@ -43,7 +43,7 @@ cook_county_2010 <- load_oeps(
 head(data.frame(cook_county_2010))
 ```
 
-We can then immediately map our data. We opt to use `tmap` in this example, but `ggplot2` also has mapping functionality for users more familiar with the library.
+We can then immediately map our data. We opt to use [`tmap`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html#hello-world) in this example, but [`ggplot2`](https://ggplot2.tidyverse.org/) also has mapping functionality for users more familiar with the library.
 
 ```{r}
 library(tmap)
@@ -87,7 +87,7 @@ tm_shape(chicago_metro_2010) +
 
 ## Longitudinal analysis
 
-Although not directly supported in the package, `oepsData` also enables easier longitudinal analysis. Continuing our above example, we might be interested in the change in percent poverty over time throughout Chicagoland. To check, let's compare 2000 data to 2010 data.
+The `oepsData` package also enables easier longitudinal analysis. Continuing our above example, we might be interested in the change in percent poverty over time throughout Chicagoland. To check, let's compare 2000 data to 2010 data.
 
 We start by grabbing data from 2000:
 ```{r}
@@ -99,7 +99,8 @@ chicago_metro_2000 <- load_oeps(
   counties=c('17031', '18089'),
   geometry=F)
 ```
-Note that `chicago_metro_2000` and `chicago_metro_2010` share column names, so we need to do some data wrangling for the merge. A wide variety of approaches exist, but we opt to use `dplyr` to select and rename our columns of interest.
+
+Because variables have the same column name in every year, `chicago_metro_2000` and `chicago_metro_2010` have columns with the same names. To fix this, we need to select and rename som eof our columns; there are a wide variety of possible approaches to this problem, but we opt to use [`dplyr`](https://dplyr.tidyverse.org/) to select and rename our columns of interest.
 
 ```{r}
 # rename data columns
@@ -107,7 +108,7 @@ chicago_metro_2000 <- dplyr::select(chicago_metro_2000, "HEROP_ID", "PovP2000"="
 chicago_metro_2010 <- dplyr::select(chicago_metro_2010, "HEROP_ID", "PovP2010"="PovP")
 ```
 
-We can then merge the dataframes. Provided with oepsData are a HEROP specific merge-key -- `HEROP_ID` -- and a more common `GEOID`. We recommend merging on `HEROP_ID` when merging HEROP data, and reserving `GEOID` for compatability with outside datasets. 
+We can then merge the dataframes. Two merge keys are provided with `oepsData`: a HEROP specific merge-key called `HEROP_ID` and the more common [`GEOID`](https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html). We recommend merging on `HEROP_ID` when merging HEROP data, and reserving `GEOID` for compatability with outside datasets. 
 
 ```{r}
 # we changed the name of our merge keys earlier
@@ -277,4 +278,4 @@ tm_shape(filter(zcta, More_Telehealth)) +
 tm_shape(zcta) + tm_borders(lwd=.2)
 ```
 
-Evelyn has thus identified six ZCTAs she thinks may benefit most from increased transit options, and one that she thinks will benefit more from increased telehealth accessibility. From here, she can and probably should continue to validate her results through multiple approaches. Computationally, she may want to check the percent of households with internet in each ZCTA -- which she can do using `load_oeps` -- or collect increased responses to ensure her calculated percentages are accurate. Qualitatively, she may also want to validate her results against interview data from patients, to ensure that her proposed interventions agree with the needs expressed by the communities they will effect.
+Evelyn has thus identified six ZCTAs she thinks may benefit most from increased transit options, and one that she thinks will benefit more from increased telehealth accessibility. From here, she can and probably should continue to validate her results through multiple approaches. Computationally, she may want to check the percent of households without internet in each ZCTA -- contained in the `NoIntP` variable she can get through another use of `load_oeps` -- or collect increased responses to ensure her calculated percentages are accurate. Qualitatively, she may also want to validate her results against interview data from patients, to ensure that her proposed interventions agree with the needs expressed by the communities they will effect.

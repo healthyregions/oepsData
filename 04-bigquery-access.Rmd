@@ -1,6 +1,6 @@
 # Getting OEPS Data from BigQuery
 
-Opioid Environment Policy Scan data is also available on Google BigQuery. In this notebook, we'll go over how to interact with the data using `bigrquery`. We go over two of the `bigrquery` APIs -- one for readers familiar with SQL, and one for readers who want to avoid SQL. Lastly, readers who are already familiar with Google BigQuery will likely want to skip to [Make a Query](#querying).
+Opioid Environment Policy Scan data is also available on Google BigQuery. In this notebook, we'll go over how to interact with the data using [`bigrquery`](https://bigrquery.r-dbi.org/). We go over two of the `bigrquery` APIs -- one for readers familiar with SQL, and one for readers who want to avoid SQL. Lastly, readers who are already familiar with Google BigQuery will likely want to skip to [Make a Query](#querying).
 
 ```{r, include = FALSE, eval=TRUE}
 knitr::opts_chunk$set(
@@ -9,8 +9,7 @@ knitr::opts_chunk$set(
   eval = TRUE
 )
 ```
-
-## Setting up BigQuery
+## Overview
 
 When making queries against a BigQuery dataset, we do not directly query the dataset. Instead, we connect to a BigQuery profile and submit a job, which tells the profile to make the query in our stead and return the data. You can think of this like connecting to another computer to middleman the exchange.
 
@@ -20,7 +19,20 @@ knitr::include_graphics('./images/gc-structure.png')
 
 The setup  allows users to work with multiple BigQuery datasets within a single profile, and also allows for billing to be separated so that data providers only pay to store the data instead of also paying for all usage of their data.
 
-To enable BigQuery, sign into a Google account on your browser of choice before navigating to [this link](https://console.cloud.google.com/marketplace/product/google/bigquery.googleapis.com?hl=en&returnUrl=%252Fbigquery), where you will be prompted to "Enable BigQuery." Do so to enable your account to access BigQuery and data through BigQuery.
+The OEPS data warehouse itself is named `oeps-391119` on BigQuery, and is divided into two datasets: `tabular` and `spatial`. The `tabular` dataset consists of 16 tables of attribute data at the state, county, tract, and ZCTA scales from 1980 to 2020. The `spatial` dataset contains the 2010 TIGER/Line geometries for each of these scales. The primary key for the datasets are `HEROP_ID`. A full dataset schema can be found on the OEPS BigQuery reference [linked here](https://github.com/healthyregions/oeps/blob/23_update_explorer/docs/BQ-Reference.md).
+
+```{r, echo=FALSE, fig.align='center', out.width=400, out.height=400, eval=TRUE}
+knitr::include_graphics('./images/oeps-structure.png')
+```
+
+## Setting up BigQuery
+
+You can set up BigQuery for usage in R in three broad steps:
+1. Enabling BigQuery on your Google Account
+2. Grabbing the name of your BigQuery resource
+3. Connecting everything to BigRQuery
+
+Let's start at step one. Sign into a Google account on your browser of choice before navigating to [this link](https://console.cloud.google.com/marketplace/product/google/bigquery.googleapis.com?hl=en&returnUrl=%252Fbigquery), where you will be prompted to "Enable BigQuery." Do so to enable your account to access BigQuery and data through BigQuery.
 
 ```{r, echo=FALSE, fig.align='center', out.width=700, out.height=246}
 #knitr::include_graphics('images/bigquery enable button.png')
@@ -36,6 +48,18 @@ Whichever route you take, we need to store the name of your BigQuery project in 
 billing <- "oeps-tutorial" # replace this with your project name!
 ```
 
+:::: {.box data-latex=""}
+
+**"Will I be charged money for using BigQuery?"**
+
+It's unlikely outside of unreasonably intense usage of BigQuery.
+
+As of September 2024, the free tier for BigQuery allows for 1 TiB of data querying. The entire OEPS dataset is less than 1 GiB in size, so you would need to pull the entire dataset over 1,000 times in a month to leave the free tier. Unless you have an automated pipeline pulling from OEPS or are pulling other datasets on BigQuery, this is a hard limit to reach!
+
+For more on BigQuery billing, see the [Google BigQuery pricing page](https://cloud.google.com/bigquery/pricing).
+
+::::
+
 Lastly, we need to establish that we actually have permission to create jobs on the account we created. To do that, we can use `bigrquery::bq_auth()`, and then grant the Tidyverse API a few permissions on our Google Account. Note that this command will prompt you to open a new window in your browser.
 
 ```{r, eval=FALSE}
@@ -48,19 +72,9 @@ bigrquery::bq_auth(path=Sys.getenv("BIGQUERY_OEPS_TUTORIAL_KEY"))
 billing <- "oeps-391119"
 ```
 
-## Making Queries {#query}
+Now that `bigrquery` is set up, we can explore using two of its interfaces to interact with BigQuery: the low-level API that uses SQL, and a higher level API using `dplyr`. 
 
-Now that we've enabled BigQuery on our account, we can use it to query the OEPS data on BigQuery.
-
-First, lets back up and look at the OEPS project at a broader level. Currently, the OEPS data warehouse on BigQuery is named `oeps-391119`, and is divided into two datasets: `tabular` and `spatial`. The `tabular` dataset consists of 16 tables of attribute data at the state, county, tract, and ZCTA scales from 1980 to 2020. The `spatial` dataset contains the 2010 TIGER/Line geometries for each of these scales. The primary key for the datasets are `HEROP_ID`. A full dataset schema can be found on the OEPS BigQuery reference [linked here](https://github.com/healthyregions/oeps/blob/23_update_explorer/docs/BQ-Reference.md).
-
-```{r, echo=FALSE, fig.align='center', out.width=400, out.height=400, eval=TRUE}
-knitr::include_graphics('./images/oeps-structure.png')
-```
-
-bigrquery offers three interfaces for interacting with BigQuery, but we introduce two here: the low-level API that uses SQL, and a higher level method using dplyr. 
-
-### The low-level API {#low-level}
+## The low-level API {#low-level}
 
 The low-level API offers a series of methods that can be used to interact with [BigQuery's REST API](https://cloud.google.com/bigquery/docs/reference/rest). While bigrquery offers quite a few commands, it's usually sufficient to use two: `bq_project_query` and `bq_table_download`.
 
@@ -118,13 +132,13 @@ head(results)
 And this works:
 
 ```{r}
-# This works
+# good
 results <- bq_table_download(tb) |> 
   st_as_sf(wkt='geom', crs='EPSG:4326') # convert geom to sf
 head(results)
 ```
 
-#### A full low-level pipeline:
+### A full low-level pipeline:
 
 Putting this all together, we can create a quick map of how county level poverty changed from 1990 to 2000:
 
@@ -157,9 +171,9 @@ tm_shape(results) +
 
 ```
 
-### The dplyr API {#dplyr}
+## The dplyr API {#dplyr}
 
-For users with less SQL familiarity, it's also possible to use dplyr to interact with BigQuery. We'll need the help of DBI, a library for interacting with databases in R.
+For users with less SQL familiarity, it's also possible to use dplyr to interact with BigQuery. We'll need the help of [`DBI`](https://dbi.r-dbi.org/), a library for interacting with databases in R.
 
 ```{r, warning=FALSE, message=FALSE}
 library(dplyr)
@@ -167,7 +181,7 @@ library(DBI)
 library(bigrquery)
 ```
 
-For this pipeline, we use DBI to connect to a given dataset (e.g. `tabular`), before picking a table within the dataset to interact with and then manipulate that table using dplyr. 
+For this pipeline, we use `DBI` to connect to a given dataset (e.g. `tabular`), before picking a table within the dataset to interact with and then manipulate that table using dplyr. 
 
 ```{r}
 # Connect to the tabular dataset
@@ -247,7 +261,7 @@ counties2010 <- tbl(spatial_conn, 'counties2010') |>
 head(counties2010)
 ```
 
-#### A full dplyr pipeline:
+### A full dplyr pipeline:
 
 Putting all the pieces together, we can make our poverty map with the following code: 
 

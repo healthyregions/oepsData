@@ -13,8 +13,8 @@ description: "This is a short bookdown explaining how to access OEPS data throug
 
 # Introduction
 
-The Opioid Environment Policy Scan (OEPS) is an open-source data warehouse created by the Healthy Regions & Policies Lab to support researchers in studying and modeling the opioid risk environment. This website is intended as a starting place for researchers interested in using the OEPS data.
-
+The Opioid Environment Policy Scan (OEPS) is an open-source data warehouse created by the [Healthy Regions & Policies Lab](https://healthyregions.org/) to support researchers in studying and modeling the opioid risk environment. This website is intended as a starting place for researchers interested in using the OEPS data, especially using R.
+ 
 On this site, we have tutorials demonstrating two methods of accessing the Policy Scan's data sets: first through an R package called `oepsData`, and secondly through `bigrquery`. We additionally provide a two example analyses using the package as a starting place for spatial research. 
 
 To hear more on the project, check out the OEPS [website](https://oeps.healthyregions.org/). For more on the data itself, check out the in-depth [data documentation](https://oeps.healthyregions.org/docs) or the [online explorer](https://oeps.healthyregions.org/map).

@@ -12,3 +12,11 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+.box {
+  padding: 1em;
+  background: #429E90;
+  color: white;
+  border: 2px solid #2C5D56;
+  border-radius: 10px;
+}
