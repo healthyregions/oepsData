@@ -36,11 +36,11 @@ We might find that we're interested in the 1990 state data. We can load that dat
 
 - `states`  A string or vector of strings specifying which states to pull data for, either as FIPS codes or names. Ignored when scale is in ZCTA. Defaults `None`.
 
-- `counties` A string or vector of strings specifying which counties to pull data for, either as FIPS or names. Ignored for ZCTA, and must be specified alongside `states. Defaults `None`. 
+- `counties` A string or vector of strings specifying which counties to pull data for, either as FIPS or names. Ignored for ZCTA, and must be specified alongside `states`. Defaults `None`. 
 
 - `tidy` Boolean specifying whether to return data in tidy format; defaults to `FALSE`.
 
-- `geometry` Boolean specifying whether to pull geometires for the dataset. Defaults `FALSE`
+- `geometry` Boolean specifying whether to pull geometries for the dataset. Defaults `FALSE`
 
 - `cache` Boolean specifying whether to use cahced geometries or not. See the section on [cacheing](https://oepsdata.healthyregions.org/getting-started#cacheing) for more. Defaults `TRUE`.
 
