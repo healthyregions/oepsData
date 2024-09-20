@@ -48,11 +48,19 @@ load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL,
   stopifnot(
     grepl("state|tract|county|zcta|counties", scale, ignore.case = T),
     grepl("1980|1990|2000|2010|2018|latest", year, ignore.case = T),
-    all(grepl(valid_themes[[1]], themes, ignore.case = T)),
-    (is.null(counties) & is.null(states)) | xor(!is.null(counties), grepl("state", scale, ignore.case=T))
+    all(grepl(valid_themes[[1]], themes, ignore.case = T))
   )
+
+    if (!is.null(counties) & grepl("state", scale, ignore.case=T)) {
+    stop("Cannot subset states by counties.")
+  }
   
   scale <- standardize_scale(scale)
+  
+  if (grepl('zcta', scale, ignore.case=T) & !(year %in% c('2018', 'latest'))) {
+    stop('Historic ZCTA data is not available due to unreliability.')
+  }
+  
   attribute_data <- get_attribute_table(scale, year, cache)
   attribute_data <- filter_by_themes(attribute_data, themes)
   
