@@ -28,8 +28,11 @@ knitr::include_graphics('./images/oeps-structure.png')
 ## Setting up BigQuery
 
 You can set up BigQuery for usage in R in three broad steps:
+
 1. Enabling BigQuery on your Google Account
+
 2. Grabbing the name of your BigQuery resource
+
 3. Connecting everything to BigRQuery
 
 Let's start at step one. Sign into a Google account on your browser of choice before navigating to [this link](https://console.cloud.google.com/marketplace/product/google/bigquery.googleapis.com?hl=en&returnUrl=%252Fbigquery), where you will be prompted to "Enable BigQuery." Do so to enable your account to access BigQuery and data through BigQuery.
