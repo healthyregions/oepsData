@@ -221,11 +221,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="load_oeps" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> load_oeps<a href="usage.html#load_oeps" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We might find that we’re interested in the 1990 state data. We can load that data and its geometries using <code>load_oeps</code>, which accepts the following arguments:
-* <code>scale</code> The scale of analysis. One of “tract”, “zcta”, “county”, or “state”
-* <code>year</code> The release year for the data. One of 1980, 1990, 2000, 2010, or 2018.
-* <code>themes</code> The theme to pull data for. One of ’Geography”, “Social”, “Environment”, “Economic”, “Policy”, “Composite”, or “All”. Defaults <code>All</code>.
-* <code>states</code> A string or vector of strings specifying which states to pull data for, either as FIPS codes or names. Ignored when scale is in ZCTA. Defaults <code>None</code>.
-* <code>counties</code> A string or vector of strings specifying which counties to pull data for, either as FIPS or names. Ignored for ZCTA, and must be specified alongside <code>states. Defaults</code>None<code>.  *</code>tidy<code>Boolean specifying whether to return data in tidy format; defaults to</code>FALSE<code>. *</code>geometry<code>Boolean specifying whether to pull geometires for the dataset. Defaults</code>FALSE<code>*</code>cache<code>Boolean specifying whether to use cahced geometries or not. See the section on [cacheing](https://oepsdata.healthyregions.org/getting-started#cacheing) for more. Defaults</code>TRUE`.</p>
+- <code>scale</code> The scale of analysis. One of “tract”, “zcta”, “county”, or “state”</p>
+<ul>
+<li><p><code>year</code> The release year for the data. One of 1980, 1990, 2000, 2010, or 2018.</p></li>
+<li><p><code>themes</code> The theme to pull data for. One of ’Geography”, “Social”, “Environment”, “Economic”, “Policy”, “Composite”, or “All”. Defaults <code>All</code>.</p></li>
+<li><p><code>states</code> A string or vector of strings specifying which states to pull data for, either as FIPS codes or names. Ignored when scale is in ZCTA. Defaults <code>None</code>.</p></li>
+<li><p><code>counties</code> A string or vector of strings specifying which counties to pull data for, either as FIPS or names. Ignored for ZCTA, and must be specified alongside <code>states. Defaults</code>None`.</p></li>
+<li><p><code>tidy</code> Boolean specifying whether to return data in tidy format; defaults to <code>FALSE</code>.</p></li>
+<li><p><code>geometry</code> Boolean specifying whether to pull geometires for the dataset. Defaults <code>FALSE</code></p></li>
+<li><p><code>cache</code> Boolean specifying whether to use cahced geometries or not. See the section on <a href="https://oepsdata.healthyregions.org/getting-started#cacheing">cacheing</a> for more. Defaults <code>TRUE</code>.</p></li>
+</ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="usage.html#cb4-1" tabindex="-1"></a></span>
 <span id="cb4-2"><a href="usage.html#cb4-2" tabindex="-1"></a>states_1990 <span class="ot">&lt;-</span> <span class="fu">load_oeps</span>(<span class="at">scale=</span><span class="st">&quot;state&quot;</span>, </span>
 <span id="cb4-3"><a href="usage.html#cb4-3" tabindex="-1"></a>          <span class="at">year=</span><span class="dv">1990</span>,</span>
