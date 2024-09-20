@@ -211,10 +211,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="setting-up-bigquery" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> Setting up BigQuery<a href="getting-oeps-data-from-bigquery.html#setting-up-bigquery" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>You can set up BigQuery for usage in R in three broad steps:
-1. Enabling BigQuery on your Google Account
-2. Grabbing the name of your BigQuery resource
-3. Connecting everything to BigRQuery</p>
+<p>You can set up BigQuery for usage in R in three broad steps:</p>
+<ol style="list-style-type: decimal">
+<li><p>Enabling BigQuery on your Google Account</p></li>
+<li><p>Grabbing the name of your BigQuery resource</p></li>
+<li><p>Connecting everything to BigRQuery</p></li>
+</ol>
 <p>Let’s start at step one. Sign into a Google account on your browser of choice before navigating to <a href="https://console.cloud.google.com/marketplace/product/google/bigquery.googleapis.com?hl=en&amp;returnUrl=%252Fbigquery">this link</a>, where you will be prompted to “Enable BigQuery.” Do so to enable your account to access BigQuery and data through BigQuery.</p>
 <p>Once BigQuery is enabled, you’ll be taken to the BigQuery studio page. This page is a hub for BigQuery interaction on the cloud, and technically also a place from which you can test out SQL queries and manage connections to external databases. In the BigQuery diagram, it’s the computer on the cloud that you submit jobs to.</p>
 <p>For our purposes, we’re interested in the resources under the explorer. By default, Google creates a default resource by mashing together random words and numbers. You can proceed using this resource, or create a new, more memorably named resource through the “+ ADD” button at the top of the Explorer pane.</p>
