@@ -1,7 +1,7 @@
 introduction
 getting-started
 installation
-cacheing
+caching
 usage
 load_oeps_dictionary
 load_oeps

@@ -155,7 +155,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>2</b> Getting started</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="getting-started.html"><a href="getting-started.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a></li>
-<li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#cacheing"><i class="fa fa-check"></i><b>2.2</b> Cacheing</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#caching"><i class="fa fa-check"></i><b>2.2</b> Caching</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>3</b> Usage</a>
 <ul>
@@ -210,13 +210,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="getting-started.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(oepsData)</span></code></pre></div>
 <p>Efforts are currently under way to list the package on CRAN.</p>
 </div>
-<div id="cacheing" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Cacheing<a href="getting-started.html#cacheing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="caching" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Caching<a href="getting-started.html#caching" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><code>oepsData</code> pulls its data from online repositories, primarily GitHub. This can lead to issues for users operating on slow internet, for whom load times can be long for larger datasets, or for users who anticipate needing the package when entirely offline.</p>
-<p>To help minimize these issues, <code>oepsData</code> caches, or saves a local copy of, data loaded by <code>load_oeps</code> on its first load. Additionally, <code>oepsData</code> offers a few commands can help maintain caches:
-* <code>cache_geometries</code> and <code>cache_oeps_tables</code> cache all tables and geometries, overwriting prior ones in the process.
-* <code>clear_cache</code> deletes all cached data.
-* <code>cache_dir</code> returns the directory of the oepsData cache.</p>
+<p>To help minimize these issues, <code>oepsData</code> caches, or saves a local copy of, data loaded by <code>load_oeps</code> on its first load. Additionally, <code>oepsData</code> offers a few commands can help maintain caches:</p>
+<ul>
+<li><code>cache_geometries</code> and <code>cache_oeps_tables</code> cache all tables and geometries, overwriting prior ones in the process.</li>
+<li><code>clear_cache</code> deletes all cached data.</li>
+<li><code>cache_dir</code> returns the directory of the oepsData cache.</li>
+</ul>
 <p>Users who want to avoid using cached data and instead download data fresh every time can set <code>cache=FALSE</code> when calling <code>load_oeps</code>.</p>
 
 </div>
