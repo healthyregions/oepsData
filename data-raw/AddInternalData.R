@@ -23,17 +23,19 @@ combine_if_present <- function(A, B, sep=", ") {
   # this is not a very paradigmatic solution for R
   # but it works soooo
   return_list <- 1:length(A)
+  
   for (row in 1:length(A)) {
     if (is.na(A[row]) & is.na(B[row])) {
       return_list[row] <- NA
     } else if (!is.na(B[row]) & !is.na(A[row])) {
       return_list[row] <- paste(A[row], B[row], sep=sep)
     } else if (!is.na(A[row])) {
-      return_list[row] <- B[row]
+      return_list[row] <- A[row]
     } else {
       return_list[row] <- B[row]
     }
   }
+  print(return_list)
   return(return_list)
 }
 
@@ -63,10 +65,11 @@ tables[[4]] <- mutate(tables[[4]], '1980'=NA, '1990'=NA, '2000'=NA, '2010'=NA)
 data_dictionary <- bind_rows(tables)
 
 data_dictionary['Latest'] <- ifelse(data_dictionary['Latest'] == 'x', '2018', '')
-data_dictionary['2010'] <- ifelse(data_dictionary['2010'] == 'x', '2010', '')
-data_dictionary['2000'] <- ifelse(data_dictionary['2000'] == 'x', '2000', '')
-data_dictionary['1990'] <- ifelse(data_dictionary['1990'] == 'x', '1990', '')
-data_dictionary['1980'] <- ifelse(data_dictionary['1980'] == 'x', '1980', '')
+data_dictionary['2010']   <- ifelse(data_dictionary['2010'] == 'x', '2010', '')
+data_dictionary['2000']   <- ifelse(data_dictionary['2000'] == 'x', '2000', '')
+data_dictionary['1990']   <- ifelse(data_dictionary['1990'] == 'x', '1990', '')
+data_dictionary['1980']   <- ifelse(data_dictionary['1980'] == 'x', '1980', '')
+
 data_dictionary["Year"] <- combine_if_present(data_dictionary[['Latest']], data_dictionary[['2010']])
 data_dictionary["Year"] <- combine_if_present(data_dictionary[["Year"]], data_dictionary[["2000"]])
 data_dictionary["Year"] <- combine_if_present(data_dictionary[["Year"]], data_dictionary[["1990"]])
