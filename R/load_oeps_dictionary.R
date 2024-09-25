@@ -38,6 +38,7 @@ load_oeps_dictionary <- function(scale) {
       data_dictionary[data_dictionary$scale == 'zcta',] |>
       subset(select = -c(scale))
   }
-
+  
+  rownames(return_data) <- 1:nrow(return_data)
   return(return_data)
 }
