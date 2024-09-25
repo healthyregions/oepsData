@@ -50,7 +50,8 @@ filter_by_geography <- function(df, states, counties) {
   }
   
   if (is.null(counties) & !is.null(states)) {
-    states <- state_to_fips(states)
+    states <- sapply(states, state_to_fips,
+                     simplify=FALSE, USE.NAMES=TRUE)
     df <- filter_by_state(df, states)
     return(df)
   }
@@ -64,6 +65,11 @@ filter_by_geography <- function(df, states, counties) {
   }
   
   # states and counties both specified
+  if (length(states) > 1) {
+    stop('Cannot specify multiple states and counties at once. Instead,
+         pass five digit GEOIDs to counties parameter.')
+  }
+  
   state_fips <- state_to_fips(states)
   county_geoids <- county_to_fips(counties, state_fips)
   
@@ -140,8 +146,6 @@ county_to_fips <- function(county, state_fips) {
 #' 
 #' @returns Dataframe containing only observations which occurred in a given state.
 filter_by_state <- function(df, states) {
-  
-  # TODO: add a reference to a look-up table to parse abbreviations, state names
   
   stopifnot("HEROP_ID" %in% names(df))
   
