@@ -65,6 +65,11 @@ filter_by_geography <- function(df, states, counties) {
   }
   
   # states and counties both specified
+  if (length(states) > 1) {
+    stop('Cannot specify multiple states and counties at once. Instead,
+         pass five digit GEOIDs to counties parameter.')
+  }
+  
   state_fips <- state_to_fips(states)
   county_geoids <- county_to_fips(counties, state_fips)
   
