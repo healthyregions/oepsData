@@ -18,3 +18,14 @@ Single County GEOID or list of GEOIDS.
 Takes one or more county names, alongside their relevant
 state, and return the counties' GEOIDS.
 }
+\examples{
+
+state_fips <- 17 # Illinois
+county <- c('DuPage', 'Cook')
+
+county_to_fips(county, state_fips)
+# [1] "17043" "17031"
+}
+\seealso{
+\link{state_to_fips}, which does the same process for states.
+}

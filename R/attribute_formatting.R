@@ -78,22 +78,34 @@ filter_by_geography <- function(df, states, counties) {
 
 #' Identify a state's FIPS code.
 #'
-#' Takes a states name, abbreviation, or FIPS code and returns the 
+#' Takes a state's name, abbreviation, or FIPS code and returns the 
 #' FIPS code.
 #' 
 #' @param state String or vector of strings detailing which states to filter
-#' on. Can be the state's name, abbreviation, or GEOID. 
+#' on. Can be the state's name, abbreviation, or GEOID. If GEOID is passed,
+#' returns the GEOID as a properly formatted string. 
+#' 
+#' @returns GEOID as a string.
+#' @seealso [county_to_fips()], which does the same process but for counties.
+#'
+#' @examples
+#' state_to_fips('Il') # "17"
+#' state_to_fips('Virginia') # "51"
+#' state_to_fips('01') # "01"
+#' state_to_fips(1) # "01" 
+#' 
+#' @export
 state_to_fips <- function(state) {
-  state <- tolower(state)
+  state_chr <- tolower(state)
   
-  if (state %in% states_id_table$NAME) {
+  if (state_chr %in% states_id_table$NAME) {
     relevant_state <- state == states_id_table$NAME
     state_fips <- states_id_table[relevant_state,]$STATEFP
-  } else if (state %in% states_id_table$ABBR) {
+  } else if (state_chr %in% states_id_table$ABBR) {
     relevant_state <- state == states_id_table$ABBR 
     state_fips <- states_id_table[relevant_state,]$STATEFP
-  } else if (state %in% states_id_table$STATEFP) {
-    state_fips <- state
+  } else if (formatC(state, width=2, format='d', flag='0') %in% states_id_table$STATEFP) {
+    state_fips <- formatC(state, width=2, format='d', flag='0')
   } else {
     stop('State must be either a state name, abbreviation, or FIPS.')
   }
@@ -110,6 +122,16 @@ state_to_fips <- function(state) {
 #' @param state_fips The FIPS code for one of the 50 states or DC.
 #' 
 #' @returns Single County GEOID or list of GEOIDS. 
+#' 
+#' @seealso [state_to_fips], which does the same process for states.
+#' @examples
+#' 
+#' state_fips <- 17 # Illinois
+#' county <- c('DuPage', 'Cook')
+#' 
+#' county_to_fips(county, state_fips)
+#' # [1] "17043" "17031"
+#' @export
 county_to_fips <- function(county, state_fips) {
   county <- gsub('\\s?county', '', tolower(county))
   
@@ -168,9 +190,6 @@ filter_by_state <- function(df, states) {
 #'
 #' @returns Dataframe containing only observations in the requested counties.
 filter_by_county <- function(df, counties) {
-  
-  # TODO: add a reference to a look-up table to parse county names.
-  # TODO: make robust to 5 character long FIPS.s
   
   stopifnot("HEROP_ID" %in% names(df))
   

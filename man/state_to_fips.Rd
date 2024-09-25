@@ -8,9 +8,23 @@ state_to_fips(state)
 }
 \arguments{
 \item{state}{String or vector of strings detailing which states to filter
-on. Can be the state's name, abbreviation, or GEOID.}
+on. Can be the state's name, abbreviation, or GEOID. If GEOID is passed,
+returns the GEOID as a properly formatted string.}
+}
+\value{
+GEOID as a string.
 }
 \description{
-Takes a states name, abbreviation, or FIPS code and returns the
+Takes a state's name, abbreviation, or FIPS code and returns the
 FIPS code.
+}
+\examples{
+state_to_fips('Il') # "17"
+state_to_fips('Virginia') # "51"
+state_to_fips('01') # "01"
+state_to_fips(1) # "01" 
+
+}
+\seealso{
+\code{\link[=county_to_fips]{county_to_fips()}}, which does the same process but for counties.
 }
