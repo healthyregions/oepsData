@@ -50,7 +50,6 @@ filter_by_geography <- function(df, states, counties) {
   }
   
   if (is.null(counties) & !is.null(states)) {
-    
     states <- sapply(states, state_to_fips,
                      simplify=FALSE, USE.NAMES=TRUE)
     df <- filter_by_state(df, states)
