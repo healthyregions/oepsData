@@ -73,10 +73,15 @@ load_oeps <- function(scale, year, themes = "All", states=NULL, counties=NULL,
   
   if (tidy) attribute_data <- tidify_data(attribute_data)
 
-  if (!geometry) return(attribute_data)
+  if (!geometry) {
+    rownames(attribute_data) <- 1:nrow(attribute_data)
+    return(attribute_data)
+  }
   
   geometry <- retrieve_geometry(scale, quiet = TRUE)
   data <- merge(attribute_data, geometry, on = "HEROP_ID", how = "left")
+  
+  rownames(data) <- 1:nrow(data)
   return(sf::st_sf(data))
 }
 
