@@ -58,7 +58,6 @@ tables[[3]]['scale'] <- 'tract'
 tables[[4]]['scale'] <- 'zcta'
 
 # clean tables to safely bind_rows
-tables[[2]] <- rename(tables[[2]])
 tables[[3]] <- select(tables[[3]], "Analysis", everything())
 tables[[4]] <- mutate(tables[[4]], '1980'=NA, '1990'=NA, '2000'=NA, '2010'=NA)
 
