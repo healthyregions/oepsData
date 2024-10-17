@@ -18,6 +18,7 @@ merge_keys <- function() {
 #' 
 #' @return Dataframe in tidy format.
 #' @import utils
+#' @internal
 tidify_data <- function(df) {
   included_keys <- names(df)[names(df) %in% merge_keys()]
   observation_variables <- names(df)[!names(df) %in% included_keys]
@@ -43,6 +44,7 @@ tidify_data <- function(df) {
 #' passed, counties must either be from the same state or be GEOIDS.
 #'
 #' @returns Dataframe containing only observations which satisfy the filter.
+#' @internal
 filter_by_geography <- function(df, states, counties) {
   
   if (is.null(states) & is.null(counties)) {
@@ -99,10 +101,10 @@ state_to_fips <- function(state) {
   state_chr <- tolower(state)
   
   if (state_chr %in% states_id_table$NAME) {
-    relevant_state <- state == states_id_table$NAME
+    relevant_state <- state_chr == states_id_table$NAME
     state_fips <- states_id_table[relevant_state,]$STATEFP
   } else if (state_chr %in% states_id_table$ABBR) {
-    relevant_state <- state == states_id_table$ABBR 
+    relevant_state <- state_chr == states_id_table$ABBR 
     state_fips <- states_id_table[relevant_state,]$STATEFP
   } else if (formatC(state, width=2, format='d', flag='0') %in% states_id_table$STATEFP) {
     state_fips <- formatC(state, width=2, format='d', flag='0')
