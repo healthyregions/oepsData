@@ -2,9 +2,15 @@
 
 An R package for easy access to the Opioid Environment Policy Scan (OEPS) datasets.
 
-Find additional documentation and vignettes at the [oepsData website](https://www.oepsData.healthyregions.org), and please leave any feedback in the Issues!
+- Documentation and vignettes here: [oepsData.healthyregions.org](https://oepsData.healthyregions.org)
+- Core repo for OEPS data management: [healthyregions/oeps](https://github.com/healthyregions/oeps)
+- OEPS Explorer: [oeps.healthyregions.org](https://oeps.healthyregions.org)
 
+Please report bugs and leave feedback in [Github issues](https://github.com/healthyregions/oepsData/issues). Thanks!
 
+## Author
+
+Ashlynn Wimer (@bucketteOfIvy)
 
 ## License
 
