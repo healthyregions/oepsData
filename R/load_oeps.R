@@ -135,7 +135,7 @@ get_attribute_table <- function(scale, year, cache=FALSE) {
     return (attribute_table)
   }
 
-  url <- paste0(BASE_URL, '/', table_name)
+  url <- paste0(BASE_URL, table_name)
   attribute_table <- data.frame(data.table::fread(url))
 
   if (cache) {
