@@ -1,3 +1,7 @@
+# just in case: bookdown rendered content (could remain from other branch)
+_book/
+oepsData_files/
+
 # History files
 .Rhistory
 .Rapp.history
