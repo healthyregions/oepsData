@@ -62,23 +62,20 @@ retrieve_geometry <- function(scale, quiet = FALSE, cache=TRUE) {
 #' @returns Simple feature object containing the specified geometry.
 retrieve_geometry_from_url <- function(scale, quiet = FALSE) {
 
-  shape_url <- "/vsicurl/https://raw.githubusercontent.com/GeoDaCenter/opioid-policy-scan/main/data_final/geometryFiles/"
-
   if (scale == "state") {
-
-    shape_url <- paste0(shape_url, "state/states2010.shp")
+    shape_url <- "/vsizip//vsicurl/https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/state-2010-500k-shp.zip"
   }
 
   if (scale == "tract") {
-    shape_url <- paste0(shape_url, "tract/tracts2010.shp")
+    shape_url <- "/vsizip//vsicurl/https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/tract-2010-500k-shp.zip"
   }
 
   if (scale == "county") {
-    shape_url <- paste0(shape_url, "county/counties2010.shp")
+    shape_url <- "/vsizip//vsicurl/https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/county-2010-500k-shp.zip"
   }
 
   if (scale == "zcta") {
-    shape_url <- paste0(shape_url, "zcta/zctas2018.shp")
+    shape_url <- "/vsizip//vsicurl/https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/zcta-2018-500k-shp.zip"
   }
 
   return(sf::st_read(shape_url, quiet = quiet)['HEROP_ID'])
