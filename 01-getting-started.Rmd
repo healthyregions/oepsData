@@ -16,7 +16,7 @@ You can then load the package like any other R package:
 library(oepsData)
 ```
 
-Efforts are currently under way to list the package on CRAN.
+We hope to eventually list this package on CRAN.
 
 ## Caching
 
