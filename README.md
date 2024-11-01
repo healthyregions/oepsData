@@ -9,6 +9,23 @@ An R package for easy access to the Opioid Environment Policy Scan (OEPS) datase
 
 Please report bugs and leave feedback in [Github issues](https://github.com/healthyregions/oepsData/issues). Thanks!
 
+## Development
+
+Clone this repo and open in RStudio. Then the following commands can be run in the console:
+
+- `devtools::load_all()` Load all functions into namespace without actually installing the package
+- `devtools::install_github()` - Installs the package. Re-run this command to re-install.
+- `devtools::document()` - Build docs.
+- `devtools::check()` - Run checks across the package.
+		- Note: `curl` is imported in the package, but never directly called, which produces a warning
+
+### Managing data dictionaries
+
+Data dictionaries are downloaded from Github and parsed with `data_raw/data-raw/AddInternalData.R`. To update data dictionaries:
+
+1. `source("data-raw/AddInternalData.R")
+2. `R.sysdata` will be altered -- commit these changes.
+
 ## Author
 
 Ashlynn Wimer (@bucketteOfIvy)
