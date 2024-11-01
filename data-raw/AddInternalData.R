@@ -11,12 +11,12 @@ library(sf)
 #'
 #' Given two lists of strings A and B of equal length, paste together 
 #' every element of index i in A with every element of index i in B, using
-#' some seperator, iff they both exist. If one element is NA, attempt
+#' some separator, if they both exist. If one element is NA, attempt
 #' to use whichever is not NA, and if they are both NA, return for that element.
 #' 
 #' @param A a list of strings
 #' @param B a list of strings
-#' @param sep the seperator for pasting. Defaults ''
+#' @param sep the separator for pasting. Defaults ''
 #' 
 #' @returns A list of length `length(a)` which contains the pairwise pasted strings.
 combine_if_present <- function(A, B, sep=", ") {
@@ -35,7 +35,6 @@ combine_if_present <- function(A, B, sep=", ") {
       return_list[row] <- B[row]
     }
   }
-  print(return_list)
   return(return_list)
 }
 
@@ -58,12 +57,12 @@ tables[[3]]['scale'] <- 'tract'
 tables[[4]]['scale'] <- 'zcta'
 
 # clean tables to safely bind_rows
-tables[[3]] <- select(tables[[3]], "Analysis", everything())
+tables[[3]] <- select(tables[[3]], everything())
 tables[[4]] <- mutate(tables[[4]], '1980'=NA, '1990'=NA, '2000'=NA, '2010'=NA)
 
 data_dictionary <- bind_rows(tables)
 
-data_dictionary['Latest'] <- ifelse(data_dictionary['Latest'] == 'x', '2018', '')
+data_dictionary['Latest'] <- ifelse(data_dictionary['latest'] == 'x', '2018', '')
 data_dictionary['2010']   <- ifelse(data_dictionary['2010'] == 'x', '2010', '')
 data_dictionary['2000']   <- ifelse(data_dictionary['2000'] == 'x', '2000', '')
 data_dictionary['1990']   <- ifelse(data_dictionary['1990'] == 'x', '1990', '')
