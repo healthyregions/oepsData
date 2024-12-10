@@ -8,6 +8,8 @@ usage
 load_oeps_dictionary
 load_oeps
 a-note-on-caching
+state_to_fips
+county_to_fips
 examples
 data-subsetting
 longitudinal-analysis

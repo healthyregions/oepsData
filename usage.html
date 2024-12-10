@@ -168,6 +168,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="usage.html"><a href="usage.html#a-note-on-caching"><i class="fa fa-check"></i><b>3.2.1</b> A note on caching</a></li>
 </ul></li>
+<li class="chapter" data-level="3.3" data-path="usage.html"><a href="usage.html#state_to_fips"><i class="fa fa-check"></i><b>3.3</b> <code>state_to_fips</code></a></li>
+<li class="chapter" data-level="3.4" data-path="usage.html"><a href="usage.html#county_to_fips"><i class="fa fa-check"></i><b>3.4</b> <code>county_to_fips</code></a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>4</b> Examples</a>
 <ul>
@@ -279,8 +281,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>cache_dir</code> returns the directory of the <code>oepsData</code> cache.</li>
 </ul>
 <p>Users who want to avoid using cached data and instead download data fresh every time can set <code>cache=FALSE</code> when calling <code>load_oeps</code>.</p>
-
 </div>
+</div>
+<div id="state_to_fips" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> <code>state_to_fips</code><a href="usage.html#state_to_fips" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This is a helper function that takes a given state’s name or abbreviation and returns the state’s FIPS code.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="usage.html#cb9-1" tabindex="-1"></a><span class="fu">state_to_fips</span>(<span class="st">&quot;Illinois&quot;</span>)</span>
+<span id="cb9-2"><a href="usage.html#cb9-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;17&quot;</span></span>
+<span id="cb9-3"><a href="usage.html#cb9-3" tabindex="-1"></a><span class="fu">state_to_fips</span>(<span class="st">&quot;IL&quot;</span>)</span>
+<span id="cb9-4"><a href="usage.html#cb9-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;17&quot;</span></span></code></pre></div>
+</div>
+<div id="county_to_fips" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> <code>county_to_fips</code><a href="usage.html#county_to_fips" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This is a helper function that takes a county’s name and the FIPS of its state and returns the county level FIPS code.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="usage.html#cb10-1" tabindex="-1"></a><span class="fu">county_to_fips</span>(<span class="st">&quot;Champaign&quot;</span>, <span class="dv">17</span>)</span>
+<span id="cb10-2"><a href="usage.html#cb10-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;17019&quot;</span></span>
+<span id="cb10-3"><a href="usage.html#cb10-3" tabindex="-1"></a><span class="fu">county_to_fips</span>(<span class="st">&quot;Champaign&quot;</span>, <span class="fu">state_to_fips</span>(<span class="st">&quot;IL&quot;</span>))</span>
+<span id="cb10-4"><a href="usage.html#cb10-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;17019&quot;</span></span></code></pre></div>
+
 </div>
 </div>
             </section>
