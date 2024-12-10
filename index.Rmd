@@ -38,7 +38,7 @@ The Opioid Environment Policy Scan (OEPS) is an open-source data warehouse creat
 
 ## Releases
 
-[v0.1.0]() December 2024 - Initial release.
+[v0.1.0](https://github.com/healthyregions/oepsData/releases/tag/v0.1.0) December 2024 - Initial release.
 
 ```{r, include=FALSE}
 install.packages('bigrquery')
