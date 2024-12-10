@@ -1,10 +1,13 @@
 introduction
+in-this-documentation
+other-useful-links
+releases
 getting-started
 installation
-caching
 usage
 load_oeps_dictionary
 load_oeps
+a-note-on-caching
 examples
 data-subsetting
 longitudinal-analysis

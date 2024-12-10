@@ -151,16 +151,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">oepsData</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#in-this-documentation"><i class="fa fa-check"></i><b>1.1</b> In this documentation</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#other-useful-links"><i class="fa fa-check"></i><b>1.2</b> Other useful links</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#releases"><i class="fa fa-check"></i><b>1.3</b> Releases</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>2</b> Getting started</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="getting-started.html"><a href="getting-started.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a></li>
-<li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#caching"><i class="fa fa-check"></i><b>2.2</b> Caching</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>3</b> Usage</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="usage.html"><a href="usage.html#load_oeps_dictionary"><i class="fa fa-check"></i><b>3.1</b> load_oeps_dictionary</a></li>
-<li class="chapter" data-level="3.2" data-path="usage.html"><a href="usage.html#load_oeps"><i class="fa fa-check"></i><b>3.2</b> load_oeps</a></li>
+<li class="chapter" data-level="3.1" data-path="usage.html"><a href="usage.html#load_oeps_dictionary"><i class="fa fa-check"></i><b>3.1</b> <code>load_oeps_dictionary</code></a></li>
+<li class="chapter" data-level="3.2" data-path="usage.html"><a href="usage.html#load_oeps"><i class="fa fa-check"></i><b>3.2</b> <code>load_oeps</code></a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="usage.html"><a href="usage.html#a-note-on-caching"><i class="fa fa-check"></i><b>3.2.1</b> A note on caching</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>4</b> Examples</a>
 <ul>
@@ -204,9 +211,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="introduction" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction<a href="index.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The Opioid Environment Policy Scan (OEPS) is an open-source data warehouse created by the <a href="https://healthyregions.org/">Healthy Regions &amp; Policies Lab</a> to support researchers in studying and modeling the opioid risk environment. This website is intended as a starting place for researchers interested in using the OEPS data, especially using R.</p>
-<p>On this site, we have tutorials demonstrating two methods of accessing the Policy Scan’s data sets: first through an R package called <code>oepsData</code>, and secondly through <code>bigrquery</code>. We additionally provide a two example analyses using the package as a starting place for spatial research.</p>
-<p>To hear more on the project, check out the OEPS <a href="https://oeps.healthyregions.org/">website</a>. For more on the data itself, check out the in-depth <a href="https://oeps.healthyregions.org/docs">data documentation</a> or the <a href="https://oeps.healthyregions.org/map">online explorer</a>.</p>
+<div id="in-this-documentation" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> In this documentation<a href="index.html#in-this-documentation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><a href="getting-started.html#getting-started">Getting started</a>
+<ul>
+<li>How to install the package</li>
+</ul></li>
+<li><a href="usage.html#usage">Usage</a>
+<ul>
+<li>Explanation of available functions</li>
+</ul></li>
+<li><a href="examples.html#examples">Examples</a>
+<ul>
+<li>Some quick examples of how <code>oepsData</code> can be used</li>
+</ul></li>
+<li><a href="getting-oeps-data-from-bigquery.html#getting-oeps-data-from-bigquery">Getting OEPS Data from BigQuery</a>
+<ul>
+<li>How to access OEPS data in Google BigQuery</li>
+<li>While the examples demonstrate usage of the R package <code>bigrquery</code>, this section will be helpful regardless of which <a href="https://cloud.google.com/bigquery/docs/reference/libraries">client libary</a> you use to access BigQuery.</li>
+</ul></li>
+</ul>
+</div>
+<div id="other-useful-links" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Other useful links<a href="index.html#other-useful-links" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><a href="https://github.com/healthyregions/oepsdata">healthyregions/oepsData</a>
+<ul>
+<li>Repository for this R package. Please record bugs or feature requests in the <a href="https://github.com/healthyregions/oepsdata">repo issues</a></li>
+</ul></li>
+<li><a href="https://oeps.healthyregions.org/">OEPS Explorer</a>
+<ul>
+<li>The main project website for OEPS</li>
+</ul></li>
+<li><a href="https://github.com/healthyregions/oeps">healthyregions/oeps</a>
+<ul>
+<li>The main repository for the OEPS Explorer frontend app and backend ETL app</li>
+</ul></li>
+</ul>
+</div>
+<div id="releases" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Releases<a href="index.html#releases" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="">v0.1.0</a> December 2024 - Initial release.</p>
 
+</div>
 </div>
             </section>
 
