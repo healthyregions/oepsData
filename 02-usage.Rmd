@@ -97,3 +97,20 @@ Additionally, `oepsData` offers a few commands can help maintain caches:
 
 Users who want to avoid using cached data and instead download data fresh every time can set `cache=FALSE` when calling `load_oeps`. 
 
+## `state_to_fips`
+
+This is a helper function that takes a given state's name or abbreviation and returns the state's FIPS code.
+
+```{r}
+state_to_fips("Illinois")
+state_to_fips("IL")
+```
+
+## `county_to_fips`
+
+This is a helper function that takes a county's name and the FIPS of its state and returns the county level FIPS code.
+
+```{r}
+county_to_fips("Champaign", 17)
+county_to_fips("Champaign", state_to_fips("IL"))
+```
