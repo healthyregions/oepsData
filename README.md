@@ -3,7 +3,7 @@
 An R package for easy access to the Opioid Environment Policy Scan (OEPS) datasets.
 
 - Documentation and vignettes here: [oepsData.healthyregions.org](https://oepsData.healthyregions.org)
-  - Documentation is built with [bookdown](https://bookdown.org/) and lives in the `bookdown` branch of [healthyregions/oepsData](https://github.com/healthyregions/oepsData)
+  - Documentation is built with [bookdown](https://bookdown.org/) and lives in the `bookdown` branch of this repository ([healthyregions/oepsData](https://github.com/healthyregions/oepsData))
 - Core repo for OEPS data management: [healthyregions/oeps](https://github.com/healthyregions/oeps)
 - OEPS Explorer: [oeps.healthyregions.org](https://oeps.healthyregions.org)
 
@@ -21,14 +21,16 @@ Clone this repo and open in RStudio. Then the following commands can be run in t
 
 ### Managing data dictionaries
 
-Data dictionaries are downloaded from Github and parsed with `data_raw/data-raw/AddInternalData.R`. To update data dictionaries:
+Data dictionaries are downloaded from Github and parsed with `data-raw/AddInternalData.R`. To update data dictionaries:
 
-1. `source("data-raw/AddInternalData.R")
+1. `source("data-raw/AddInternalData.R")`
+  - If you get an error like `cannot unload 'dplyr'` while running this command, try closing and reopening RStudio.
 2. `R.sysdata` will be altered -- commit these changes.
 
-## Author
+## Authors
 
 Ashlynn Wimer (@bucketteOfIvy)
+Adam Cox (@mradamcox)
 
 ## License
 
