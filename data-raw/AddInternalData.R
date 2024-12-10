@@ -39,7 +39,7 @@ combine_if_present <- function(A, B, sep=", ") {
 }
 
 
-base_url <- 'https://raw.githubusercontent.com/GeoDaCenter/opioid-policy-scan/main/data_final/dictionaries/'
+base_url <- 'https://raw.githubusercontent.com/GeoDaCenter/opioid-policy-scan/v2.0/data_final/dictionaries/'
 file_names <- c('C_Dict.xlsx', 'S_Dict.xlsx', 'T_Dict.xlsx', 'Z_Dict.xlsx')
 
 temps <- map(file_names, tempfile, fileext='.xlsx')

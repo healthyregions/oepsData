@@ -121,7 +121,7 @@ cache_oeps_tables <- function() {
 #'
 #' @import data.table
 get_attribute_table <- function(scale, year, cache=FALSE) {
-  BASE_URL <- "https://raw.githubusercontent.com/GeoDaCenter/opioid-policy-scan/main/data_final/full_tables/"
+  BASE_URL <- "https://raw.githubusercontent.com/GeoDaCenter/opioid-policy-scan/v2.0/data_final/full_tables/"
   
   if (grepl(year, "2018")) {
     year <- 'latest'
