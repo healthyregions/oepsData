@@ -14,10 +14,31 @@ description: "This is a short bookdown explaining how to access OEPS data throug
 # Introduction
 
 The Opioid Environment Policy Scan (OEPS) is an open-source data warehouse created by the [Healthy Regions & Policies Lab](https://healthyregions.org/) to support researchers in studying and modeling the opioid risk environment. This website is intended as a starting place for researchers interested in using the OEPS data, especially using R.
- 
-On this site, we have tutorials demonstrating two methods of accessing the Policy Scan's data sets: first through an R package called `oepsData`, and secondly through `bigrquery`. We additionally provide a two example analyses using the package as a starting place for spatial research. 
 
-To hear more on the project, check out the OEPS [website](https://oeps.healthyregions.org/). For more on the data itself, check out the in-depth [data documentation](https://oeps.healthyregions.org/docs) or the [online explorer](https://oeps.healthyregions.org/map).
+## In this documentation
+
+- [Getting started]
+  - How to install the package
+- [Usage]
+  - Explanation of available functions
+- [Examples]
+  - Some quick examples of how `oepsData` can be used
+- [Getting OEPS Data from BigQuery]
+  - How to access OEPS data in Google BigQuery
+  - While the examples demonstrate usage of the R package `bigrquery`, this section will be helpful regardless of which [client libary](https://cloud.google.com/bigquery/docs/reference/libraries) you use to access BigQuery.
+
+## Other useful links
+
+- [healthyregions/oepsData](https://github.com/healthyregions/oepsdata)
+  - Repository for this R package. Please record bugs or feature requests in the [repo issues](https://github.com/healthyregions/oepsdata)
+- [OEPS Explorer](https://oeps.healthyregions.org/)
+  - The main project website for OEPS
+- [healthyregions/oeps](https://github.com/healthyregions/oeps)
+  - The main repository for the OEPS Explorer frontend app and backend ETL app
+
+## Releases
+
+[v0.1.0]() December 2024 - Initial release.
 
 ```{r, include=FALSE}
 install.packages('bigrquery')

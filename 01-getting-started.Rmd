@@ -7,6 +7,12 @@ Installing `oepsData` is easy. Just run the following command to grab the newest
 ```{r how to install, results=FALSE, message=FALSE, warning=FALSE}
 install.packages('devtools')
 
+devtools::install_github('https://github.com/healthyregions/oepsData@v0.1.0')
+```
+
+Or, to install the latest development version (which may be unstable), omit the release tag:
+
+```{r eval=FALSE}
 devtools::install_github('https://github.com/healthyregions/oepsData')
 ```
 
@@ -16,17 +22,4 @@ You can then load the package like any other R package:
 library(oepsData)
 ```
 
-We hope to eventually list this package on CRAN.
-
-## Caching
-
-`oepsData` pulls its data from online repositories, primarily GitHub. This can lead to issues for users operating on slow internet, for whom load times can be long for larger datasets, or for users who anticipate needing the package when entirely offline.
-
-To help minimize these issues, `oepsData` caches, or saves a local copy of, data loaded by `load_oeps` on its first load. Additionally, `oepsData` offers a few commands can help maintain caches:
-
-* `cache_geometries` and `cache_oeps_tables` cache all tables and geometries, overwriting prior ones in the process.
-* `clear_cache` deletes all cached data.
-* `cache_dir` returns the directory of the oepsData cache.
-
-Users who want to avoid using cached data and instead download data fresh every time can set `cache=FALSE` when calling `load_oeps`. 
-
+Efforts are currently under way to list the package on CRAN.
