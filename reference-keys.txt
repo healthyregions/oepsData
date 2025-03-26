@@ -1,6 +1,7 @@
 introduction
 in-this-documentation
-other-useful-links
+links
+data-sources
 releases
 getting-started
 installation

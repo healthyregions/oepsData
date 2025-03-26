@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Usage | oepsData Package Documentation</title>
   <meta name="description" content="This is a short bookdown explaining how to access OEPS data through R and showing off a few potential uses." />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Usage | oepsData Package Documentation" />
   <meta property="og:type" content="book" />
@@ -154,8 +154,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#in-this-documentation"><i class="fa fa-check"></i><b>1.1</b> In this documentation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#other-useful-links"><i class="fa fa-check"></i><b>1.2</b> Other useful links</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#releases"><i class="fa fa-check"></i><b>1.3</b> Releases</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#links"><i class="fa fa-check"></i><b>1.2</b> Links</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#data-sources"><i class="fa fa-check"></i><b>1.3</b> Data Sources</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#releases"><i class="fa fa-check"></i><b>1.4</b> Releases</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>2</b> Getting started</a>
 <ul>
@@ -256,18 +257,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Which lets us operate on the data as we desire. For instance, we can make a simple map:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="usage.html#cb8-1" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
-<span id="cb8-2"><a href="usage.html#cb8-2" tabindex="-1"></a><span class="co">#&gt; Breaking News: tmap 3.x is retiring. Please test v4, e.g. with</span></span>
-<span id="cb8-3"><a href="usage.html#cb8-3" tabindex="-1"></a><span class="co">#&gt; remotes::install_github(&#39;r-tmap/tmap&#39;)</span></span>
-<span id="cb8-4"><a href="usage.html#cb8-4" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb8-5"><a href="usage.html#cb8-5" tabindex="-1"></a><span class="co">#&gt; Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE</span></span>
-<span id="cb8-6"><a href="usage.html#cb8-6" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="usage.html#cb8-7" tabindex="-1"></a><span class="co"># reproject to a better display CRS</span></span>
-<span id="cb8-8"><a href="usage.html#cb8-8" tabindex="-1"></a>states_1990 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(states_1990, <span class="st">&quot;ESRI:102004&quot;</span>)</span>
-<span id="cb8-9"><a href="usage.html#cb8-9" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="usage.html#cb8-10" tabindex="-1"></a><span class="fu">tm_shape</span>(states_1990) <span class="sc">+</span> </span>
-<span id="cb8-11"><a href="usage.html#cb8-11" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="st">&quot;NoHsP&quot;</span>, <span class="at">style=</span><span class="st">&quot;jenks&quot;</span>) <span class="sc">+</span></span>
-<span id="cb8-12"><a href="usage.html#cb8-12" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">alpha=</span><span class="fl">0.05</span>) <span class="sc">+</span></span>
-<span id="cb8-13"><a href="usage.html#cb8-13" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">&quot;Population over 25 without a high school degree&quot;</span>)</span></code></pre></div>
+<span id="cb8-2"><a href="usage.html#cb8-2" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb8-3"><a href="usage.html#cb8-3" tabindex="-1"></a><span class="co">#&gt; Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE</span></span>
+<span id="cb8-4"><a href="usage.html#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="usage.html#cb8-5" tabindex="-1"></a><span class="co"># reproject to a better display CRS</span></span>
+<span id="cb8-6"><a href="usage.html#cb8-6" tabindex="-1"></a>states_1990 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(states_1990, <span class="st">&quot;ESRI:102004&quot;</span>)</span>
+<span id="cb8-7"><a href="usage.html#cb8-7" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="usage.html#cb8-8" tabindex="-1"></a><span class="fu">tm_shape</span>(states_1990) <span class="sc">+</span> </span>
+<span id="cb8-9"><a href="usage.html#cb8-9" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="st">&quot;NoHsP&quot;</span>, <span class="at">style=</span><span class="st">&quot;jenks&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="usage.html#cb8-10" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">alpha=</span><span class="fl">0.05</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="usage.html#cb8-11" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">&quot;Population over 25 without a high school degree&quot;</span>)</span>
+<span id="cb8-12"><a href="usage.html#cb8-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-13"><a href="usage.html#cb8-13" tabindex="-1"></a><span class="co">#&gt; ── tmap v3 code detected ───────────────────────────────────────────────────────</span></span>
+<span id="cb8-14"><a href="usage.html#cb8-14" tabindex="-1"></a><span class="co">#&gt; [v3-&gt;v4] `tm_fill()`: instead of `style = &quot;jenks&quot;`, use fill.scale =</span></span>
+<span id="cb8-15"><a href="usage.html#cb8-15" tabindex="-1"></a><span class="co">#&gt; `tm_scale_intervals()`.</span></span>
+<span id="cb8-16"><a href="usage.html#cb8-16" tabindex="-1"></a><span class="co">#&gt; ℹ Migrate the argument(s) &#39;style&#39; to &#39;tm_scale_intervals(&lt;HERE&gt;)&#39;</span></span>
+<span id="cb8-17"><a href="usage.html#cb8-17" tabindex="-1"></a><span class="co">#&gt; [v3-&gt;v4] `tm_borders()`: use &#39;fill&#39; for the fill color of polygons/symbols</span></span>
+<span id="cb8-18"><a href="usage.html#cb8-18" tabindex="-1"></a><span class="co">#&gt; (instead of &#39;col&#39;), and &#39;col&#39; for the outlines (instead of &#39;border.col&#39;).</span></span>
+<span id="cb8-19"><a href="usage.html#cb8-19" tabindex="-1"></a><span class="co">#&gt; [v3-&gt;v4] `tm_borders()`: use `fill_alpha` instead of `alpha`.</span></span>
+<span id="cb8-20"><a href="usage.html#cb8-20" tabindex="-1"></a><span class="co">#&gt; [v3-&gt;v4] `tm_layout()`: use `tm_title()` instead of `tm_layout(main.title = )`</span></span></code></pre></div>
 <p><img src="oepsData_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>See <a href="examples.html#examples">Examples</a> for many more demonstrations of how you can use this function.</p>
 <div id="a-note-on-caching" class="section level3 hasAnchor" number="3.2.1">
@@ -321,42 +329,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-usage.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["oepsData.pdf", "oepsData.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/02-usage.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["oepsData.pdf", "oepsData.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

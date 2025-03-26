@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>oepsData Package Documentation</title>
   <meta name="description" content="This is a short bookdown explaining how to access OEPS data through R and showing off a few potential uses." />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="oepsData Package Documentation" />
   <meta property="og:type" content="book" />
@@ -154,8 +154,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#in-this-documentation"><i class="fa fa-check"></i><b>1.1</b> In this documentation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#other-useful-links"><i class="fa fa-check"></i><b>1.2</b> Other useful links</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#releases"><i class="fa fa-check"></i><b>1.3</b> Releases</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#links"><i class="fa fa-check"></i><b>1.2</b> Links</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#data-sources"><i class="fa fa-check"></i><b>1.3</b> Data Sources</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#releases"><i class="fa fa-check"></i><b>1.4</b> Releases</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>2</b> Getting started</a>
 <ul>
@@ -235,12 +236,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 </div>
-<div id="other-useful-links" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> Other useful links<a href="index.html#other-useful-links" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="links" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Links<a href="index.html#links" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li><a href="https://github.com/healthyregions/oepsdata">healthyregions/oepsData</a>
 <ul>
-<li>Repository for this R package. Please record bugs or feature requests in the <a href="https://github.com/healthyregions/oepsdata">repo issues</a></li>
+<li>Repository for this R package, please record bugs or feature requests in the <a href="https://github.com/healthyregions/oepsdata">repo issues</a></li>
 </ul></li>
 <li><a href="https://oeps.healthyregions.org/">OEPS Explorer</a>
 <ul>
@@ -252,8 +253,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 </div>
-<div id="releases" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> Releases<a href="index.html#releases" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="data-sources" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Data Sources<a href="index.html#data-sources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>All OEPS data is pulled from <a href="https://github.com/GeoDaCenter/opioid-policy-scan/v2.0/data_final/full_tables/">GeoDaCenter/opioid-policy-scan/v2.0</a>.</p>
+<p>Geospatial data comes from our own derivatives of US Census Cartographic Boundary files (500k scale):</p>
+<ul>
+<li>State: <a href="https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/state-2010-500k-shp.zip" class="uri">https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/state-2010-500k-shp.zip</a></li>
+<li>County: <a href="https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/county-2010-500k-shp.zip" class="uri">https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/county-2010-500k-shp.zip</a></li>
+<li>Tract: <a href="https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/tract-2010-500k-shp.zip" class="uri">https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/tract-2010-500k-shp.zip</a></li>
+<li>ZCTA: <a href="https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/zcta-2018-500k-shp.zip" class="uri">https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/zcta-2018-500k-shp.zip</a></li>
+</ul>
+<p>Note: Because we use 2010 Census boundaries for state, county, and tracts data, there are a few tracts that get left out when the join is made. A more detailed explanation of this can be found in <a href="https://github.com/healthyregions/oepsData/issues/20">ticket #20</a>, big thank you to <span class="citation">@csarapas</span> for finding this bug. We hope to address this in a future release.</p>
+</div>
+<div id="releases" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Releases<a href="index.html#releases" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><a href="https://github.com/healthyregions/oepsData/releases/tag/v0.1.0">v0.1.0</a> December 2024 - Initial release.</p>
 
 </div>
@@ -278,42 +291,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["oepsData.pdf", "oepsData.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["oepsData.pdf", "oepsData.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
