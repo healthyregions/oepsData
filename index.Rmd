@@ -27,14 +27,27 @@ The Opioid Environment Policy Scan (OEPS) is an open-source data warehouse creat
   - How to access OEPS data in Google BigQuery
   - While the examples demonstrate usage of the R package `bigrquery`, this section will be helpful regardless of which [client libary](https://cloud.google.com/bigquery/docs/reference/libraries) you use to access BigQuery.
 
-## Other useful links
+## Links
 
 - [healthyregions/oepsData](https://github.com/healthyregions/oepsdata)
-  - Repository for this R package. Please record bugs or feature requests in the [repo issues](https://github.com/healthyregions/oepsdata)
+  - Repository for this R package, please record bugs or feature requests in the [repo issues](https://github.com/healthyregions/oepsdata)
 - [OEPS Explorer](https://oeps.healthyregions.org/)
   - The main project website for OEPS
 - [healthyregions/oeps](https://github.com/healthyregions/oeps)
   - The main repository for the OEPS Explorer frontend app and backend ETL app
+
+## Data Sources
+
+All OEPS data is pulled from [GeoDaCenter/opioid-policy-scan/v2.0](https://github.com/GeoDaCenter/opioid-policy-scan/v2.0/data_final/full_tables/).
+
+Geospatial data comes from our own derivatives of US Census Cartographic Boundary files (500k scale):
+
+- State: https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/state-2010-500k-shp.zip
+- County: https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/county-2010-500k-shp.zip
+- Tract: https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/tract-2010-500k-shp.zip
+- ZCTA: https://herop-geodata.s3.us-east-2.amazonaws.com/oeps/zcta-2018-500k-shp.zip
+
+Note: Because we use 2010 Census boundaries for state, county, and tracts data, there are a few tracts that get left out when the join is made. A more detailed explanation of this can be found in [ticket #20](https://github.com/healthyregions/oepsData/issues/20), big thank you to @csarapas for finding this bug. We hope to address this in a future release.
 
 ## Releases
 
